@@ -1,6 +1,14 @@
 using ApiCurrency.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Set environment from configuration
+var environment = builder.Configuration["ASPNETCORE_ENVIRONMENT"];
+if (!string.IsNullOrEmpty(environment))
+{
+    builder.Environment.EnvironmentName = environment;
+}
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -10,10 +18,11 @@ if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddSwaggerGen(c =>
     {
-        c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+        c.SwaggerDoc("v1", new OpenApiInfo
         {
             Title = "Currency Converter API",
-            Version = "v1"
+            Version = "v1",
+            Description = "API for currency conversion"
         });
     });
 }
@@ -37,4 +46,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run(); 
+app.Run();

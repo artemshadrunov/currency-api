@@ -1,0 +1,8 @@
+{
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+} 
