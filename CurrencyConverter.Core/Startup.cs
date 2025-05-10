@@ -20,8 +20,6 @@ public class Startup
         {
             services.AddSwaggerGen();
         }
-
-        services.AddScoped<ICurrencyConverterService, CurrencyConverterServiceMock>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

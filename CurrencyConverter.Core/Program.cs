@@ -1,16 +1,18 @@
+using ApiCurrency.Models;
 using ApiCurrency.Services;
+using ApiCurrency.Settings;
+using ApiCurrency.ExchangeRateProviders;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Set environment from configuration
 var environment = builder.Configuration["ASPNETCORE_ENVIRONMENT"];
 if (!string.IsNullOrEmpty(environment))
 {
     builder.Environment.EnvironmentName = environment;
 }
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -27,11 +29,27 @@ if (builder.Environment.IsDevelopment())
     });
 }
 
-builder.Services.AddScoped<ICurrencyConverterService, CurrencyConverterServiceMock>();
+builder.Services.Configure<ExchangeRateSettings>(
+    builder.Configuration.GetSection("ExchangeRateSettings"));
+builder.Services.Configure<CurrencyRulesOptions>(
+    builder.Configuration.GetSection("CurrencyRules"));
+
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<ICurrencyRulesProvider, CurrencyRulesSettingsProvider>();
+builder.Services.AddSingleton<IExchangeRateProvider, StubExchangeRateProvider>();
+builder.Services.AddSingleton<IExchangeRateProvider>(sp =>
+    new FrankfurterExchangeRateProvider(
+        sp.GetRequiredService<HttpClient>(),
+        sp.GetRequiredService<IOptions<ExchangeRateSettings>>()));
+builder.Services.AddSingleton<IExchangeRateProviderFactory>(sp =>
+{
+    var providers = sp.GetServices<IExchangeRateProvider>();
+    return new ExchangeRateProviderFactory(providers);
+});
+builder.Services.AddScoped<ICurrencyConverterService, CurrencyConverterService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
