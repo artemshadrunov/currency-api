@@ -2,22 +2,6 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run Tests",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "test",
-                "${workspaceFolder}/CurrencyConverter.Tests/CurrencyConverter.Tests.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
             "label": "Run API",
             "command": "dotnet",
             "type": "process",
@@ -45,5 +29,60 @@
             "problemMatcher": "$msCompile",
             "group": "build"
         },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "dotnet build",
+            "group": "build"
+        },
+        {
+            "label": "Run tests with coverage",
+            "type": "shell",
+            "dependsOn": [
+                "build"
+            ],
+            "command": "coverlet",
+            "args": [
+                "CurrencyConverter.Tests/bin/Debug/net8.0/CurrencyConverter.Tests.dll",
+                "--target",
+                "dotnet",
+                "--targetargs",
+                "test --no-build --no-restore",
+                "--output",
+                "coverage/coverage.cobertura.xml",
+                "--format",
+                "cobertura",
+                "--exclude-by-file",
+                "**/CurrencyConverter.Core/Program.cs",
+                "**/CurrencyConverter.Core/Startup.cs",
+                "**/CurrencyConverter.Core/LambdaEntryPoint.cs",
+                "**/CurrencyConverter.Core/Controllers/CurrencyConverterController.cs"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Generate coverage HTML report",
+            "type": "shell",
+            "command": "reportgenerator",
+            "args": [
+                "-reports:coverage/coverage.cobertura.xml",
+                "-targetdir:coverage/html",
+                "-reporttypes:Html"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
     ]
 }
