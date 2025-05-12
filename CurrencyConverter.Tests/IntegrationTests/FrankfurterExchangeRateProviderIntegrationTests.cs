@@ -52,8 +52,8 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         // Arrange
         var fromCurrency = "USD";
         var toCurrency = "EUR";
-        var start = DateTime.UtcNow.AddDays(-7);
-        var end = DateTime.UtcNow.AddDays(-1);
+        var start = new DateTime(2025, 5, 5);
+        var end = new DateTime(2025, 5, 10);
         var step = TimeSpan.FromDays(1);
 
         // Act
@@ -118,8 +118,8 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         {
             BaseCurrency = "USD",
             TargetCurrency = "EUR",
-            Start = DateTime.UtcNow.AddDays(-7),
-            End = DateTime.UtcNow.AddDays(-1),
+            Start = new DateTime(2025, 5, 5),
+            End = new DateTime(2025, 5, 10),
             Step = TimeSpan.FromDays(1),
             Page = 1,
             PageSize = 3,
@@ -148,8 +148,8 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         {
             BaseCurrency = "USD",
             TargetCurrency = "EUR",
-            Start = DateTime.UtcNow.AddDays(-7),
-            End = DateTime.UtcNow.AddDays(-1),
+            Start = new DateTime(2025, 5, 5),
+            End = new DateTime(2025, 5, 10),
             Step = TimeSpan.FromDays(1),
             Page = 2,
             PageSize = 3,
@@ -178,8 +178,8 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         {
             BaseCurrency = "USD",
             TargetCurrency = "EUR",
-            Start = DateTime.UtcNow.AddDays(-7),
-            End = DateTime.UtcNow.AddDays(-1),
+            Start = new DateTime(2025, 5, 5),
+            End = new DateTime(2025, 5, 10),
             Step = TimeSpan.FromDays(1),
             Page = 3,
             PageSize = 3,

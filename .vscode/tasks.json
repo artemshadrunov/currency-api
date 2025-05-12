@@ -45,11 +45,5 @@
             "problemMatcher": "$msCompile",
             "group": "build"
         },
-        {
-            "label": "Tests: coverage + html report",
-            "type": "shell",
-            "command": "dotnet test ./CurrencyConverter.Tests/CurrencyConverter.Tests.csproj --settings ./coverlet.runsettings --results-directory ./TestResults && reportgenerator -reports:\"./TestResults/**/coverage.cobertura.xml\" -targetdir:coverage-report -reporttypes:Html",
-            "problemMatcher": []
-        }
     ]
-} 
+}
