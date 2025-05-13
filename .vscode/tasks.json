@@ -83,6 +83,36 @@
                 "panel": "shared"
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Stop Redis",
+            "type": "shell",
+            "command": "docker ps -a | findstr redis | foreach { docker stop $_.Split()[0] } | foreach { docker rm $_ }; docker-compose down --remove-orphans --volumes",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Start Redis",
+            "type": "shell",
+            "command": "docker ps -a | findstr redis | foreach { docker stop $_.Split()[0] } | foreach { docker rm $_ }; docker-compose down --remove-orphans --volumes; docker-compose up --detach redis",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Start Core + Redis",
+            "type": "shell",
+            "command": "docker ps -a | findstr redis | foreach { docker stop $_.Split()[0] } | foreach { docker rm $_ }; docker-compose down --remove-orphans --volumes; docker-compose up --detach redis; dotnet run --project CurrencyConverter.Core",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
         }
     ]
 }

@@ -1,4 +1,8 @@
 using ApiCurrency.Services;
+using CurrencyConverter.Core.Infrastructure.Cache;
+using CurrencyConverter.Core.Settings;
+using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 
 namespace ApiCurrency;
 
@@ -15,7 +19,18 @@ public class Startup
     {
         services.AddControllers();
         services.AddEndpointsApiExplorer();
-        
+
+        // Configure Redis
+        services.Configure<RedisSettings>(Configuration.GetSection("Redis"));
+        services.AddSingleton<IConnectionMultiplexer>(sp =>
+        {
+            var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
+            return ConnectionMultiplexer.Connect(settings.ConnectionString);
+        });
+
+        // Register cache services
+        services.AddSingleton<ICacheProvider, RedisCacheProvider>();
+
         if (!IsProduction())
         {
             services.AddSwaggerGen();
@@ -44,4 +59,4 @@ public class Startup
     {
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production";
     }
-} 
+}
