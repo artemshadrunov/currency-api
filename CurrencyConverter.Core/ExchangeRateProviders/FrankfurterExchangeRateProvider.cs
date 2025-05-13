@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using ApiCurrency.Models;
 
@@ -28,36 +29,23 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
         return rate;
     }
 
-    public async Task<Dictionary<DateTime, decimal>> GetRatesForPeriod(string fromCurrency, string toCurrency, DateTime start, DateTime end, TimeSpan step)
+    public async Task<Dictionary<DateTime, decimal>> GetRatesForPeriod(string fromCurrency, string toCurrency, DateTime start, DateTime end)
     {
-        var url = $"https://api.frankfurter.app/{start:yyyy-MM-dd}..?from={fromCurrency}&to={toCurrency}&start_date={start:yyyy-MM-dd}&end_date={end:yyyy-MM-dd}";
+        var url = $"https://api.frankfurter.app/{start:yyyy-MM-dd}..{end:yyyy-MM-dd}?from={fromCurrency}&to={toCurrency}";
         var response = await _httpClient.GetFromJsonAsync<FrankfurterHistoricalResponse>(url);
         if (response?.Rates == null)
-        {
             throw new Exception($"Failed to get exchange rates for {fromCurrency}/{toCurrency}");
-        }
 
         var allRates = response.Rates.ToDictionary(
             kvp => DateTime.Parse(kvp.Key),
             kvp => kvp.Value[toCurrency]);
 
         var result = new Dictionary<DateTime, decimal>();
-        var currentDate = start;
-
-        // Add dates until we reach the end date (inclusive)
-        while (currentDate <= end)
+        for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
         {
-            var nearestDate = allRates.Keys
-                .Where(d => d >= currentDate)
-                .OrderBy(d => d)
-                .FirstOrDefault();
-            if (nearestDate != default)
-            {
-                result[nearestDate] = allRates[nearestDate];
-            }
-            currentDate = currentDate.Add(step);
+            if (allRates.TryGetValue(date, out var rate))
+                result[date] = rate;
         }
-
         return result;
     }
 

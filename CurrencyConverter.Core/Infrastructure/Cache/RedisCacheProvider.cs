@@ -12,20 +12,12 @@ public class RedisCacheProvider : ICacheProvider
     private readonly IConnectionMultiplexer _redis;
     private readonly IDatabase _db;
     private readonly RedisSettings _settings;
-    private readonly IDistributedCache _cache;
-    private readonly DistributedCacheEntryOptions _options;
 
-    public RedisCacheProvider(IConnectionMultiplexer redis, IOptions<RedisSettings> settings, IDistributedCache cache, IConfiguration configuration)
+    public RedisCacheProvider(IConnectionMultiplexer redis, IOptions<RedisSettings> settings)
     {
         _redis = redis;
         _db = redis.GetDatabase();
         _settings = settings.Value;
-        _cache = cache;
-        var expirationDays = configuration.GetValue<int>("Redis:DefaultExpirationDays", 30);
-        _options = new DistributedCacheEntryOptions
-        {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(expirationDays)
-        };
     }
 
     public async Task<T?> Get<T>(string key)

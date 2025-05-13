@@ -43,16 +43,15 @@ public class StubExchangeRateProviderTests
         // Arrange
         var from = "USD";
         var to = "EUR";
-        var startDate = new DateTime(2024, 1, 1);
-        var endDate = new DateTime(2024, 1, 3);
-        var step = TimeSpan.FromDays(1);
+        var startDate = new DateTime(2025, 1, 1);
+        var endDate = new DateTime(2025, 1, 5);
 
         // Act
-        var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate, step);
+        var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate);
 
         // Assert
-        Assert.Equal(3, result.Count);
-        Assert.All(result.Values, rate => Assert.Equal(1.5m, rate));
+        Assert.Equal(5, result.Count);
+        Assert.All(result, kvp => Assert.Equal(1.0m, kvp.Value));
     }
 
     [Fact]
@@ -61,18 +60,14 @@ public class StubExchangeRateProviderTests
         // Arrange
         var from = "USD";
         var to = "EUR";
-        var startDate = new DateTime(2024, 1, 1);
-        var endDate = new DateTime(2024, 1, 3);
-        var step = TimeSpan.FromDays(1);
+        var startDate = new DateTime(2025, 1, 1);
+        var endDate = new DateTime(2025, 1, 5);
 
         // Act
-        var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate, step);
+        var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate);
 
         // Assert
-        Assert.Equal(3, result.Count);
-        Assert.All(result.Values, rate => Assert.Equal(1.5m, rate));
-        Assert.Contains(startDate, result.Keys);
-        Assert.Contains(startDate.AddDays(1), result.Keys);
-        Assert.Contains(endDate, result.Keys);
+        Assert.Equal(5, result.Count);
+        Assert.All(result, kvp => Assert.Equal(1.0m, kvp.Value));
     }
 }

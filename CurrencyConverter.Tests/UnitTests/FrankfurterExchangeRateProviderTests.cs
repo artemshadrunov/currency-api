@@ -65,34 +65,49 @@ public class FrankfurterExchangeRateProviderTests
     }
 
     [Fact]
-    public async Task GetRatesForPeriod_ShouldReturnCorrectRates()
+    public async Task GetRatesForPeriod_ShouldReturnCorrectNumberOfRates()
     {
         // Arrange
         var from = "USD";
         var to = "EUR";
-        var startDate = new DateTime(2025, 5, 5);
-        var endDate = new DateTime(2025, 5, 7);
-        var step = TimeSpan.FromDays(1);
-
-        var expectedRates = new Dictionary<string, Dictionary<string, decimal>>
+        var startDate = new DateTime(2025, 1, 1);
+        var endDate = new DateTime(2025, 1, 5);
+        var rates = new Dictionary<string, Dictionary<string, decimal>>();
+        for (var date = startDate; date <= endDate; date = date.AddDays(1))
         {
-            { "2025-05-05", new Dictionary<string, decimal> { { to, 1.1m } } },
-            { "2025-05-06", new Dictionary<string, decimal> { { to, 1.15m } } },
-            { "2025-05-07", new Dictionary<string, decimal> { { to, 1.2m } } }
-        };
-
-        SetupMockResponse(
-            $"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..?from={from}&to={to}&start_date={startDate:yyyy-MM-dd}&end_date={endDate:yyyy-MM-dd}",
-            new FrankfurterHistoricalResponse { Rates = expectedRates });
+            rates[date.ToString("yyyy-MM-dd")] = new Dictionary<string, decimal> { { to, 1.0m } };
+        }
+        SetupMockResponse($"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?from={from}&to={to}", new FrankfurterHistoricalResponse { Rates = rates });
 
         // Act
-        var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate, step);
+        var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate);
 
         // Assert
-        Assert.Equal(3, result.Count);
-        Assert.Equal(1.1m, result[startDate]);
-        Assert.Equal(1.15m, result[startDate.AddDays(1)]);
-        Assert.Equal(1.2m, result[startDate.AddDays(2)]);
+        Assert.Equal(5, result.Count);
+        Assert.All(result, kvp => Assert.Equal(1.0m, kvp.Value));
+    }
+
+    [Fact]
+    public async Task GetRatesForPeriod_WithDifferentStep_ShouldReturnCorrectNumberOfRates()
+    {
+        // Arrange
+        var from = "USD";
+        var to = "EUR";
+        var startDate = new DateTime(2025, 1, 1);
+        var endDate = new DateTime(2025, 1, 5);
+        var rates = new Dictionary<string, Dictionary<string, decimal>>();
+        for (var date = startDate; date <= endDate; date = date.AddDays(1))
+        {
+            rates[date.ToString("yyyy-MM-dd")] = new Dictionary<string, decimal> { { to, 1.0m } };
+        }
+        SetupMockResponse($"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?from={from}&to={to}", new FrankfurterHistoricalResponse { Rates = rates });
+
+        // Act
+        var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate);
+
+        // Assert
+        Assert.Equal(5, result.Count);
+        Assert.All(result, kvp => Assert.Equal(1.0m, kvp.Value));
     }
 
     [Fact]

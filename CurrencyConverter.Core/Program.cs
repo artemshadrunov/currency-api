@@ -82,13 +82,7 @@ builder.Services.AddSingleton<IExchangeRateProvider>(sp =>
 });
 
 // Register provider factory
-builder.Services.AddSingleton<IExchangeRateProviderFactory>(sp =>
-{
-    var cache = sp.GetRequiredService<ICacheProvider>();
-    var settings = sp.GetRequiredService<IOptions<RedisSettings>>();
-    var providers = sp.GetServices<IExchangeRateProvider>();
-    return new CachedExchangeRateProviderFactory(cache, settings, providers);
-});
+builder.Services.AddSingleton<IExchangeRateProviderFactory, CachedExchangeRateProviderFactory>();
 
 // Register main service
 builder.Services.AddScoped<ICurrencyConverterService, CurrencyConverterService>();

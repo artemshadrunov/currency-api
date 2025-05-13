@@ -265,38 +265,35 @@ public class CurrencyConverterServiceTests
     }
 
     [Fact]
-    public async Task GetHistoricalRates_ReturnsCorrectPagedResult()
+    public async Task GetHistoricalRates_ShouldReturnCorrectRates()
     {
         // Arrange
-        var start = DateTime.UtcNow.AddDays(-7);
-        var end = DateTime.UtcNow.AddDays(-1);
-        var step = TimeSpan.FromDays(1);
-        var rates = new Dictionary<DateTime, decimal>
-        {
-            { start, 1.1m },
-            { start.AddDays(1), 1.15m },
-            { start.AddDays(2), 1.2m },
-            { start.AddDays(3), 1.25m },
-            { start.AddDays(4), 1.3m },
-            { start.AddDays(5), 1.35m },
-            { end, 1.4m }
-        };
-
-        _mockProvider
-            .Setup(x => x.GetRatesForPeriod("USD", "EUR", start, end, step))
-            .ReturnsAsync(rates);
-
         var request = new HistoricalRatesRequest
         {
             BaseCurrency = "USD",
             TargetCurrency = "EUR",
-            Start = start,
-            End = end,
-            Step = step,
+            Start = new DateTime(2025, 1, 1),
+            End = new DateTime(2025, 1, 5),
             Page = 1,
             PageSize = 3,
-            ProviderName = "Stub"
+            ProviderName = "Frankfurter"
         };
+
+        var expectedRates = new Dictionary<DateTime, decimal>
+        {
+            { new DateTime(2025, 1, 1), 1.1m },
+            { new DateTime(2025, 1, 2), 1.15m },
+            { new DateTime(2025, 1, 3), 1.2m },
+            { new DateTime(2025, 1, 4), 1.25m },
+            { new DateTime(2025, 1, 5), 1.3m }
+        };
+
+        _mockProvider.Setup(p => p.GetRatesForPeriod(
+            request.BaseCurrency,
+            request.TargetCurrency,
+            request.Start,
+            request.End))
+            .ReturnsAsync(expectedRates);
 
         // Act
         var result = await _service.GetHistoricalRates(request);
@@ -304,14 +301,14 @@ public class CurrencyConverterServiceTests
         // Assert
         Assert.Equal(1, result.Page);
         Assert.Equal(3, result.PageSize);
-        Assert.Equal(7, result.TotalCount);
-        Assert.Equal(3, result.TotalPages);
+        Assert.Equal(5, result.TotalCount);
+        Assert.Equal(2, result.TotalPages);
         Assert.True(result.HasNextPage);
         Assert.False(result.HasPreviousPage);
         Assert.Equal(3, result.Rates.Count);
-        Assert.Equal(1.1m, result.Rates[start]);
-        Assert.Equal(1.15m, result.Rates[start.AddDays(1)]);
-        Assert.Equal(1.2m, result.Rates[start.AddDays(2)]);
+        Assert.Equal(1.1m, result.Rates[new DateTime(2025, 1, 1)]);
+        Assert.Equal(1.15m, result.Rates[new DateTime(2025, 1, 2)]);
+        Assert.Equal(1.2m, result.Rates[new DateTime(2025, 1, 3)]);
     }
 
     [Fact]

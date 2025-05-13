@@ -2,8 +2,16 @@ using ApiCurrency.ExchangeRateProviders;
 using ApiCurrency.Models;
 using ApiCurrency.Services;
 using ApiCurrency.Settings;
+using CurrencyConverter.Core.Infrastructure.Cache;
+using CurrencyConverter.Core.Settings;
+using CurrencyConverter.Core.ExchangeRateProviders;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Moq;
+using StackExchange.Redis;
 using Xunit;
+using System.Linq;
 
 namespace CurrencyConverter.Tests.IntegrationTests;
 
@@ -13,16 +21,39 @@ public class FrankfurterExchangeRateProviderIntegrationTests
     private readonly ICurrencyConverterService _service;
     private readonly IExchangeRateProviderFactory _providerFactory;
     private readonly ICurrencyRulesProvider _currencyRulesProvider;
+    private readonly ICacheProvider _cacheProvider;
 
     public FrankfurterExchangeRateProviderIntegrationTests()
     {
         var httpClient = new HttpClient();
-        _provider = new FrankfurterExchangeRateProvider(httpClient);
-        _providerFactory = new ExchangeRateProviderFactory(new List<IExchangeRateProvider> { _provider });
+        var baseProvider = new FrankfurterExchangeRateProvider(httpClient);
+
+        var mockDistributedCache = new Mock<IDistributedCache>();
+        var mockConfiguration = new Mock<IConfiguration>();
+        var mockSection = new Mock<IConfigurationSection>();
+
+        mockSection.Setup(x => x.Value).Returns("30");
+        mockConfiguration.Setup(x => x.GetSection("Redis:DefaultExpirationDays")).Returns(mockSection.Object);
+
+        _cacheProvider = new RedisCacheProvider(
+            ConnectionMultiplexer.Connect("localhost:6379"),
+            Options.Create(new RedisSettings { CacheRetentionDays = 30 }));
+
+        _provider = new CachedExchangeRateProvider(
+            baseProvider,
+            _cacheProvider,
+            Options.Create(new RedisSettings()));
+
+        _providerFactory = new CachedExchangeRateProviderFactory(
+            _cacheProvider,
+            Options.Create(new RedisSettings()),
+            new List<IExchangeRateProvider> { _provider });
+
         _currencyRulesProvider = new CurrencyRulesSettingsProvider(Options.Create(new CurrencyRulesOptions
         {
             ExcludedCurrencies = new List<string> { "TRY" }
         }));
+
         _service = new CurrencyConverterService(_providerFactory, _currencyRulesProvider);
     }
 
@@ -49,10 +80,9 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         var toCurrency = "EUR";
         var start = new DateTime(2025, 5, 5);
         var end = new DateTime(2025, 5, 10);
-        var step = TimeSpan.FromDays(1);
 
         // Act
-        var rates = await _provider.GetRatesForPeriod(fromCurrency, toCurrency, start, end, step);
+        var rates = await _provider.GetRatesForPeriod(fromCurrency, toCurrency, start, end);
 
         // Assert
         Assert.NotEmpty(rates);

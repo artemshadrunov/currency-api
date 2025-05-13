@@ -68,8 +68,7 @@ public class CurrencyConverterService : ICurrencyConverterService
             request.BaseCurrency,
             request.TargetCurrency,
             request.Start,
-            request.End,
-            request.Step);
+            request.End);
 
         var ordered = allRates.OrderBy(x => x.Key).ToList();
         var total = ordered.Count;
