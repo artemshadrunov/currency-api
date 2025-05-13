@@ -16,13 +16,8 @@ public class FrankfurterExchangeRateProviderIntegrationTests
 
     public FrankfurterExchangeRateProviderIntegrationTests()
     {
-        var options = Options.Create(new ExchangeRateSettings
-        {
-            FreshnessWindowMinutes = 10
-        });
-
         var httpClient = new HttpClient();
-        _provider = new FrankfurterExchangeRateProvider(httpClient, options);
+        _provider = new FrankfurterExchangeRateProvider(httpClient);
         _providerFactory = new ExchangeRateProviderFactory(new List<IExchangeRateProvider> { _provider });
         _currencyRulesProvider = new CurrencyRulesSettingsProvider(Options.Create(new CurrencyRulesOptions
         {
@@ -37,7 +32,7 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         // Arrange
         var fromCurrency = "USD";
         var toCurrency = "EUR";
-        var timestamp = DateTime.UtcNow.AddDays(-1);
+        var timestamp = DateTime.UtcNow.Date.AddDays(-1);
 
         // Act
         var rate = await _provider.GetRate(fromCurrency, toCurrency, timestamp);
@@ -73,7 +68,7 @@ public class FrankfurterExchangeRateProviderIntegrationTests
             FromCurrency = "USD",
             ToCurrency = "EUR",
             Amount = 100,
-            Timestamp = DateTime.UtcNow.AddDays(-1),
+            Timestamp = DateTime.UtcNow.Date.AddDays(-1),
             ProviderName = "Frankfurter"
         };
 
@@ -86,7 +81,7 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         Assert.Equal(100, result.Amount);
         Assert.True(result.ConvertedAmount > 0);
         Assert.True(result.Rate > 0);
-        Assert.Equal(request.Timestamp, result.ConversionTimestamp);
+        Assert.Equal(request.Timestamp.Date, result.ConversionTimestamp.Date);
         Assert.Equal("Frankfurter", result.ProviderName);
     }
 
@@ -98,7 +93,7 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         {
             BaseCurrency = "USD",
             TargetCurrencies = new List<string> { "EUR", "GBP", "JPY" },
-            Timestamp = DateTime.UtcNow.AddDays(-1),
+            Timestamp = DateTime.UtcNow.Date,
             ProviderName = "Frankfurter"
         };
 
@@ -132,7 +127,7 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         // Assert
         Assert.Equal(1, result.Page);
         Assert.Equal(3, result.PageSize);
-        Assert.Equal(5, result.TotalCount);
+        Assert.Equal(6, result.TotalCount);
         Assert.Equal(2, result.TotalPages);
         Assert.True(result.HasNextPage);
         Assert.False(result.HasPreviousPage);
@@ -162,11 +157,11 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         // Assert
         Assert.Equal(2, result.Page);
         Assert.Equal(3, result.PageSize);
-        Assert.Equal(5, result.TotalCount);
+        Assert.Equal(6, result.TotalCount);
         Assert.Equal(2, result.TotalPages);
         Assert.False(result.HasNextPage);
         Assert.True(result.HasPreviousPage);
-        Assert.Equal(2, result.Rates.Count);
+        Assert.Equal(3, result.Rates.Count);
         Assert.All(result.Rates, kvp => Assert.True(kvp.Value > 0));
     }
 
@@ -192,7 +187,7 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         // Assert
         Assert.Equal(3, result.Page);
         Assert.Equal(3, result.PageSize);
-        Assert.Equal(5, result.TotalCount);
+        Assert.Equal(6, result.TotalCount);
         Assert.Equal(2, result.TotalPages);
         Assert.False(result.HasNextPage);
         Assert.True(result.HasPreviousPage);

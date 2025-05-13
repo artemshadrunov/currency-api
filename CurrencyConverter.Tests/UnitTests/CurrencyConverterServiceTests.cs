@@ -375,6 +375,48 @@ public class CurrencyConverterServiceTests
     }
 
     [Fact]
+    public async Task GetHistoricalRates_ThrowsWhenEndDateIsInFuture()
+    {
+        // Arrange
+        var request = new HistoricalRatesRequest
+        {
+            BaseCurrency = "USD",
+            TargetCurrency = "EUR",
+            Start = DateTime.UtcNow.AddDays(-1),  // yesterday
+            End = DateTime.UtcNow.AddDays(1),     // tomorrow
+            Step = TimeSpan.FromDays(1),
+            Page = 1,
+            PageSize = 10,
+            ProviderName = "Stub"
+        };
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<ArgumentException>(() => _service.GetHistoricalRates(request));
+        Assert.Contains("End date must be between", exception.Message);
+    }
+
+    [Fact]
+    public async Task GetHistoricalRates_ThrowsWhenStartDateIsInFuture()
+    {
+        // Arrange
+        var request = new HistoricalRatesRequest
+        {
+            BaseCurrency = "USD",
+            TargetCurrency = "EUR",
+            Start = DateTime.UtcNow.AddDays(1),   // tomorrow
+            End = DateTime.UtcNow.AddDays(2),     // day after tomorrow
+            Step = TimeSpan.FromDays(1),
+            Page = 1,
+            PageSize = 10,
+            ProviderName = "Stub"
+        };
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<ArgumentException>(() => _service.GetHistoricalRates(request));
+        Assert.Contains("Start date must be between", exception.Message);
+    }
+
+    [Fact]
     public async Task GetHistoricalRates_ThrowsOnEmptyProvider()
     {
         // Arrange

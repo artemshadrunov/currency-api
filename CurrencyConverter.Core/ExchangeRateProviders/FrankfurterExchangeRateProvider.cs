@@ -1,20 +1,16 @@
 using System.Net.Http.Json;
 using ApiCurrency.Models;
-using ApiCurrency.Settings;
-using Microsoft.Extensions.Options;
 
 namespace ApiCurrency.ExchangeRateProviders;
 
 public class FrankfurterExchangeRateProvider : IExchangeRateProvider
 {
     private readonly HttpClient _httpClient;
-    private readonly ExchangeRateSettings _settings;
     public string Name => "Frankfurter";
 
-    public FrankfurterExchangeRateProvider(HttpClient httpClient, IOptions<ExchangeRateSettings> settings)
+    public FrankfurterExchangeRateProvider(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _settings = settings.Value;
     }
 
     public async Task<decimal> GetRate(string fromCurrency, string toCurrency, DateTime date)
@@ -47,19 +43,18 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
 
         var result = new Dictionary<DateTime, decimal>();
         var currentDate = start;
+
+        // Add dates until we reach the end date (inclusive)
         while (currentDate <= end)
         {
-            
             var nearestDate = allRates.Keys
                 .Where(d => d >= currentDate)
                 .OrderBy(d => d)
                 .FirstOrDefault();
-
             if (nearestDate != default)
             {
                 result[nearestDate] = allRates[nearestDate];
             }
-
             currentDate = currentDate.Add(step);
         }
 
@@ -68,7 +63,7 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
 
     private bool ShouldUseLatest(DateTime date)
     {
-        return (DateTime.UtcNow - date).TotalMinutes <= _settings.FreshnessWindowMinutes;
+        return date.Date == DateTime.UtcNow.Date;
     }
 }
 

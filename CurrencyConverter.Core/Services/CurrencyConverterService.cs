@@ -145,8 +145,15 @@ public class CurrencyConverterService : ICurrencyConverterService
         if (_currencyRulesProvider.IsCurrencyExcluded(request.TargetCurrency))
             throw new InvalidOperationException($"Currency {request.TargetCurrency} is excluded from conversion");
 
-        ValidateTimestamp(request.Start, nameof(request.Start));
-        ValidateTimestamp(request.End, nameof(request.End));
+        var now = DateTime.UtcNow;
+        var minDate = now.AddYears(-MaxHistoricalYears);
+
+        // Check if both dates are within valid range
+        if (request.Start < minDate || request.Start > now)
+            throw new ArgumentException($"Start date must be between {minDate:yyyy-MM-dd} and {now:yyyy-MM-dd}", nameof(request.Start));
+
+        if (request.End < minDate || request.End > now)
+            throw new ArgumentException($"End date must be between {minDate:yyyy-MM-dd} and {now:yyyy-MM-dd}", nameof(request.End));
 
         if (request.Start > request.End)
             throw new ArgumentException("Start date cannot be later than end date");

@@ -28,7 +28,7 @@ public class StubExchangeRateProviderTests
         // Arrange
         var from = "USD";
         var to = "EUR";
-        var date = DateTime.UtcNow;
+        var date = DateTime.UtcNow.Date;
 
         // Act
         var result = await _provider.GetRate(from, to, date);
@@ -61,9 +61,9 @@ public class StubExchangeRateProviderTests
         // Arrange
         var from = "USD";
         var to = "EUR";
-        var startDate = new DateTime(2024, 1, 1, 10, 0, 0);
-        var endDate = new DateTime(2024, 1, 1, 12, 0, 0);
-        var step = TimeSpan.FromHours(1);
+        var startDate = new DateTime(2024, 1, 1);
+        var endDate = new DateTime(2024, 1, 3);
+        var step = TimeSpan.FromDays(1);
 
         // Act
         var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate, step);
@@ -72,7 +72,7 @@ public class StubExchangeRateProviderTests
         Assert.Equal(3, result.Count);
         Assert.All(result.Values, rate => Assert.Equal(1.5m, rate));
         Assert.Contains(startDate, result.Keys);
-        Assert.Contains(startDate.AddHours(1), result.Keys);
+        Assert.Contains(startDate.AddDays(1), result.Keys);
         Assert.Contains(endDate, result.Keys);
     }
 }
