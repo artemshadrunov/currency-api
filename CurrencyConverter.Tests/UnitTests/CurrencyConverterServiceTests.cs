@@ -321,7 +321,6 @@ public class CurrencyConverterServiceTests
             TargetCurrency = "EUR",
             Start = DateTime.UtcNow.AddDays(1),
             End = DateTime.UtcNow.AddDays(2),
-            Step = TimeSpan.FromDays(1),
             Page = 1,
             PageSize = 10,
             ProviderName = "Stub"
@@ -341,7 +340,6 @@ public class CurrencyConverterServiceTests
             TargetCurrency = "EUR",
             Start = DateTime.UtcNow.AddYears(-2),
             End = DateTime.UtcNow.AddYears(-1),
-            Step = TimeSpan.FromDays(1),
             Page = 1,
             PageSize = 10,
             ProviderName = "Stub"
@@ -361,7 +359,6 @@ public class CurrencyConverterServiceTests
             TargetCurrency = "EUR",
             Start = DateTime.UtcNow,
             End = DateTime.UtcNow.AddDays(-1),
-            Step = TimeSpan.FromDays(1),
             Page = 1,
             PageSize = 10,
             ProviderName = "Stub"
@@ -381,7 +378,6 @@ public class CurrencyConverterServiceTests
             TargetCurrency = "EUR",
             Start = DateTime.UtcNow.AddDays(-1),  // yesterday
             End = DateTime.UtcNow.AddDays(1),     // tomorrow
-            Step = TimeSpan.FromDays(1),
             Page = 1,
             PageSize = 10,
             ProviderName = "Stub"
@@ -402,7 +398,6 @@ public class CurrencyConverterServiceTests
             TargetCurrency = "EUR",
             Start = DateTime.UtcNow.AddDays(1),   // tomorrow
             End = DateTime.UtcNow.AddDays(2),     // day after tomorrow
-            Step = TimeSpan.FromDays(1),
             Page = 1,
             PageSize = 10,
             ProviderName = "Stub"
@@ -423,7 +418,6 @@ public class CurrencyConverterServiceTests
             TargetCurrency = "EUR",
             Start = DateTime.UtcNow.AddDays(-7),
             End = DateTime.UtcNow.AddDays(-1),
-            Step = TimeSpan.FromDays(1),
             Page = 1,
             PageSize = 10,
             ProviderName = null

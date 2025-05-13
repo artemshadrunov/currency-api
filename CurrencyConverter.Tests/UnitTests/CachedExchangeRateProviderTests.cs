@@ -43,7 +43,7 @@ namespace CurrencyConverter.Tests.UnitTests
                 { new DateTime(2025, 1, 4), 1.0m },
                 { new DateTime(2025, 1, 5), 1.0m }
             };
-            // Сначала кэш промах, потом кэш хит
+            // First cache miss, then cache hit
             var cache = new Dictionary<string, decimal>();
             _mockCache.Setup(c => c.Get<decimal>(It.IsAny<string>())).ReturnsAsync((string key) =>
             {

@@ -145,7 +145,6 @@ public class FrankfurterExchangeRateProviderIntegrationTests
             TargetCurrency = "EUR",
             Start = new DateTime(2025, 5, 5),
             End = new DateTime(2025, 5, 10),
-            Step = TimeSpan.FromDays(1),
             Page = 1,
             PageSize = 3,
             ProviderName = "Frankfurter"
@@ -175,7 +174,6 @@ public class FrankfurterExchangeRateProviderIntegrationTests
             TargetCurrency = "EUR",
             Start = new DateTime(2025, 5, 5),
             End = new DateTime(2025, 5, 10),
-            Step = TimeSpan.FromDays(1),
             Page = 2,
             PageSize = 3,
             ProviderName = "Frankfurter"
@@ -205,7 +203,6 @@ public class FrankfurterExchangeRateProviderIntegrationTests
             TargetCurrency = "EUR",
             Start = new DateTime(2025, 5, 5),
             End = new DateTime(2025, 5, 10),
-            Step = TimeSpan.FromDays(1),
             Page = 3,
             PageSize = 3,
             ProviderName = "Frankfurter"

@@ -52,11 +52,60 @@ public class CachedExchangeRateProvider : IExchangeRateProvider
         string fromCurrency,
         string toCurrency,
         DateTime start,
-        DateTime end,
-        TimeSpan step)
+        DateTime end)
     {
-        // TODO: Implement caching for historical data
-        return await _provider.GetRatesForPeriod(fromCurrency, toCurrency, start, end, step);
+        var result = new Dictionary<DateTime, decimal>();
+        var missingDates = new List<DateTime>();
+
+        // Check cache for each date first
+        for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
+        {
+            var cacheKey = $"{CacheKeyPrefix}{fromCurrency}_{toCurrency}_{date:yyyy-MM-dd}";
+            var cachedRate = await _cache.Get<decimal>(cacheKey);
+            if (cachedRate != default)
+            {
+                result[date] = cachedRate;
+            }
+            else
+            {
+                missingDates.Add(date);
+            }
+        }
+
+        if (missingDates.Count > 0)
+        {
+            // Group dates into continuous segments
+            var segments = new List<(DateTime Start, DateTime End)>();
+            var currentSegment = (Start: missingDates[0], End: missingDates[0]);
+
+            for (int i = 1; i < missingDates.Count; i++)
+            {
+                if ((missingDates[i] - currentSegment.End).TotalDays == 1)
+                {
+                    currentSegment.End = missingDates[i];
+                }
+                else
+                {
+                    segments.Add(currentSegment);
+                    currentSegment = (Start: missingDates[i], End: missingDates[i]);
+                }
+            }
+            segments.Add(currentSegment);
+
+            // Request data for each segment
+            foreach (var segment in segments)
+            {
+                var fetched = await _provider.GetRatesForPeriod(fromCurrency, toCurrency, segment.Start, segment.End);
+                foreach (var kvp in fetched)
+                {
+                    var cacheKey = $"{CacheKeyPrefix}{fromCurrency}_{toCurrency}_{kvp.Key:yyyy-MM-dd}";
+                    await _cache.Set(cacheKey, kvp.Value, TimeSpan.FromDays(_settings.CacheRetentionDays));
+                    result[kvp.Key] = kvp.Value;
+                }
+            }
+        }
+
+        return result;
     }
 }
 
