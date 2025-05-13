@@ -41,11 +41,24 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
             kvp => kvp.Value[toCurrency]);
 
         var result = new Dictionary<DateTime, decimal>();
-        for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
+        var currentDate = start;
+
+        // Add dates until we reach the end date (inclusive)
+        while (currentDate <= end)
         {
-            if (allRates.TryGetValue(date, out var rate))
-                result[date] = rate;
+            // Find the nearest available date that is not greater than currentDate
+            var nearestDate = allRates.Keys
+                .Where(d => d <= currentDate)
+                .OrderByDescending(d => d)
+                .FirstOrDefault();
+
+            if (nearestDate != default)
+            {
+                result[currentDate] = allRates[nearestDate];
+            }
+            currentDate = currentDate.AddDays(1);
         }
+
         return result;
     }
 
