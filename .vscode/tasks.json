@@ -56,7 +56,10 @@
                 "**/CurrencyConverter.Core/Program.cs",
                 "**/CurrencyConverter.Core/Startup.cs",
                 "**/CurrencyConverter.Core/LambdaEntryPoint.cs",
-                "**/CurrencyConverter.Core/Controllers/CurrencyConverterController.cs"
+                "**/CurrencyConverter.Core/Controllers/CurrencyConverterController.cs",
+                "**/CurrencyConverter.Core/Controllers/AuthController.cs",
+                "**/CurrencyConverter.Core/Infrastructure/ApplicationConfiguration.cs"
+                
             ],
             "group": {
                 "kind": "test",
