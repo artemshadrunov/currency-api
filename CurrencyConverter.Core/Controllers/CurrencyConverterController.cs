@@ -1,22 +1,28 @@
 using ApiCurrency.Models;
 using ApiCurrency.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiCurrency.Controllers;
 
 [ApiController]
 [Route("api/v1/currencies")]
+[Authorize]
 public class CurrencyConverterController : ControllerBase
 {
     private readonly ICurrencyConverterService _converterService;
+    private readonly ILogger<CurrencyConverterController> _logger;
 
-    public CurrencyConverterController(ICurrencyConverterService converterService)
+    public CurrencyConverterController(
+        ICurrencyConverterService converterService,
+        ILogger<CurrencyConverterController> logger)
     {
         _converterService = converterService;
+        _logger = logger;
     }
 
     [HttpPost("convert")]
+    [Authorize(Policy = "User")]
     public async Task<ActionResult<CurrencyConversionResult>> Convert([FromBody] CurrencyConversionRequest request)
     {
         try
@@ -36,13 +42,15 @@ public class CurrencyConverterController : ControllerBase
         {
             return StatusCode(502, new { error = "External API is unavailable" });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, new { error = "Internal server error" });
+            _logger.LogError(ex, "Error converting currency");
+            return StatusCode(500, new { error = ex.Message });
         }
     }
 
     [HttpPost("latest")]
+    [Authorize(Policy = "User")]
     public async Task<ActionResult<Dictionary<string, decimal>>> GetLatestRates([FromBody] LatestRatesRequest request)
     {
         try
@@ -62,13 +70,15 @@ public class CurrencyConverterController : ControllerBase
         {
             return StatusCode(502, new { error = "External API is unavailable" });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, new { error = "Internal server error" });
+            _logger.LogError(ex, "Error getting latest rates");
+            return StatusCode(500, new { error = ex.Message });
         }
     }
 
     [HttpPost("history")]
+    [Authorize(Policy = "Admin")]
     public async Task<ActionResult<PagedRatesResult>> GetHistoricalRates([FromBody] HistoricalRatesRequest request)
     {
         try
@@ -88,9 +98,10 @@ public class CurrencyConverterController : ControllerBase
         {
             return StatusCode(502, new { error = "External API is unavailable" });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, new { error = "Internal server error" });
+            _logger.LogError(ex, "Error getting historical rates");
+            return StatusCode(500, new { error = ex.Message });
         }
     }
 }

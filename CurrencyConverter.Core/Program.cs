@@ -5,10 +5,8 @@ using ApiCurrency.ExchangeRateProviders;
 using CurrencyConverter.Core.Infrastructure.Cache;
 using CurrencyConverter.Core.Settings;
 using CurrencyConverter.Core.ExchangeRateProviders;
+using CurrencyConverter.Core.Infrastructure;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
-using StackExchange.Redis;
-using Microsoft.Extensions.Caching.StackExchangeRedis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,47 +16,18 @@ if (!string.IsNullOrEmpty(environment))
     builder.Environment.EnvironmentName = environment;
 }
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-
-// Always enable Swagger
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Currency Converter API",
-        Version = "v1",
-        Description = "API for currency conversion"
-    });
-});
-
 // Configure settings
 builder.Services.Configure<CurrencyRulesOptions>(
     builder.Configuration.GetSection("CurrencyRules"));
 builder.Services.Configure<RedisSettings>(
     builder.Configuration.GetSection("Redis"));
 
-// Configure Redis
-builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-{
-    var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-    return ConnectionMultiplexer.Connect(settings.ConnectionString);
-});
-
-// Add Redis distributed cache
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    var settings = builder.Configuration.GetSection("Redis").Get<RedisSettings>();
-    options.Configuration = settings.ConnectionString;
-    options.InstanceName = settings.InstanceName;
-});
+// Configure services
+ApplicationConfiguration.ConfigureServices(builder);
 
 // Register cache services
 builder.Services.AddSingleton<ICacheProvider, RedisCacheProvider>();
 builder.Services.AddSingleton<CachedExchangeRateProviderFactory>();
-
-// Register HTTP client
-builder.Services.AddHttpClient();
 
 // Register providers
 builder.Services.AddSingleton<ICurrencyRulesProvider, CurrencyRulesSettingsProvider>();
@@ -89,16 +58,7 @@ builder.Services.AddScoped<ICurrencyConverterService, CurrencyConverterService>(
 
 var app = builder.Build();
 
-// Always enable Swagger UI
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Currency Converter API V1");
-    c.RoutePrefix = "swagger";
-});
-
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
+// Configure middleware
+ApplicationConfiguration.ConfigureMiddleware(app);
 
 app.Run();
