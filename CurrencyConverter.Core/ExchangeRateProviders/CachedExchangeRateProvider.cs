@@ -113,6 +113,9 @@ public static class DateTimeExtensions
 {
     public static DateTime RoundDown(this DateTime dateTime, TimeSpan interval)
     {
+        if (interval <= TimeSpan.Zero)
+            throw new ArgumentException("Interval must be greater than zero", nameof(interval));
+
         var delta = dateTime.Ticks % interval.Ticks;
         return new DateTime(dateTime.Ticks - delta, dateTime.Kind);
     }
