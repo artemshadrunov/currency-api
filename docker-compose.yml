@@ -8,6 +8,15 @@ services:
     volumes:
       - redis_data:/data
 
+  seq:
+    image: datalust/seq:latest
+    ports:
+      - "5341:80"
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - seq_data:/data
+
   app:
     build:
       context: .
@@ -16,8 +25,11 @@ services:
       - "5000:80"
     environment:
       - Redis__ConnectionString=redis:6379
+      - Seq__ServerUrl=http://seq:80
     depends_on:
       - redis
+      - seq
 
 volumes:
-  redis_data: 
+  redis_data:
+  seq_data: 
