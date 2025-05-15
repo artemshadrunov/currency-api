@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using ApiCurrency.Models;
 using Microsoft.Extensions.Logging;
+using Serilog.Context;
+using System.Diagnostics;
 
 namespace ApiCurrency.ExchangeRateProviders;
 
@@ -9,6 +11,7 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<FrankfurterExchangeRateProvider> _logger;
+    private const string CorrelationIdHeader = "X-Correlation-ID";
     public string Name => "Frankfurter";
 
     public FrankfurterExchangeRateProvider(
@@ -25,11 +28,20 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
             ? $"https://api.frankfurter.app/latest?from={fromCurrency}&to={toCurrency}"
             : $"https://api.frankfurter.app/{date:yyyy-MM-dd}?from={fromCurrency}&to={toCurrency}";
 
+        using var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+        // Add correlation ID from current log context
+        var correlationId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
+        request.Headers.Add(CorrelationIdHeader, correlationId);
+
         _logger.LogDebug("Requesting exchange rate from Frankfurter API: {Url}", url);
         try
         {
-            var response = await _httpClient.GetFromJsonAsync<FrankfurterResponse>(url);
-            if (response?.Rates == null || !response.Rates.TryGetValue(toCurrency, out var rate))
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var frankfurterResponse = await response.Content.ReadFromJsonAsync<FrankfurterResponse>();
+
+            if (frankfurterResponse?.Rates == null || !frankfurterResponse.Rates.TryGetValue(toCurrency, out var rate))
             {
                 _logger.LogError("Failed to get exchange rate for {FromCurrency}/{ToCurrency} on {Date}",
                     fromCurrency, toCurrency, date);
@@ -51,19 +63,29 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
     public async Task<Dictionary<DateTime, decimal>> GetRatesForPeriod(string fromCurrency, string toCurrency, DateTime start, DateTime end)
     {
         var url = $"https://api.frankfurter.app/{start:yyyy-MM-dd}..{end:yyyy-MM-dd}?from={fromCurrency}&to={toCurrency}";
+
+        using var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+        // Add correlation ID from current log context
+        var correlationId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
+        request.Headers.Add(CorrelationIdHeader, correlationId);
+
         _logger.LogDebug("Requesting historical rates from Frankfurter API: {Url}", url);
 
         try
         {
-            var response = await _httpClient.GetFromJsonAsync<FrankfurterHistoricalResponse>(url);
-            if (response?.Rates == null)
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var frankfurterResponse = await response.Content.ReadFromJsonAsync<FrankfurterHistoricalResponse>();
+
+            if (frankfurterResponse?.Rates == null)
             {
                 _logger.LogError("Failed to get exchange rates for {FromCurrency}/{ToCurrency} from {StartDate} to {EndDate}",
                     fromCurrency, toCurrency, start, end);
                 throw new Exception($"Failed to get exchange rates for {fromCurrency}/{toCurrency}");
             }
 
-            var allRates = response.Rates.ToDictionary(
+            var allRates = frankfurterResponse.Rates.ToDictionary(
                 kvp => DateTime.Parse(kvp.Key),
                 kvp => kvp.Value[toCurrency]);
 

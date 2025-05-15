@@ -198,6 +198,7 @@ public static class ApplicationConfiguration
 
         app.UseHttpsRedirection();
         app.UseRateLimiter();
+        app.UseMiddleware<CorrelationIdMiddleware>();
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseMiddleware<RequestLoggingMiddleware>();

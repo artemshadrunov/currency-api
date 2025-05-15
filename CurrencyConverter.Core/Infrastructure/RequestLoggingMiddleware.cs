@@ -37,7 +37,15 @@ public class RequestLoggingMiddleware
                 {
                     var handler = new JwtSecurityTokenHandler();
                     var jwtToken = handler.ReadJwtToken(token);
-                    clientId = jwtToken.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ?? "unknown";
+
+                    // Log all claims for debugging
+                    _logger.LogDebug("JWT Claims: {Claims}",
+                        string.Join(", ", jwtToken.Claims.Select(c => $"{c.Type}: {c.Value}")));
+
+                    // Get user name from the claim
+                    clientId = jwtToken.Claims
+                        .FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value
+                        ?? "unknown";
                 }
             }
 

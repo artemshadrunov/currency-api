@@ -2,40 +2,6 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run API",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "run",
-                "--project",
-                "${workspaceFolder}/CurrencyConverter.Core/CurrencyConverter.Core.csproj"
-            ],
-            "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Run API (Watch)",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "--project",
-                "${workspaceFolder}/CurrencyConverter.Core/CurrencyConverter.Core.csproj"
-            ],
-            "problemMatcher": "$msCompile",
-            "group": "build"
-        },
-        {
-            "label": "build",
-            "type": "shell",
-            "command": "dotnet build",
-            "group": "build"
-        },
-        {
             "label": "Run tests with coverage",
             "type": "shell",
             "dependsOn": [
@@ -83,26 +49,6 @@
             "presentation": {
                 "reveal": "always",
                 "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Stop Redis",
-            "type": "shell",
-            "command": "docker ps -a | findstr redis | foreach { docker stop $_.Split()[0] } | foreach { docker rm $_ }; docker-compose down --remove-orphans --volumes",
-            "presentation": {
-                "reveal": "always",
-                "panel": "new"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Start Redis",
-            "type": "shell",
-            "command": "docker ps -a | findstr redis | foreach { docker stop $_.Split()[0] } | foreach { docker rm $_ }; docker-compose down --remove-orphans --volumes; docker-compose up --detach redis",
-            "presentation": {
-                "reveal": "always",
-                "panel": "new"
             },
             "problemMatcher": []
         },
