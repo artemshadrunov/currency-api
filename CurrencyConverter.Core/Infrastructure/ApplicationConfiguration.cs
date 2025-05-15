@@ -14,6 +14,12 @@ using System.Threading.RateLimiting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Seq;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Instrumentation.AspNetCore;
+using OpenTelemetry.Instrumentation.Http;
+using OpenTelemetry.Instrumentation.StackExchangeRedis;
 
 namespace CurrencyConverter.Core.Infrastructure;
 
@@ -30,6 +36,28 @@ public static class ApplicationConfiguration
             .CreateLogger();
 
         builder.Host.UseSerilog();
+
+        // Configure OpenTelemetry
+        services.AddOpenTelemetry()
+            .WithTracing(tracerProviderBuilder =>
+                tracerProviderBuilder
+                    .AddSource("CurrencyConverter")
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault()
+                        .AddService("CurrencyConverter", serviceVersion: "1.0.0"))
+                    .AddAspNetCoreInstrumentation(options =>
+                    {
+                        options.RecordException = true;
+                    })
+                    .AddHttpClientInstrumentation(options =>
+                    {
+                        options.RecordException = true;
+                    })
+                    .AddRedisInstrumentation()
+                    .AddConsoleExporter()
+                    .AddOtlpExporter(options =>
+                    {
+                        options.Endpoint = new Uri(configuration["OpenTelemetry:Endpoint"] ?? "http://localhost:4317");
+                    }));
 
         // JWT Authentication
         services.AddAuthentication(options =>
@@ -172,6 +200,7 @@ public static class ApplicationConfiguration
         app.UseRateLimiter();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseMiddleware<RequestLoggingMiddleware>();
         app.MapControllers();
     }
 }

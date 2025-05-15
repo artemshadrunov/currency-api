@@ -17,6 +17,19 @@ services:
     volumes:
       - seq_data:/data
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+
   app:
     build:
       context: .
@@ -26,9 +39,11 @@ services:
     environment:
       - Redis__ConnectionString=redis:6379
       - Seq__ServerUrl=http://seq:80
+      - OpenTelemetry__Endpoint=http://jaeger:4317
     depends_on:
       - redis
       - seq
+      - jaeger
 
 volumes:
   redis_data:
