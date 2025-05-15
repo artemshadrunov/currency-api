@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace CurrencyConverter.Tests.UnitTests
 {
@@ -16,15 +17,18 @@ namespace CurrencyConverter.Tests.UnitTests
         private readonly Mock<IExchangeRateProvider> _mockProvider;
         private readonly Mock<ICacheProvider> _mockCache;
         private readonly CachedExchangeRateProvider _provider;
+        private readonly Mock<ILogger<CachedExchangeRateProvider>> _mockLogger;
 
         public CachedExchangeRateProviderTests()
         {
             _mockProvider = new Mock<IExchangeRateProvider>();
             _mockCache = new Mock<ICacheProvider>();
+            _mockLogger = new Mock<ILogger<CachedExchangeRateProvider>>();
             _provider = new CachedExchangeRateProvider(
                 _mockProvider.Object,
                 _mockCache.Object,
-                Options.Create(new RedisSettings()));
+                Options.Create(new RedisSettings()),
+                _mockLogger.Object);
         }
 
         [Fact]

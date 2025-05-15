@@ -12,6 +12,7 @@ using Moq;
 using StackExchange.Redis;
 using Xunit;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace CurrencyConverter.Tests.IntegrationTests;
 
@@ -26,7 +27,8 @@ public class FrankfurterExchangeRateProviderIntegrationTests
     public FrankfurterExchangeRateProviderIntegrationTests()
     {
         var httpClient = new HttpClient();
-        var baseProvider = new FrankfurterExchangeRateProvider(httpClient);
+        var frankLogger = new Mock<ILogger<FrankfurterExchangeRateProvider>>();
+        var baseProvider = new FrankfurterExchangeRateProvider(httpClient, frankLogger.Object);
 
         var mockDistributedCache = new Mock<IDistributedCache>();
         var mockConfiguration = new Mock<IConfiguration>();
@@ -39,15 +41,19 @@ public class FrankfurterExchangeRateProviderIntegrationTests
             ConnectionMultiplexer.Connect("localhost:6379"),
             Options.Create(new RedisSettings { CacheRetentionDays = 30 }));
 
+        var cacheLogger = new Mock<ILogger<CachedExchangeRateProvider>>();
         _provider = new CachedExchangeRateProvider(
             baseProvider,
             _cacheProvider,
-            Options.Create(new RedisSettings()));
+            Options.Create(new RedisSettings()),
+            cacheLogger.Object);
 
+        var factoryLogger = new Mock<ILogger<CachedExchangeRateProvider>>();
         _providerFactory = new CachedExchangeRateProviderFactory(
             _cacheProvider,
             Options.Create(new RedisSettings()),
-            new List<IExchangeRateProvider> { _provider });
+            new List<IExchangeRateProvider> { _provider },
+            factoryLogger.Object);
 
         _currencyRulesProvider = new CurrencyRulesSettingsProvider(Options.Create(new CurrencyRulesOptions
         {

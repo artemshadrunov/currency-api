@@ -11,6 +11,8 @@ using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using CurrencyConverter.Core.Settings;
 using System.Threading.RateLimiting;
+using Serilog;
+using Serilog.Events;
 
 namespace CurrencyConverter.Core.Infrastructure;
 
@@ -20,6 +22,19 @@ public static class ApplicationConfiguration
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
+
+        // Configure Serilog
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .Enrich.FromLogContext()
+            .Enrich.WithMachineName()
+            .Enrich.WithThreadId()
+            .Enrich.WithProcessId()
+            .WriteTo.Console(
+                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
+            .CreateLogger();
+
+        builder.Host.UseSerilog();
 
         // JWT Authentication
         services.AddAuthentication(options =>

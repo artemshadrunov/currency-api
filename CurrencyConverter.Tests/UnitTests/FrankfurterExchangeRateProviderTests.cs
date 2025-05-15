@@ -4,6 +4,7 @@ using ApiCurrency.ExchangeRateProviders;
 using Moq;
 using Moq.Protected;
 using Xunit;
+using Microsoft.Extensions.Logging;
 
 namespace CurrencyConverter.Tests.UnitTests;
 
@@ -12,12 +13,14 @@ public class FrankfurterExchangeRateProviderTests
     private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler;
     private readonly HttpClient _httpClient;
     private readonly FrankfurterExchangeRateProvider _provider;
+    private readonly Mock<ILogger<FrankfurterExchangeRateProvider>> _mockLogger;
 
     public FrankfurterExchangeRateProviderTests()
     {
         _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
         _httpClient = new HttpClient(_mockHttpMessageHandler.Object);
-        _provider = new FrankfurterExchangeRateProvider(_httpClient);
+        _mockLogger = new Mock<ILogger<FrankfurterExchangeRateProvider>>();
+        _provider = new FrankfurterExchangeRateProvider(_httpClient, _mockLogger.Object);
     }
 
     [Fact]
