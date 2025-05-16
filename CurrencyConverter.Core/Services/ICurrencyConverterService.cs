@@ -1,6 +1,6 @@
-using ApiCurrency.Models;
+using CurrencyConverter.Core.Models;
 
-namespace ApiCurrency.Services;
+namespace CurrencyConverter.Core.Services;
 
 public interface ICurrencyConverterService
 {

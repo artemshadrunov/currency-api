@@ -1,13 +1,10 @@
+using System.Threading.Tasks;
 using Xunit;
 using Moq;
-using ApiCurrency.ExchangeRateProviders;
 using CurrencyConverter.Core.ExchangeRateProviders;
 using CurrencyConverter.Core.Infrastructure.Cache;
 using CurrencyConverter.Core.Settings;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
-using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace CurrencyConverter.Tests.UnitTests

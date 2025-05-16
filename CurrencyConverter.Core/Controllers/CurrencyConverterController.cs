@@ -1,9 +1,9 @@
-using ApiCurrency.Models;
-using ApiCurrency.Services;
+using CurrencyConverter.Core.Models;
+using CurrencyConverter.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace ApiCurrency.Controllers;
+namespace CurrencyConverter.Core.Controllers;
 
 [ApiController]
 [Route("api/v1/currencies")]

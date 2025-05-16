@@ -1,4 +1,3 @@
-using ApiCurrency.ExchangeRateProviders;
 using CurrencyConverter.Core.Infrastructure.Cache;
 using CurrencyConverter.Core.Settings;
 using Microsoft.Extensions.Options;

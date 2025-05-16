@@ -1,10 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -12,14 +9,8 @@ using StackExchange.Redis;
 using CurrencyConverter.Core.Settings;
 using System.Threading.RateLimiting;
 using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.Seq;
-using OpenTelemetry;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
-using OpenTelemetry.Instrumentation.AspNetCore;
-using OpenTelemetry.Instrumentation.Http;
-using OpenTelemetry.Instrumentation.StackExchangeRedis;
 
 namespace CurrencyConverter.Core.Infrastructure;
 

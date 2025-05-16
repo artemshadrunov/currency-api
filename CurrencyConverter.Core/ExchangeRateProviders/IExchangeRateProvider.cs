@@ -1,4 +1,6 @@
-namespace ApiCurrency.ExchangeRateProviders;
+using CurrencyConverter.Core.Models;
+
+namespace CurrencyConverter.Core.ExchangeRateProviders;
 
 public interface IExchangeRateProvider
 {

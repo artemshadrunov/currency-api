@@ -1,7 +1,8 @@
-using ApiCurrency.Models;
+using CurrencyConverter.Core.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
-namespace ApiCurrency.Settings;
+namespace CurrencyConverter.Core.Settings;
 
 public class CurrencyRulesSettingsProvider : ICurrencyRulesProvider
 {

@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
-using ApiCurrency.Models;
+using CurrencyConverter.Core.Models;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 using System.Diagnostics;
 
-namespace ApiCurrency.ExchangeRateProviders;
+namespace CurrencyConverter.Core.ExchangeRateProviders;
 
 public class FrankfurterExchangeRateProvider : IExchangeRateProvider
 {

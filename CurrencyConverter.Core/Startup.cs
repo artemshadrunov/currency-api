@@ -1,10 +1,10 @@
-using ApiCurrency.Services;
+using CurrencyConverter.Core.Services;
 using CurrencyConverter.Core.Infrastructure.Cache;
 using CurrencyConverter.Core.Settings;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
-namespace ApiCurrency;
+namespace CurrencyConverter.Core;
 
 public class Startup
 {

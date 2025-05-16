@@ -1,4 +1,4 @@
-using ApiCurrency.ExchangeRateProviders;
+using CurrencyConverter.Core.ExchangeRateProviders;
 using Xunit;
 
 namespace CurrencyConverter.Tests.UnitTests;

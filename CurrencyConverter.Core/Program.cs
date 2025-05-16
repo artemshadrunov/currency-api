@@ -1,12 +1,20 @@
-using ApiCurrency.Models;
-using ApiCurrency.Services;
-using ApiCurrency.Settings;
-using ApiCurrency.ExchangeRateProviders;
 using CurrencyConverter.Core.Infrastructure.Cache;
+using CurrencyConverter.Core.Models;
+using CurrencyConverter.Core.Services;
 using CurrencyConverter.Core.Settings;
 using CurrencyConverter.Core.ExchangeRateProviders;
 using CurrencyConverter.Core.Infrastructure;
+using CurrencyConverter.Core.Infrastructure.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using StackExchange.Redis;
+using System.Text;
 using Serilog;
 
 try

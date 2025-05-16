@@ -1,6 +1,6 @@
 using Amazon.Lambda.AspNetCoreServer;
 
-namespace ApiCurrency;
+namespace CurrencyConverter.Core;
 
 public class LambdaEntryPoint : APIGatewayProxyFunction
 {
@@ -9,4 +9,4 @@ public class LambdaEntryPoint : APIGatewayProxyFunction
         builder
             .UseStartup<Startup>();
     }
-} 
+}

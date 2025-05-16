@@ -1,4 +1,4 @@
-namespace ApiCurrency.Models;
+namespace CurrencyConverter.Core.Models;
 
 public class PagedRatesResult
 {

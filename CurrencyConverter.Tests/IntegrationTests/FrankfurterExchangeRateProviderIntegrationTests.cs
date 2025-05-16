@@ -1,17 +1,14 @@
-using ApiCurrency.ExchangeRateProviders;
-using ApiCurrency.Models;
-using ApiCurrency.Services;
-using ApiCurrency.Settings;
-using CurrencyConverter.Core.Infrastructure.Cache;
-using CurrencyConverter.Core.Settings;
 using CurrencyConverter.Core.ExchangeRateProviders;
+using CurrencyConverter.Core.Models;
+using CurrencyConverter.Core.Services;
+using CurrencyConverter.Core.Settings;
+using CurrencyConverter.Core.Infrastructure.Cache;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Moq;
 using StackExchange.Redis;
 using Xunit;
-using System.Linq;
 using Microsoft.Extensions.Logging;
 
 namespace CurrencyConverter.Tests.IntegrationTests;

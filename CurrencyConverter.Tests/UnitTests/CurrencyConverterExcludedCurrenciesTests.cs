@@ -1,11 +1,11 @@
-using ApiCurrency.ExchangeRateProviders;
-using ApiCurrency.Models;
-using ApiCurrency.Services;
-using ApiCurrency.Settings;
+using CurrencyConverter.Core.ExchangeRateProviders;
+using CurrencyConverter.Core.Models;
+using CurrencyConverter.Core.Services;
+using CurrencyConverter.Core.Settings;
 using Moq;
 using Xunit;
 
-namespace CurrencyConverter.Tests.Services;
+namespace CurrencyConverter.Tests.UnitTests;
 
 public class CurrencyConverterExcludedCurrenciesTests
 {

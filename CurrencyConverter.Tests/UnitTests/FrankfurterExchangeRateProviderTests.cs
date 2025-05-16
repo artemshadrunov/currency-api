@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
-using ApiCurrency.ExchangeRateProviders;
+using System.Threading.Tasks;
+using CurrencyConverter.Core.ExchangeRateProviders;
 using Moq;
 using Moq.Protected;
 using Xunit;

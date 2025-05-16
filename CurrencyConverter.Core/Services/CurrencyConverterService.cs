@@ -1,8 +1,8 @@
-using ApiCurrency.Models;
-using ApiCurrency.ExchangeRateProviders;
-using ApiCurrency.Settings;
+using CurrencyConverter.Core.Models;
+using CurrencyConverter.Core.ExchangeRateProviders;
+using CurrencyConverter.Core.Settings;
 
-namespace ApiCurrency.Services;
+namespace CurrencyConverter.Core.Services;
 
 public class CurrencyConverterService : ICurrencyConverterService
 {

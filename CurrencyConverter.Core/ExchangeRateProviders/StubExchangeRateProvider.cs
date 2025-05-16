@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiCurrency.Models;
+using CurrencyConverter.Core.Models;
 
-namespace ApiCurrency.ExchangeRateProviders;
+namespace CurrencyConverter.Core.ExchangeRateProviders;
 
 public class StubExchangeRateProvider : IExchangeRateProvider
 {

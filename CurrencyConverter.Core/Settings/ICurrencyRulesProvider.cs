@@ -1,4 +1,4 @@
-namespace ApiCurrency.Settings;
+namespace CurrencyConverter.Core.Settings;
 
 public interface ICurrencyRulesProvider
 {
