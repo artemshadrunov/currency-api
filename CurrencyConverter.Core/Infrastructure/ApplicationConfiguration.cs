@@ -11,6 +11,9 @@ using System.Threading.RateLimiting;
 using Serilog;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
+using CurrencyConverter.Core.Infrastructure.Cache;
+using CurrencyConverter.Core.ExchangeRateProviders;
+using CurrencyConverter.Core.Services;
 
 namespace CurrencyConverter.Core.Infrastructure;
 
@@ -21,14 +24,36 @@ public static class ApplicationConfiguration
         var services = builder.Services;
         var configuration = builder.Configuration;
 
-        // Configure Serilog
+        // 1. Infrastructure Services
+        ConfigureLogging(builder);
+        ConfigureOpenTelemetry(services, configuration);
+        ConfigureRedis(services, configuration);
+
+        // 2. Security Services
+        ConfigureAuthentication(services, configuration);
+        ConfigureAuthorization(services);
+        ConfigureRateLimiting(services);
+
+        // 3. API Services
+        ConfigureApiVersioning(services);
+        ConfigureSwagger(services, configuration);
+
+        // 4. Application Services
+        ConfigureCoreServices(services);
+        ConfigureExchangeRateProviders(services);
+    }
+
+    private static void ConfigureLogging(WebApplicationBuilder builder)
+    {
         Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(configuration)
+            .ReadFrom.Configuration(builder.Configuration)
             .CreateLogger();
 
         builder.Host.UseSerilog();
+    }
 
-        // Configure OpenTelemetry
+    private static void ConfigureOpenTelemetry(IServiceCollection services, IConfiguration configuration)
+    {
         services.AddOpenTelemetry()
             .WithTracing(tracerProviderBuilder =>
                 tracerProviderBuilder
@@ -49,8 +74,26 @@ public static class ApplicationConfiguration
                     {
                         options.Endpoint = new Uri(configuration["OpenTelemetry:Endpoint"] ?? "http://localhost:4317");
                     }));
+    }
 
-        // JWT Authentication
+    private static void ConfigureRedis(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<IConnectionMultiplexer>(sp =>
+        {
+            var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
+            return ConnectionMultiplexer.Connect(settings.ConnectionString);
+        });
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            var redisSettings = configuration.GetSection("Redis").Get<RedisSettings>() ?? new RedisSettings();
+            options.Configuration = redisSettings.ConnectionString;
+            options.InstanceName = redisSettings.InstanceName;
+        });
+    }
+
+    private static void ConfigureAuthentication(IServiceCollection services, IConfiguration configuration)
+    {
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -69,15 +112,19 @@ public static class ApplicationConfiguration
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SigningKey"] ?? string.Empty))
             };
         });
+    }
 
-        // Authorization
+    private static void ConfigureAuthorization(IServiceCollection services)
+    {
         services.AddAuthorization(options =>
         {
             options.AddPolicy("User", policy => policy.RequireRole("User", "Admin"));
             options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
         });
+    }
 
-        // Rate limiting
+    private static void ConfigureRateLimiting(IServiceCollection services)
+    {
         services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = 429;
@@ -97,43 +144,10 @@ public static class ApplicationConfiguration
                         Window = TimeSpan.FromMinutes(1)
                     }));
         });
+    }
 
-        // Swagger
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "Currency Converter API",
-                Version = "v1",
-                Description = "API for currency conversion"
-            });
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                In = ParameterLocation.Header,
-                Description = "Please enter a valid token",
-                Name = "Authorization",
-                Type = SecuritySchemeType.Http,
-                BearerFormat = "JWT",
-                Scheme = "bearer"
-            });
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    new string[] {}
-                }
-            });
-        });
-
-        // API Versioning
+    private static void ConfigureApiVersioning(IServiceCollection services)
+    {
         services.AddApiVersioning(options =>
         {
             options.DefaultApiVersion = new ApiVersion(1, 0);
@@ -141,43 +155,99 @@ public static class ApplicationConfiguration
             options.ReportApiVersions = true;
             options.ApiVersionReader = new UrlSegmentApiVersionReader();
         });
+
         services.AddVersionedApiExplorer(options =>
         {
             options.GroupNameFormat = "'v'VVV";
             options.SubstituteApiVersionInUrl = true;
         });
+    }
 
-        // Redis
-        services.AddSingleton<IConnectionMultiplexer>(sp =>
-        {
-            var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-            return ConnectionMultiplexer.Connect(settings.ConnectionString);
-        });
-        services.AddStackExchangeRedisCache(options =>
-        {
-            var redisSettings = configuration.GetSection("Redis").Get<RedisSettings>() ?? new RedisSettings();
-            options.Configuration = redisSettings.ConnectionString;
-            options.InstanceName = redisSettings.InstanceName;
-        });
+    private static void ConfigureSwagger(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddEndpointsApiExplorer();
 
-        // Controllers
+        if (!IsProduction())
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Currency Converter API",
+                    Version = "v1",
+                    Description = "API for currency conversion"
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+            });
+        }
+    }
+
+    private static void ConfigureCoreServices(IServiceCollection services)
+    {
         services.AddControllers();
         services.AddHttpClient();
+        services.AddScoped<ICurrencyConverterService, CurrencyConverterService>();
+    }
+
+    private static void ConfigureExchangeRateProviders(IServiceCollection services)
+    {
+        // Register cache services
+        services.AddSingleton<ICacheProvider, RedisCacheProvider>();
+        services.AddSingleton<CachedExchangeRateProviderFactory>();
+
+        // Register providers
+        services.AddSingleton<ICurrencyRulesProvider, CurrencyRulesSettingsProvider>();
+
+        // Register cached providers
+        services.AddSingleton<IExchangeRateProvider>(sp =>
+        {
+            var cache = sp.GetRequiredService<ICacheProvider>();
+            var settings = sp.GetRequiredService<IOptions<RedisSettings>>();
+            var logger = sp.GetRequiredService<ILogger<CachedExchangeRateProvider>>();
+            var stubProvider = new StubExchangeRateProvider();
+            return new CachedExchangeRateProvider(stubProvider, cache, settings, logger);
+        });
+
+        services.AddSingleton<IExchangeRateProvider>(sp =>
+        {
+            var cache = sp.GetRequiredService<ICacheProvider>();
+            var settings = sp.GetRequiredService<IOptions<RedisSettings>>();
+            var logger = sp.GetRequiredService<ILogger<CachedExchangeRateProvider>>();
+            var httpClient = sp.GetRequiredService<HttpClient>();
+            var frankfurterLogger = sp.GetRequiredService<ILogger<FrankfurterExchangeRateProvider>>();
+            var frankfurterProvider = new FrankfurterExchangeRateProvider(httpClient, frankfurterLogger);
+            return new CachedExchangeRateProvider(frankfurterProvider, cache, settings, logger);
+        });
+
+        // Register provider factory
+        services.AddSingleton<IExchangeRateProviderFactory, CachedExchangeRateProviderFactory>();
     }
 
     public static void ConfigureMiddleware(WebApplication app)
     {
-        var env = app.Environment;
-        if (env.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Currency Converter API V1");
-                c.RoutePrefix = "swagger";
-            });
-        }
-        else
+        if (!IsProduction())
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -194,5 +264,10 @@ public static class ApplicationConfiguration
         app.UseAuthorization();
         app.UseMiddleware<RequestLoggingMiddleware>();
         app.MapControllers();
+    }
+
+    private static bool IsProduction()
+    {
+        return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production";
     }
 }
