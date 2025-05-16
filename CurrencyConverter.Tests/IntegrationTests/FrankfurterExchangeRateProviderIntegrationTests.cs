@@ -1,3 +1,4 @@
+using System.Net.Http;
 using CurrencyConverter.Core.ExchangeRateProviders;
 using CurrencyConverter.Core.Models;
 using CurrencyConverter.Core.Services;
@@ -10,11 +11,17 @@ using Moq;
 using StackExchange.Redis;
 using Xunit;
 using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Registry;
+using CurrencyConverter.Core.Infrastructure.Http;
+using Polly.Extensions.Http;
 
 namespace CurrencyConverter.Tests.IntegrationTests;
 
 public class FrankfurterExchangeRateProviderIntegrationTests
 {
+    private readonly IHttpClient _httpClient;
+    private readonly ILogger<FrankfurterExchangeRateProvider> _logger;
     private readonly IExchangeRateProvider _provider;
     private readonly ICurrencyConverterService _service;
     private readonly IExchangeRateProviderFactory _providerFactory;
@@ -24,8 +31,28 @@ public class FrankfurterExchangeRateProviderIntegrationTests
     public FrankfurterExchangeRateProviderIntegrationTests()
     {
         var httpClient = new HttpClient();
-        var frankLogger = new Mock<ILogger<FrankfurterExchangeRateProvider>>();
-        var baseProvider = new FrankfurterExchangeRateProvider(httpClient, frankLogger.Object);
+        var policyRegistry = new PolicyRegistry();
+
+        // Добавляем политику повторных попыток
+        var retryPolicy = HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .WaitAndRetryAsync(3, retryAttempt =>
+                TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+        // Добавляем политику размыкателя цепи
+        var circuitBreakerPolicy = HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .CircuitBreakerAsync(2, TimeSpan.FromSeconds(30));
+
+        // Комбинируем политики
+        var combinedPolicy = Policy.WrapAsync(retryPolicy, circuitBreakerPolicy);
+
+        // Регистрируем политику
+        policyRegistry.Add("CombinedPolicy", combinedPolicy);
+
+        _httpClient = new ResilientHttpClient(httpClient, policyRegistry);
+        _logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<FrankfurterExchangeRateProvider>();
+        _provider = new FrankfurterExchangeRateProvider(_httpClient, _logger);
 
         var mockDistributedCache = new Mock<IDistributedCache>();
         var mockConfiguration = new Mock<IConfiguration>();
@@ -40,7 +67,7 @@ public class FrankfurterExchangeRateProviderIntegrationTests
 
         var cacheLogger = new Mock<ILogger<CachedExchangeRateProvider>>();
         _provider = new CachedExchangeRateProvider(
-            baseProvider,
+            _provider,
             _cacheProvider,
             Options.Create(new RedisSettings()),
             cacheLogger.Object);
@@ -61,31 +88,41 @@ public class FrankfurterExchangeRateProviderIntegrationTests
     }
 
     [Fact]
-    public async Task GetRate_ReturnsValidRate()
+    public async Task GetRate_WithValidCurrencies_ShouldReturnRate()
     {
         // Arrange
-        var fromCurrency = "USD";
-        var toCurrency = "EUR";
-        var timestamp = DateTime.UtcNow.Date.AddDays(-1);
+        var from = "USD";
+        var to = "EUR";
 
         // Act
-        var rate = await _provider.GetRate(fromCurrency, toCurrency, timestamp);
+        var rate = await _provider.GetRate(from, to, DateTime.UtcNow);
 
         // Assert
         Assert.True(rate > 0);
     }
 
     [Fact]
-    public async Task GetRatesForPeriod_ReturnsValidRates()
+    public async Task GetRate_WithInvalidCurrency_ShouldThrowException()
     {
         // Arrange
-        var fromCurrency = "USD";
-        var toCurrency = "EUR";
-        var start = new DateTime(2025, 5, 5);
-        var end = new DateTime(2025, 5, 10);
+        var from = "INVALID";
+        var to = "EUR";
+
+        // Act & Assert
+        await Assert.ThrowsAsync<HttpRequestException>(() => _provider.GetRate(from, to, DateTime.UtcNow));
+    }
+
+    [Fact]
+    public async Task GetRatesForPeriod_WithValidCurrencies_ShouldReturnRates()
+    {
+        // Arrange
+        var from = "USD";
+        var to = "EUR";
+        var startDate = DateTime.UtcNow.AddDays(-7);
+        var endDate = DateTime.UtcNow;
 
         // Act
-        var rates = await _provider.GetRatesForPeriod(fromCurrency, toCurrency, start, end);
+        var rates = await _provider.GetRatesForPeriod(from, to, startDate, endDate);
 
         // Assert
         Assert.NotEmpty(rates);

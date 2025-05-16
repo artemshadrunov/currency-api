@@ -4,18 +4,19 @@ using CurrencyConverter.Core.Models;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 using System.Diagnostics;
+using CurrencyConverter.Core.Infrastructure.Http;
 
 namespace CurrencyConverter.Core.ExchangeRateProviders;
 
 public class FrankfurterExchangeRateProvider : IExchangeRateProvider
 {
-    private readonly HttpClient _httpClient;
+    private readonly IHttpClient _httpClient;
     private readonly ILogger<FrankfurterExchangeRateProvider> _logger;
     private const string CorrelationIdHeader = "X-Correlation-ID";
     public string Name => "Frankfurter";
 
     public FrankfurterExchangeRateProvider(
-        HttpClient httpClient,
+        IHttpClient httpClient,
         ILogger<FrankfurterExchangeRateProvider> logger)
     {
         _httpClient = httpClient;

@@ -14,6 +14,13 @@ using OpenTelemetry.Resources;
 using CurrencyConverter.Core.Infrastructure.Cache;
 using CurrencyConverter.Core.ExchangeRateProviders;
 using CurrencyConverter.Core.Services;
+using Polly;
+using Polly.Extensions.Http;
+using Polly.CircuitBreaker;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
+using Polly.Registry;
+using CurrencyConverter.Core.Infrastructure.Http;
 
 namespace CurrencyConverter.Core.Infrastructure;
 
@@ -28,6 +35,7 @@ public static class ApplicationConfiguration
         ConfigureLogging(builder);
         ConfigureOpenTelemetry(services, configuration);
         ConfigureRedis(services, configuration);
+        ConfigureResiliencePolicies(services);
 
         // 2. Security Services
         ConfigureAuthentication(services, configuration);
@@ -89,6 +97,38 @@ public static class ApplicationConfiguration
             var redisSettings = configuration.GetSection("Redis").Get<RedisSettings>() ?? new RedisSettings();
             options.Configuration = redisSettings.ConnectionString;
             options.InstanceName = redisSettings.InstanceName;
+        });
+    }
+
+    private static void ConfigureResiliencePolicies(IServiceCollection services)
+    {
+        // Configure retry policy with exponential backoff
+        var retryPolicy = Polly.Extensions.Http.HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .WaitAndRetryAsync(3, retryAttempt =>
+                TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+        // Configure circuit breaker policy
+        var circuitBreakerPolicy = Polly.Extensions.Http.HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .CircuitBreakerAsync(
+                handledEventsAllowedBeforeBreaking: 3,
+                durationOfBreak: TimeSpan.FromSeconds(30)
+            );
+
+        // Combine policies
+        var combinedPolicy = Polly.Policy.WrapAsync(retryPolicy, circuitBreakerPolicy);
+
+        // Register policies
+        services.AddHttpClient("ResilientHttpClient")
+            .AddPolicyHandler(combinedPolicy);
+
+        // Register policy registry for use in other services
+        services.AddPolicyRegistry(new Polly.Registry.PolicyRegistry
+        {
+            { "RetryPolicy", retryPolicy },
+            { "CircuitBreakerPolicy", circuitBreakerPolicy },
+            { "CombinedPolicy", combinedPolicy }
         });
     }
 
@@ -209,6 +249,14 @@ public static class ApplicationConfiguration
         services.AddControllers();
         services.AddHttpClient();
         services.AddScoped<ICurrencyConverterService, CurrencyConverterService>();
+
+        // Register ResilientHttpClient
+        services.AddSingleton<IHttpClient>(sp =>
+        {
+            var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("ResilientHttpClient");
+            var policyRegistry = sp.GetRequiredService<IReadOnlyPolicyRegistry<string>>();
+            return new ResilientHttpClient(httpClient, policyRegistry);
+        });
     }
 
     private static void ConfigureExchangeRateProviders(IServiceCollection services)
@@ -235,7 +283,7 @@ public static class ApplicationConfiguration
             var cache = sp.GetRequiredService<ICacheProvider>();
             var settings = sp.GetRequiredService<IOptions<RedisSettings>>();
             var logger = sp.GetRequiredService<ILogger<CachedExchangeRateProvider>>();
-            var httpClient = sp.GetRequiredService<HttpClient>();
+            var httpClient = sp.GetRequiredService<IHttpClient>();
             var frankfurterLogger = sp.GetRequiredService<ILogger<FrankfurterExchangeRateProvider>>();
             var frankfurterProvider = new FrankfurterExchangeRateProvider(httpClient, frankfurterLogger);
             return new CachedExchangeRateProvider(frankfurterProvider, cache, settings, logger);

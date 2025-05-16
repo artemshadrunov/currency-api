@@ -6,22 +6,21 @@ using Moq;
 using Moq.Protected;
 using Xunit;
 using Microsoft.Extensions.Logging;
+using CurrencyConverter.Core.Infrastructure.Http;
 
 namespace CurrencyConverter.Tests.UnitTests;
 
 public class FrankfurterExchangeRateProviderTests
 {
-    private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler;
-    private readonly HttpClient _httpClient;
+    private readonly Mock<IHttpClient> _mockHttpClient;
     private readonly FrankfurterExchangeRateProvider _provider;
     private readonly Mock<ILogger<FrankfurterExchangeRateProvider>> _mockLogger;
 
     public FrankfurterExchangeRateProviderTests()
     {
-        _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
-        _httpClient = new HttpClient(_mockHttpMessageHandler.Object);
+        _mockHttpClient = new Mock<IHttpClient>();
         _mockLogger = new Mock<ILogger<FrankfurterExchangeRateProvider>>();
-        _provider = new FrankfurterExchangeRateProvider(_httpClient, _mockLogger.Object);
+        _provider = new FrankfurterExchangeRateProvider(_mockHttpClient.Object, _mockLogger.Object);
     }
 
     [Fact]
@@ -122,13 +121,10 @@ public class FrankfurterExchangeRateProviderTests
         var to = "EUR";
         var date = DateTime.UtcNow.Date;
 
-        _mockHttpMessageHandler
-            .Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == $"https://api.frankfurter.app/latest?from={from}&to={to}"),
-                ItExpr.IsAny<CancellationToken>()
-            )
+        _mockHttpClient
+            .Setup(x => x.SendAsync(
+                It.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == $"https://api.frankfurter.app/latest?from={from}&to={to}"),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError
@@ -140,13 +136,10 @@ public class FrankfurterExchangeRateProviderTests
 
     private void SetupMockResponse(string url, object response)
     {
-        _mockHttpMessageHandler
-            .Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == url),
-                ItExpr.IsAny<CancellationToken>()
-            )
+        _mockHttpClient
+            .Setup(x => x.SendAsync(
+                It.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == url),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
@@ -156,13 +149,10 @@ public class FrankfurterExchangeRateProviderTests
 
     private void VerifyHttpCall(string url)
     {
-        _mockHttpMessageHandler
-            .Protected()
-            .Verify(
-                "SendAsync",
-                Times.Once(),
-                ItExpr.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == url),
-                ItExpr.IsAny<CancellationToken>()
-            );
+        _mockHttpClient.Verify(
+            x => x.SendAsync(
+                It.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == url),
+                It.IsAny<CancellationToken>()),
+            Times.Once());
     }
 }
