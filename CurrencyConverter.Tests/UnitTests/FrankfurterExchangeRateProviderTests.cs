@@ -3,7 +3,6 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using CurrencyConverter.Core.ExchangeRateProviders;
 using Moq;
-using Moq.Protected;
 using Xunit;
 using Microsoft.Extensions.Logging;
 using CurrencyConverter.Core.Infrastructure.Http;
@@ -31,8 +30,9 @@ public class FrankfurterExchangeRateProviderTests
         var to = "EUR";
         var date = DateTime.UtcNow.Date;
         var expectedRate = 1.1m;
+        var url = $"https://api.frankfurter.app/latest?from={from}&to={to}";
 
-        SetupMockResponse($"https://api.frankfurter.app/latest?from={from}&to={to}", new FrankfurterResponse
+        SetupMockResponse(url, new FrankfurterResponse
         {
             Rates = new Dictionary<string, decimal> { { to, expectedRate } }
         });
@@ -42,7 +42,7 @@ public class FrankfurterExchangeRateProviderTests
 
         // Assert
         Assert.Equal(expectedRate, result);
-        VerifyHttpCall($"https://api.frankfurter.app/latest?from={from}&to={to}");
+        VerifyHttpCall(url);
     }
 
     [Fact]
@@ -53,8 +53,9 @@ public class FrankfurterExchangeRateProviderTests
         var to = "EUR";
         var date = DateTime.UtcNow.Date.AddDays(-1);
         var expectedRate = 1.2m;
+        var url = $"https://api.frankfurter.app/{date:yyyy-MM-dd}?from={from}&to={to}";
 
-        SetupMockResponse($"https://api.frankfurter.app/{date:yyyy-MM-dd}?from={from}&to={to}", new FrankfurterResponse
+        SetupMockResponse(url, new FrankfurterResponse
         {
             Rates = new Dictionary<string, decimal> { { to, expectedRate } }
         });
@@ -64,7 +65,7 @@ public class FrankfurterExchangeRateProviderTests
 
         // Assert
         Assert.Equal(expectedRate, result);
-        VerifyHttpCall($"https://api.frankfurter.app/{date:yyyy-MM-dd}?from={from}&to={to}");
+        VerifyHttpCall(url);
     }
 
     [Fact]
@@ -75,12 +76,13 @@ public class FrankfurterExchangeRateProviderTests
         var to = "EUR";
         var startDate = new DateTime(2025, 1, 1);
         var endDate = new DateTime(2025, 1, 5);
+        var url = $"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?from={from}&to={to}";
         var rates = new Dictionary<string, Dictionary<string, decimal>>();
         for (var date = startDate; date <= endDate; date = date.AddDays(1))
         {
             rates[date.ToString("yyyy-MM-dd")] = new Dictionary<string, decimal> { { to, 1.0m } };
         }
-        SetupMockResponse($"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?from={from}&to={to}", new FrankfurterHistoricalResponse { Rates = rates });
+        SetupMockResponse(url, new FrankfurterHistoricalResponse { Rates = rates });
 
         // Act
         var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate);
@@ -98,12 +100,13 @@ public class FrankfurterExchangeRateProviderTests
         var to = "EUR";
         var startDate = new DateTime(2025, 1, 1);
         var endDate = new DateTime(2025, 1, 5);
+        var url = $"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?from={from}&to={to}";
         var rates = new Dictionary<string, Dictionary<string, decimal>>();
         for (var date = startDate; date <= endDate; date = date.AddDays(1))
         {
             rates[date.ToString("yyyy-MM-dd")] = new Dictionary<string, decimal> { { to, 1.0m } };
         }
-        SetupMockResponse($"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?from={from}&to={to}", new FrankfurterHistoricalResponse { Rates = rates });
+        SetupMockResponse(url, new FrankfurterHistoricalResponse { Rates = rates });
 
         // Act
         var result = await _provider.GetRatesForPeriod(from, to, startDate, endDate);
@@ -120,10 +123,11 @@ public class FrankfurterExchangeRateProviderTests
         var from = "USD";
         var to = "EUR";
         var date = DateTime.UtcNow.Date;
+        var url = $"https://api.frankfurter.app/latest?from={from}&to={to}";
 
         _mockHttpClient
             .Setup(x => x.SendAsync(
-                It.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == $"https://api.frankfurter.app/latest?from={from}&to={to}"),
+                It.Is<HttpRequestMessage>(req => req.RequestUri.ToString() == url),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(new HttpResponseMessage
             {
