@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
 using Serilog.Context;
 
 namespace CurrencyConverter.Core.Infrastructure;
@@ -30,39 +31,36 @@ public class RequestLoggingMiddleware
             var clientId = "anonymous";
             if (context.User.Identity?.IsAuthenticated == true)
             {
-                var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-                if (!string.IsNullOrEmpty(token))
+                var authHeader = context.Request.Headers["Authorization"].ToString();
+                if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
                 {
-                    var handler = new JwtSecurityTokenHandler();
-                    var jwtToken = handler.ReadJwtToken(token);
-
-                    // Log all claims for debugging
-                    _logger.LogDebug("JWT Claims: {Claims}",
-                        string.Join(", ", jwtToken.Claims.Select(c => $"{c.Type}: {c.Value}")));
-
-                    // Get user name from the claim
-                    clientId = jwtToken.Claims
-                        .FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value
-                        ?? "unknown";
+                    var token = authHeader.Substring("Bearer ".Length).Trim();
+                    try
+                    {
+                        var handler = new JwtSecurityTokenHandler();
+                        if (handler.CanReadToken(token))
+                        {
+                            var jwtToken = handler.ReadJwtToken(token);
+                            clientId = jwtToken.Claims
+                                .FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value
+                                ?? "unknown";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex, "Failed to read JWT token for logging purposes");
+                    }
                 }
             }
 
-            using (LogContext.PushProperty("ClientIP", context.Connection.RemoteIpAddress))
-            using (LogContext.PushProperty("ClientId", clientId))
-            using (LogContext.PushProperty("Method", context.Request.Method))
-            using (LogContext.PushProperty("Path", context.Request.Path))
-            using (LogContext.PushProperty("StatusCode", context.Response.StatusCode))
-            using (LogContext.PushProperty("ElapsedMilliseconds", sw.ElapsedMilliseconds))
-            {
-                _logger.LogInformation(
-                    "Request completed: {Method} {Path} - Status: {StatusCode} - Time: {ElapsedMilliseconds}ms - Client: {ClientId} ({ClientIP})",
-                    context.Request.Method,
-                    context.Request.Path,
-                    context.Response.StatusCode,
-                    sw.ElapsedMilliseconds,
-                    clientId,
-                    context.Connection.RemoteIpAddress);
-            }
+            var elapsed = sw.ElapsedMilliseconds;
+            _logger.LogInformation(
+                "Request {Method} {Path} completed in {ElapsedMilliseconds}ms with status code {StatusCode} for client {ClientId}",
+                context.Request.Method,
+                context.Request.Path,
+                elapsed,
+                context.Response.StatusCode,
+                clientId);
         }
     }
 }

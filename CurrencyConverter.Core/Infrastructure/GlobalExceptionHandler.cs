@@ -31,19 +31,23 @@ public class GlobalExceptionHandler
 
     private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-        var response = new
+        // Only modify the response if it hasn't started yet
+        if (!context.Response.HasStarted)
         {
-            error = new
-            {
-                message = "An error occurred while processing your request.",
-                details = exception.Message,
-                stackTrace = exception.StackTrace
-            }
-        };
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-        await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            var response = new
+            {
+                error = new
+                {
+                    message = "An error occurred while processing your request.",
+                    details = exception.Message,
+                    stackTrace = exception.StackTrace
+                }
+            };
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+        }
     }
 }
