@@ -65,7 +65,7 @@
         {
             "label": "CDK Deploy",
             "type": "shell",
-            "command": "Set-Location -Path '${workspaceFolder}/CurrencyConverter.Infrastructure'; cdk bootstrap --profile test-account; cdk synth --profile test-account; cdk deploy --profile test-account",
+            "command": "Set-Location -Path '${workspaceFolder}/CurrencyConverter.Infrastructure'; cdk synth --profile test-account; cdk deploy --profile test-account",
             "options": {
                 "env": {
                     "AWS_SHARED_CREDENTIALS_FILE": "${workspaceFolder}/.project-aws/credentials",

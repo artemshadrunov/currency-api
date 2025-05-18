@@ -6,7 +6,6 @@ using Moq;
 using Xunit;
 
 namespace CurrencyConverter.Tests.UnitTests;
-
 public class CurrencyConverterServiceTests
 {
     private readonly Mock<IExchangeRateProviderFactory> _mockProviderFactory;
@@ -262,6 +261,48 @@ public class CurrencyConverterServiceTests
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _service.GetLatestRates(request));
+    }
+
+    [Fact]
+    public async Task GetLatestRates_ThrowsOnExcludedTargetCurrency()
+    {
+        // Arrange
+        _mockCurrencyRulesProvider
+            .Setup(x => x.IsCurrencyExcluded("TRY"))
+            .Returns(true);
+
+        var request = new LatestRatesRequest
+        {
+            BaseCurrency = "USD",
+            TargetCurrencies = new List<string> { "EUR", "TRY" },
+            Timestamp = DateTime.UtcNow,
+            ProviderName = "Stub"
+        };
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => _service.GetLatestRates(request));
+        Assert.Contains("TRY is excluded from conversion", exception.Message);
+    }
+
+    [Fact]
+    public async Task GetLatestRates_ThrowsOnExcludedBaseCurrency()
+    {
+        // Arrange
+        _mockCurrencyRulesProvider
+            .Setup(x => x.IsCurrencyExcluded("TRY"))
+            .Returns(true);
+
+        var request = new LatestRatesRequest
+        {
+            BaseCurrency = "TRY",
+            TargetCurrencies = new List<string> { "EUR", "USD" },
+            Timestamp = DateTime.UtcNow,
+            ProviderName = "Stub"
+        };
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => _service.GetLatestRates(request));
+        Assert.Contains("TRY is excluded from conversion", exception.Message);
     }
 
     [Fact]

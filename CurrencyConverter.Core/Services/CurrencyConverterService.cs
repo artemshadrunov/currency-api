@@ -47,7 +47,7 @@ public class CurrencyConverterService : ICurrencyConverterService
         foreach (var target in request.TargetCurrencies)
         {
             if (_currencyRulesProvider.IsCurrencyExcluded(target))
-                continue;
+                throw new InvalidOperationException($"Currency {target} is excluded from conversion");
 
             if (string.Equals(target, request.BaseCurrency, StringComparison.OrdinalIgnoreCase))
                 continue;
@@ -129,6 +129,9 @@ public class CurrencyConverterService : ICurrencyConverterService
 
         if (!request.TargetCurrencies.Any())
             throw new ArgumentException("At least one target currency is required", nameof(request));
+
+        if (_currencyRulesProvider.IsCurrencyExcluded(request.BaseCurrency))
+            throw new InvalidOperationException($"Currency {request.BaseCurrency} is excluded from conversion");
 
         ValidateTimestamp(request.Timestamp, nameof(request.Timestamp));
     }

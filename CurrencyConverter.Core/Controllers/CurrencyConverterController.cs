@@ -79,7 +79,7 @@ public class CurrencyConverterController : ControllerBase
         catch (InvalidOperationException ex) when (ex.Message.Contains("is excluded from conversion"))
         {
             _logger.LogWarning(ex, "Forbidden latest rates request for {BaseCurrency}", request.BaseCurrency);
-            return Forbid(ex.Message);
+            return StatusCode(403, new { error = ex.Message });
         }
         catch (HttpRequestException)
         {
@@ -114,7 +114,7 @@ public class CurrencyConverterController : ControllerBase
         catch (InvalidOperationException ex) when (ex.Message.Contains("is excluded from conversion"))
         {
             _logger.LogWarning(ex, "Forbidden historical rates request for {BaseCurrency}", request.BaseCurrency);
-            return Forbid(ex.Message);
+            return StatusCode(403, new { error = ex.Message });
         }
         catch (HttpRequestException)
         {
