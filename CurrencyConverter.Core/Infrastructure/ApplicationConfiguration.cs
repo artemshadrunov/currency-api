@@ -15,13 +15,9 @@ using CurrencyConverter.Core.Infrastructure.Cache;
 using CurrencyConverter.Core.ExchangeRateProviders;
 using CurrencyConverter.Core.Services;
 using Polly;
-using Polly.Extensions.Http;
-using Polly.CircuitBreaker;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Http;
 using Polly.Registry;
 using CurrencyConverter.Core.Infrastructure.Http;
-using Microsoft.Extensions.Configuration;
+using System.Text.Json.Serialization;
 
 namespace CurrencyConverter.Core.Infrastructure;
 
@@ -33,12 +29,12 @@ public static class ApplicationConfiguration
         ConfigureLogging(services, configuration);
         ConfigureOpenTelemetry(services, configuration);
         ConfigureRedis(services, configuration);
-        ConfigureResiliencePolicies(services);
-
+        
         // 2. Security Services
         ConfigureAuthentication(services, configuration);
         ConfigureAuthorization(services);
         ConfigureRateLimiting(services);
+        ConfigureResiliencePolicies(services);
 
         // 3. API Services
         ConfigureApiVersioning(services);
@@ -88,9 +84,7 @@ public static class ApplicationConfiguration
         services.AddSingleton<IConnectionMultiplexer>(sp =>
         {
             var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-            var options = ConfigurationOptions.Parse(settings.ConnectionString);
-            options.AbortOnConnectFail = false;
-            return ConnectionMultiplexer.Connect(options);
+            return ConnectionMultiplexer.Connect(settings.ConnectionString);
         });
 
         services.AddStackExchangeRedisCache(options =>
@@ -119,10 +113,6 @@ public static class ApplicationConfiguration
 
         // Combine policies
         var combinedPolicy = Polly.Policy.WrapAsync(retryPolicy, circuitBreakerPolicy);
-
-        // Register policies
-        services.AddHttpClient("ResilientHttpClient")
-            .AddPolicyHandler(combinedPolicy);
 
         // Register policy registry for use in other services
         services.AddPolicyRegistry(new Polly.Registry.PolicyRegistry
@@ -206,8 +196,6 @@ public static class ApplicationConfiguration
 
     private static void ConfigureSwagger(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddEndpointsApiExplorer();
-
         if (!IsProduction())
         {
             services.AddSwaggerGen(c =>
@@ -247,11 +235,21 @@ public static class ApplicationConfiguration
 
     private static void ConfigureCoreServices(IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
+        services.AddEndpointsApiExplorer();
         services.AddHttpClient();
         services.AddScoped<ICurrencyConverterService, CurrencyConverterService>();
 
-        // Register ResilientHttpClient
+        // Register ResilientHttpClient with policies
+        services.AddHttpClient("ResilientHttpClient")
+            .AddPolicyHandlerFromRegistry("CombinedPolicy");
+
+        // Register ResilientHttpClient wrapper
         services.AddSingleton<IHttpClient>(sp =>
         {
             var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("ResilientHttpClient");
@@ -319,7 +317,7 @@ public static class ApplicationConfiguration
         });
     }
 
-    private static bool IsProduction()
+    public static bool IsProduction()
     {
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production";
     }
