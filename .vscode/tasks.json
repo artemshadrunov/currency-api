@@ -56,7 +56,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Start App",
+            "label": "Start Local App",
             "type": "shell",
             "command": "docker-compose down --remove-orphans --volumes; docker-compose up --detach redis seq jaeger; dotnet run --project CurrencyConverter.Core --environment Development",
             "presentation": {

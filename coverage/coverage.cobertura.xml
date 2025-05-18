@@ -1,308 +1,366 @@
 <?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.8894" branch-rate="0.7931" version="1.9" timestamp="1747060705" lines-covered="193" lines-valid="217" branches-covered="46" branches-valid="58">
+<coverage line-rate="0.9014" branch-rate="0.8303" version="1.9" timestamp="1747567383" lines-covered="430" lines-valid="477" branches-covered="93" branches-valid="112">
   <sources>
     <source>C:\Users\artem\OneDrive\Рабочий стол\ApiCurrency\CurrencyConverter.Core\</source>
   </sources>
   <packages>
-    <package name="CurrencyConverter.Core" line-rate="0.8894" branch-rate="0.7931" complexity="109">
+    <package name="CurrencyConverter.Core" line-rate="0.9014" branch-rate="0.8303" complexity="175">
       <classes>
-        <class name="ApiCurrency.Settings.CurrencyRulesSettingsProvider" filename="Settings\CurrencyRulesSettingsProvider.cs" line-rate="0.9" branch-rate="0.5" complexity="3">
+        <class name="CurrencyConverter.Core.Settings.CurrencyRulesSettingsProvider" filename="Settings\CurrencyRulesSettingsProvider.cs" line-rate="0.9" branch-rate="0.5" complexity="3">
           <methods>
             <method name="IsCurrencyExcluded" signature="(System.String)" line-rate="0.8332999999999999" branch-rate="0.5" complexity="2">
               <lines>
-                <line number="16" hits="11" branch="False" />
-                <line number="17" hits="11" branch="True" condition-coverage="50% (1/2)">
+                <line number="17" hits="12" branch="False" />
+                <line number="18" hits="12" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
                     <condition number="27" type="jump" coverage="50%" />
                   </conditions>
                 </line>
-                <line number="18" hits="0" branch="False" />
-                <line number="20" hits="11" branch="False" />
-                <line number="21" hits="22" branch="False" />
-                <line number="22" hits="11" branch="False" />
+                <line number="19" hits="0" branch="False" />
+                <line number="21" hits="12" branch="False" />
+                <line number="22" hits="24" branch="False" />
+                <line number="23" hits="12" branch="False" />
               </lines>
             </method>
-            <method name=".ctor" signature="(Microsoft.Extensions.Options.IOptions`1&lt;ApiCurrency.Models.CurrencyRulesOptions&gt;)" line-rate="1" branch-rate="1" complexity="1">
+            <method name=".ctor" signature="(Microsoft.Extensions.Options.IOptions`1&lt;CurrencyConverter.Core.Models.CurrencyRulesOptions&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="7" branch="False" />
-                <line number="11" hits="7" branch="False" />
-                <line number="12" hits="7" branch="False" />
-                <line number="13" hits="7" branch="False" />
+                <line number="11" hits="8" branch="False" />
+                <line number="12" hits="8" branch="False" />
+                <line number="13" hits="8" branch="False" />
+                <line number="14" hits="8" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="16" hits="11" branch="False" />
-            <line number="17" hits="11" branch="True" condition-coverage="50% (1/2)">
+            <line number="17" hits="12" branch="False" />
+            <line number="18" hits="12" branch="True" condition-coverage="50% (1/2)">
               <conditions>
                 <condition number="27" type="jump" coverage="50%" />
               </conditions>
             </line>
-            <line number="18" hits="0" branch="False" />
-            <line number="20" hits="11" branch="False" />
-            <line number="21" hits="22" branch="False" />
-            <line number="22" hits="11" branch="False" />
-            <line number="10" hits="7" branch="False" />
-            <line number="11" hits="7" branch="False" />
-            <line number="12" hits="7" branch="False" />
-            <line number="13" hits="7" branch="False" />
+            <line number="19" hits="0" branch="False" />
+            <line number="21" hits="12" branch="False" />
+            <line number="22" hits="24" branch="False" />
+            <line number="23" hits="12" branch="False" />
+            <line number="11" hits="8" branch="False" />
+            <line number="12" hits="8" branch="False" />
+            <line number="13" hits="8" branch="False" />
+            <line number="14" hits="8" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Settings.ExchangeRateSettings" filename="Settings\ExchangeRateSettings.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="CurrencyConverter.Core.Settings.RedisSettings" filename="Settings\RedisSettings.cs" line-rate="1" branch-rate="1" complexity="4">
           <methods>
-            <method name="get_FreshnessWindowMinutes" signature="()" line-rate="1" branch-rate="1" complexity="1">
+            <method name="get_ConnectionString" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="19" branch="False" />
+                <line number="5" hits="37" branch="False" />
+              </lines>
+            </method>
+            <method name="get_InstanceName" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="115" branch="False" />
+              </lines>
+            </method>
+            <method name="get_DefaultExpirationDays" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name="get_CacheRetentionDays" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="56" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="19" branch="False" />
+            <line number="5" hits="37" branch="False" />
+            <line number="6" hits="115" branch="False" />
+            <line number="7" hits="5" branch="False" />
+            <line number="8" hits="56" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Services.CurrencyConverterService" filename="Services\CurrencyConverterService.cs" line-rate="0.9361" branch-rate="0.8845999999999999" complexity="27">
+        <class name="CurrencyConverter.Core.Services.CurrencyConverterService" filename="Services\CurrencyConverterService.cs" line-rate="0.9433" branch-rate="0.8887999999999999" complexity="37">
           <methods>
             <method name="ValidateTimestamp" signature="(System.DateTime,System.String)" line-rate="1" branch-rate="1" complexity="4">
               <lines>
-                <line number="96" hits="25" branch="False" />
-                <line number="97" hits="25" branch="False" />
-                <line number="98" hits="25" branch="True" condition-coverage="100% (2/2)">
+                <line number="95" hits="14" branch="False" />
+                <line number="96" hits="14" branch="False" />
+                <line number="97" hits="14" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="16" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="99" hits="3" branch="False" />
-                <line number="101" hits="22" branch="False" />
-                <line number="102" hits="22" branch="True" condition-coverage="100% (2/2)">
+                <line number="98" hits="2" branch="False" />
+                <line number="100" hits="12" branch="False" />
+                <line number="101" hits="12" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="48" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="103" hits="3" branch="False" />
-                <line number="104" hits="19" branch="False" />
+                <line number="102" hits="2" branch="False" />
+                <line number="103" hits="10" branch="False" />
               </lines>
             </method>
-            <method name="ValidateConversionRequest" signature="(ApiCurrency.Models.CurrencyConversionRequest)" line-rate="1" branch-rate="1" complexity="8">
+            <method name="ValidateConversionRequest" signature="(CurrencyConverter.Core.Models.CurrencyConversionRequest)" line-rate="1" branch-rate="1" complexity="8">
               <lines>
-                <line number="107" hits="11" branch="False" />
-                <line number="108" hits="11" branch="True" condition-coverage="100% (2/2)">
+                <line number="106" hits="11" branch="False" />
+                <line number="107" hits="11" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="14" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="109" hits="1" branch="False" />
-                <line number="111" hits="10" branch="True" condition-coverage="100% (2/2)">
+                <line number="108" hits="1" branch="False" />
+                <line number="110" hits="10" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="50" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="112" hits="2" branch="False" />
-                <line number="114" hits="8" branch="False" />
-                <line number="116" hits="6" branch="True" condition-coverage="100% (2/2)">
+                <line number="111" hits="2" branch="False" />
+                <line number="113" hits="8" branch="False" />
+                <line number="115" hits="6" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="105" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="117" hits="2" branch="False" />
-                <line number="119" hits="4" branch="True" condition-coverage="100% (2/2)">
+                <line number="116" hits="2" branch="False" />
+                <line number="118" hits="4" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="153" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="120" hits="1" branch="False" />
-                <line number="121" hits="3" branch="False" />
+                <line number="119" hits="1" branch="False" />
+                <line number="120" hits="3" branch="False" />
               </lines>
             </method>
-            <method name="ValidateLatestRatesRequest" signature="(ApiCurrency.Models.LatestRatesRequest)" line-rate="0.8887999999999999" branch-rate="0.8332999999999999" complexity="6">
+            <method name="ValidateLatestRatesRequest" signature="(CurrencyConverter.Core.Models.LatestRatesRequest)" line-rate="0.909" branch-rate="0.875" complexity="8">
               <lines>
-                <line number="124" hits="7" branch="False" />
-                <line number="125" hits="7" branch="True" condition-coverage="100% (2/2)">
+                <line number="123" hits="9" branch="False" />
+                <line number="124" hits="9" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="14" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="126" hits="1" branch="False" />
-                <line number="128" hits="6" branch="True" condition-coverage="50% (1/2)">
+                <line number="125" hits="1" branch="False" />
+                <line number="127" hits="8" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
                     <condition number="45" type="jump" coverage="50%" />
                   </conditions>
                 </line>
-                <line number="129" hits="0" branch="False" />
-                <line number="131" hits="6" branch="True" condition-coverage="100% (2/2)">
+                <line number="128" hits="0" branch="False" />
+                <line number="130" hits="8" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="79" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="132" hits="1" branch="False" />
-                <line number="134" hits="5" branch="False" />
-                <line number="135" hits="3" branch="False" />
+                <line number="131" hits="1" branch="False" />
+                <line number="133" hits="7" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="116" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="134" hits="1" branch="False" />
+                <line number="136" hits="6" branch="False" />
+                <line number="137" hits="4" branch="False" />
               </lines>
             </method>
-            <method name="ValidateHistoricalRatesRequest" signature="(ApiCurrency.Models.HistoricalRatesRequest)" line-rate="0.8332999999999999" branch-rate="0.75" complexity="8">
+            <method name="ValidateHistoricalRatesRequest" signature="(CurrencyConverter.Core.Models.HistoricalRatesRequest)" line-rate="0.875" branch-rate="0.8125" complexity="16">
               <lines>
-                <line number="138" hits="8" branch="False" />
-                <line number="139" hits="8" branch="True" condition-coverage="100% (2/2)">
+                <line number="140" hits="10" branch="False" />
+                <line number="141" hits="10" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="14" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="140" hits="1" branch="False" />
-                <line number="142" hits="7" branch="True" condition-coverage="50% (1/2)">
+                <line number="142" hits="1" branch="False" />
+                <line number="144" hits="9" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
                     <condition number="51" type="jump" coverage="50%" />
                   </conditions>
                 </line>
-                <line number="143" hits="0" branch="False" />
-                <line number="145" hits="7" branch="True" condition-coverage="50% (1/2)">
+                <line number="145" hits="0" branch="False" />
+                <line number="147" hits="9" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
-                    <condition number="99" type="jump" coverage="50%" />
+                    <condition number="101" type="jump" coverage="50%" />
                   </conditions>
                 </line>
-                <line number="146" hits="0" branch="False" />
-                <line number="148" hits="7" branch="False" />
-                <line number="149" hits="5" branch="False" />
-                <line number="151" hits="5" branch="True" condition-coverage="100% (2/2)">
+                <line number="148" hits="0" branch="False" />
+                <line number="150" hits="9" branch="False" />
+                <line number="151" hits="9" branch="False" />
+                <line number="154" hits="9" branch="True" condition-coverage="100% (4/4)">
                   <conditions>
-                    <condition number="183" type="jump" coverage="100%" />
+                    <condition number="157" type="jump" coverage="100%" />
+                    <condition number="178" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="152" hits="1" branch="False" />
-                <line number="153" hits="4" branch="False" />
+                <line number="155" hits="3" branch="False" />
+                <line number="157" hits="6" branch="True" condition-coverage="75% (3/4)">
+                  <conditions>
+                    <condition number="274" type="jump" coverage="50%" />
+                    <condition number="295" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="158" hits="1" branch="False" />
+                <line number="160" hits="5" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="400" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="161" hits="1" branch="False" />
+                <line number="162" hits="4" branch="False" />
               </lines>
             </method>
-            <method name=".ctor" signature="(ApiCurrency.ExchangeRateProviders.IExchangeRateProviderFactory,ApiCurrency.Settings.ICurrencyRulesProvider)" line-rate="1" branch-rate="1" complexity="1">
+            <method name=".ctor" signature="(CurrencyConverter.Core.ExchangeRateProviders.IExchangeRateProviderFactory,CurrencyConverter.Core.Settings.ICurrencyRulesProvider)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="13" hits="28" branch="False" />
-                <line number="14" hits="28" branch="False" />
-                <line number="15" hits="28" branch="False" />
-                <line number="16" hits="28" branch="False" />
-                <line number="17" hits="28" branch="False" />
-                <line number="18" hits="28" branch="False" />
-                <line number="19" hits="28" branch="False" />
+                <line number="13" hits="33" branch="False" />
+                <line number="14" hits="33" branch="False" />
+                <line number="15" hits="33" branch="False" />
+                <line number="16" hits="33" branch="False" />
+                <line number="17" hits="33" branch="False" />
+                <line number="18" hits="33" branch="False" />
+                <line number="19" hits="33" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="96" hits="25" branch="False" />
-            <line number="97" hits="25" branch="False" />
-            <line number="98" hits="25" branch="True" condition-coverage="100% (2/2)">
+            <line number="95" hits="14" branch="False" />
+            <line number="96" hits="14" branch="False" />
+            <line number="97" hits="14" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="16" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="99" hits="3" branch="False" />
-            <line number="101" hits="22" branch="False" />
-            <line number="102" hits="22" branch="True" condition-coverage="100% (2/2)">
+            <line number="98" hits="2" branch="False" />
+            <line number="100" hits="12" branch="False" />
+            <line number="101" hits="12" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="48" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="103" hits="3" branch="False" />
-            <line number="104" hits="19" branch="False" />
-            <line number="107" hits="11" branch="False" />
-            <line number="108" hits="11" branch="True" condition-coverage="100% (2/2)">
+            <line number="102" hits="2" branch="False" />
+            <line number="103" hits="10" branch="False" />
+            <line number="106" hits="11" branch="False" />
+            <line number="107" hits="11" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="14" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="109" hits="1" branch="False" />
-            <line number="111" hits="10" branch="True" condition-coverage="100% (2/2)">
+            <line number="108" hits="1" branch="False" />
+            <line number="110" hits="10" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="50" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="112" hits="2" branch="False" />
-            <line number="114" hits="8" branch="False" />
-            <line number="116" hits="6" branch="True" condition-coverage="100% (2/2)">
+            <line number="111" hits="2" branch="False" />
+            <line number="113" hits="8" branch="False" />
+            <line number="115" hits="6" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="105" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="117" hits="2" branch="False" />
-            <line number="119" hits="4" branch="True" condition-coverage="100% (2/2)">
+            <line number="116" hits="2" branch="False" />
+            <line number="118" hits="4" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="153" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="120" hits="1" branch="False" />
-            <line number="121" hits="3" branch="False" />
-            <line number="124" hits="7" branch="False" />
-            <line number="125" hits="7" branch="True" condition-coverage="100% (2/2)">
+            <line number="119" hits="1" branch="False" />
+            <line number="120" hits="3" branch="False" />
+            <line number="123" hits="9" branch="False" />
+            <line number="124" hits="9" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="14" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="126" hits="1" branch="False" />
-            <line number="128" hits="6" branch="True" condition-coverage="50% (1/2)">
+            <line number="125" hits="1" branch="False" />
+            <line number="127" hits="8" branch="True" condition-coverage="50% (1/2)">
               <conditions>
                 <condition number="45" type="jump" coverage="50%" />
               </conditions>
             </line>
-            <line number="129" hits="0" branch="False" />
-            <line number="131" hits="6" branch="True" condition-coverage="100% (2/2)">
+            <line number="128" hits="0" branch="False" />
+            <line number="130" hits="8" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="79" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="132" hits="1" branch="False" />
-            <line number="134" hits="5" branch="False" />
-            <line number="135" hits="3" branch="False" />
-            <line number="138" hits="8" branch="False" />
-            <line number="139" hits="8" branch="True" condition-coverage="100% (2/2)">
+            <line number="131" hits="1" branch="False" />
+            <line number="133" hits="7" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="116" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="134" hits="1" branch="False" />
+            <line number="136" hits="6" branch="False" />
+            <line number="137" hits="4" branch="False" />
+            <line number="140" hits="10" branch="False" />
+            <line number="141" hits="10" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="14" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="140" hits="1" branch="False" />
-            <line number="142" hits="7" branch="True" condition-coverage="50% (1/2)">
+            <line number="142" hits="1" branch="False" />
+            <line number="144" hits="9" branch="True" condition-coverage="50% (1/2)">
               <conditions>
                 <condition number="51" type="jump" coverage="50%" />
               </conditions>
             </line>
-            <line number="143" hits="0" branch="False" />
-            <line number="145" hits="7" branch="True" condition-coverage="50% (1/2)">
+            <line number="145" hits="0" branch="False" />
+            <line number="147" hits="9" branch="True" condition-coverage="50% (1/2)">
               <conditions>
-                <condition number="99" type="jump" coverage="50%" />
+                <condition number="101" type="jump" coverage="50%" />
               </conditions>
             </line>
-            <line number="146" hits="0" branch="False" />
-            <line number="148" hits="7" branch="False" />
-            <line number="149" hits="5" branch="False" />
-            <line number="151" hits="5" branch="True" condition-coverage="100% (2/2)">
+            <line number="148" hits="0" branch="False" />
+            <line number="150" hits="9" branch="False" />
+            <line number="151" hits="9" branch="False" />
+            <line number="154" hits="9" branch="True" condition-coverage="100% (4/4)">
               <conditions>
-                <condition number="183" type="jump" coverage="100%" />
+                <condition number="157" type="jump" coverage="100%" />
+                <condition number="178" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="152" hits="1" branch="False" />
-            <line number="153" hits="4" branch="False" />
-            <line number="13" hits="28" branch="False" />
-            <line number="14" hits="28" branch="False" />
-            <line number="15" hits="28" branch="False" />
-            <line number="16" hits="28" branch="False" />
-            <line number="17" hits="28" branch="False" />
-            <line number="18" hits="28" branch="False" />
-            <line number="19" hits="28" branch="False" />
+            <line number="155" hits="3" branch="False" />
+            <line number="157" hits="6" branch="True" condition-coverage="75% (3/4)">
+              <conditions>
+                <condition number="274" type="jump" coverage="50%" />
+                <condition number="295" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="158" hits="1" branch="False" />
+            <line number="160" hits="5" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="400" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="161" hits="1" branch="False" />
+            <line number="162" hits="4" branch="False" />
+            <line number="13" hits="33" branch="False" />
+            <line number="14" hits="33" branch="False" />
+            <line number="15" hits="33" branch="False" />
+            <line number="16" hits="33" branch="False" />
+            <line number="17" hits="33" branch="False" />
+            <line number="18" hits="33" branch="False" />
+            <line number="19" hits="33" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Services.CurrencyConverterService/&lt;&gt;c" filename="Services\CurrencyConverterService.cs" line-rate="1" branch-rate="1" complexity="2">
+        <class name="CurrencyConverter.Core.Services.CurrencyConverterService/&lt;&gt;c" filename="Services\CurrencyConverterService.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
             <method name="&lt;GetHistoricalRates&gt;b__6_0" signature="(System.Collections.Generic.KeyValuePair`2&lt;System.DateTime,System.Decimal&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="74" hits="26" branch="False" />
+                <line number="73" hits="27" branch="False" />
               </lines>
             </method>
             <method name="&lt;GetHistoricalRates&gt;b__6_1" signature="(System.Collections.Generic.KeyValuePair`2&lt;System.DateTime,System.Decimal&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="81" hits="20" branch="False" />
+                <line number="80" hits="22" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="74" hits="26" branch="False" />
-            <line number="81" hits="20" branch="False" />
+            <line number="73" hits="27" branch="False" />
+            <line number="80" hits="22" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Services.CurrencyConverterService/&lt;Convert&gt;d__4" filename="Services\CurrencyConverterService.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="CurrencyConverter.Core.Services.CurrencyConverterService/&lt;Convert&gt;d__4" filename="Services\CurrencyConverterService.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
@@ -342,24 +400,24 @@
             <line number="38" hits="3" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Services.CurrencyConverterService/&lt;GetHistoricalRates&gt;d__6" filename="Services\CurrencyConverterService.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="CurrencyConverter.Core.Services.CurrencyConverterService/&lt;GetHistoricalRates&gt;d__6" filename="Services\CurrencyConverterService.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="62" hits="8" branch="False" />
-                <line number="63" hits="8" branch="False" />
+                <line number="62" hits="10" branch="False" />
+                <line number="63" hits="10" branch="False" />
                 <line number="65" hits="4" branch="False" />
                 <line number="67" hits="4" branch="False" />
                 <line number="68" hits="4" branch="False" />
                 <line number="69" hits="4" branch="False" />
                 <line number="70" hits="4" branch="False" />
                 <line number="71" hits="4" branch="False" />
-                <line number="72" hits="4" branch="False" />
+                <line number="74" hits="4" branch="False" />
                 <line number="75" hits="4" branch="False" />
-                <line number="76" hits="4" branch="False" />
+                <line number="77" hits="4" branch="False" />
                 <line number="78" hits="4" branch="False" />
                 <line number="79" hits="4" branch="False" />
-                <line number="80" hits="4" branch="False" />
+                <line number="82" hits="4" branch="False" />
                 <line number="83" hits="4" branch="False" />
                 <line number="84" hits="4" branch="False" />
                 <line number="85" hits="4" branch="False" />
@@ -370,25 +428,24 @@
                 <line number="90" hits="4" branch="False" />
                 <line number="91" hits="4" branch="False" />
                 <line number="92" hits="4" branch="False" />
-                <line number="93" hits="4" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="62" hits="8" branch="False" />
-            <line number="63" hits="8" branch="False" />
+            <line number="62" hits="10" branch="False" />
+            <line number="63" hits="10" branch="False" />
             <line number="65" hits="4" branch="False" />
             <line number="67" hits="4" branch="False" />
             <line number="68" hits="4" branch="False" />
             <line number="69" hits="4" branch="False" />
             <line number="70" hits="4" branch="False" />
             <line number="71" hits="4" branch="False" />
-            <line number="72" hits="4" branch="False" />
+            <line number="74" hits="4" branch="False" />
             <line number="75" hits="4" branch="False" />
-            <line number="76" hits="4" branch="False" />
+            <line number="77" hits="4" branch="False" />
             <line number="78" hits="4" branch="False" />
             <line number="79" hits="4" branch="False" />
-            <line number="80" hits="4" branch="False" />
+            <line number="82" hits="4" branch="False" />
             <line number="83" hits="4" branch="False" />
             <line number="84" hits="4" branch="False" />
             <line number="85" hits="4" branch="False" />
@@ -399,72 +456,71 @@
             <line number="90" hits="4" branch="False" />
             <line number="91" hits="4" branch="False" />
             <line number="92" hits="4" branch="False" />
-            <line number="93" hits="4" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Services.CurrencyConverterService/&lt;GetLatestRates&gt;d__5" filename="Services\CurrencyConverterService.cs" line-rate="0.9285" branch-rate="1" complexity="6">
+        <class name="CurrencyConverter.Core.Services.CurrencyConverterService/&lt;GetLatestRates&gt;d__5" filename="Services\CurrencyConverterService.cs" line-rate="1" branch-rate="1" complexity="6">
           <methods>
-            <method name="MoveNext" signature="()" line-rate="0.9285" branch-rate="1" complexity="6">
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="6">
               <lines>
-                <line number="41" hits="7" branch="False" />
-                <line number="42" hits="7" branch="False" />
-                <line number="44" hits="3" branch="False" />
-                <line number="45" hits="3" branch="False" />
-                <line number="47" hits="23" branch="True" condition-coverage="100% (2/2)">
+                <line number="41" hits="9" branch="False" />
+                <line number="42" hits="9" branch="False" />
+                <line number="44" hits="4" branch="False" />
+                <line number="45" hits="4" branch="False" />
+                <line number="47" hits="29" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="416" type="jump" coverage="100%" />
+                    <condition number="438" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="48" hits="7" branch="False" />
-                <line number="49" hits="7" branch="True" condition-coverage="100% (2/2)">
+                <line number="48" hits="9" branch="False" />
+                <line number="49" hits="9" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="158" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="50" hits="0" branch="False" />
-                <line number="52" hits="7" branch="True" condition-coverage="100% (2/2)">
+                <line number="50" hits="1" branch="False" />
+                <line number="52" hits="8" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="190" type="jump" coverage="100%" />
+                    <condition number="212" type="jump" coverage="100%" />
                   </conditions>
                 </line>
                 <line number="53" hits="1" branch="False" />
-                <line number="55" hits="6" branch="False" />
-                <line number="56" hits="6" branch="False" />
+                <line number="55" hits="7" branch="False" />
+                <line number="56" hits="7" branch="False" />
                 <line number="58" hits="3" branch="False" />
                 <line number="59" hits="3" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="41" hits="7" branch="False" />
-            <line number="42" hits="7" branch="False" />
-            <line number="44" hits="3" branch="False" />
-            <line number="45" hits="3" branch="False" />
-            <line number="47" hits="23" branch="True" condition-coverage="100% (2/2)">
+            <line number="41" hits="9" branch="False" />
+            <line number="42" hits="9" branch="False" />
+            <line number="44" hits="4" branch="False" />
+            <line number="45" hits="4" branch="False" />
+            <line number="47" hits="29" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="416" type="jump" coverage="100%" />
+                <condition number="438" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="48" hits="7" branch="False" />
-            <line number="49" hits="7" branch="True" condition-coverage="100% (2/2)">
+            <line number="48" hits="9" branch="False" />
+            <line number="49" hits="9" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="158" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="50" hits="0" branch="False" />
-            <line number="52" hits="7" branch="True" condition-coverage="100% (2/2)">
+            <line number="50" hits="1" branch="False" />
+            <line number="52" hits="8" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="190" type="jump" coverage="100%" />
+                <condition number="212" type="jump" coverage="100%" />
               </conditions>
             </line>
             <line number="53" hits="1" branch="False" />
-            <line number="55" hits="6" branch="False" />
-            <line number="56" hits="6" branch="False" />
+            <line number="55" hits="7" branch="False" />
+            <line number="56" hits="7" branch="False" />
             <line number="58" hits="3" branch="False" />
             <line number="59" hits="3" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Models.CurrencyConversionRequest" filename="Models\CurrencyConversionRequest.cs" line-rate="1" branch-rate="1" complexity="5">
+        <class name="CurrencyConverter.Core.Models.CurrencyConversionRequest" filename="Models\CurrencyConversionRequest.cs" line-rate="1" branch-rate="1" complexity="5">
           <methods>
             <method name="get_FromCurrency" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
@@ -500,534 +556,1356 @@
             <line number="9" hits="39" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Models.CurrencyConversionResult" filename="Models\CurrencyConversionResult.cs" line-rate="1" branch-rate="1" complexity="7">
+        <class name="CurrencyConverter.Core.Models.CurrencyConversionResult" filename="Models\CurrencyConversionResult.cs" line-rate="1" branch-rate="1" complexity="7">
           <methods>
             <method name="get_FromCurrency" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="9" branch="False" />
+                <line number="8" hits="9" branch="False" />
               </lines>
             </method>
             <method name="get_ToCurrency" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="6" hits="9" branch="False" />
+                <line number="11" hits="9" branch="False" />
               </lines>
             </method>
             <method name="get_Amount" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="6" branch="False" />
+                <line number="14" hits="6" branch="False" />
               </lines>
             </method>
             <method name="get_ConvertedAmount" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="6" branch="False" />
+                <line number="17" hits="6" branch="False" />
               </lines>
             </method>
             <method name="get_Rate" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="6" branch="False" />
+                <line number="20" hits="6" branch="False" />
               </lines>
             </method>
             <method name="get_ConversionTimestamp" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="6" branch="False" />
+                <line number="23" hits="6" branch="False" />
               </lines>
             </method>
             <method name="get_ProviderName" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="9" branch="False" />
+                <line number="26" hits="9" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="9" branch="False" />
-            <line number="6" hits="9" branch="False" />
-            <line number="7" hits="6" branch="False" />
-            <line number="8" hits="6" branch="False" />
-            <line number="9" hits="6" branch="False" />
-            <line number="10" hits="6" branch="False" />
+            <line number="8" hits="9" branch="False" />
             <line number="11" hits="9" branch="False" />
+            <line number="14" hits="6" branch="False" />
+            <line number="17" hits="6" branch="False" />
+            <line number="20" hits="6" branch="False" />
+            <line number="23" hits="6" branch="False" />
+            <line number="26" hits="9" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Models.CurrencyRulesOptions" filename="Models\CurrencyRulesOptions.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="CurrencyConverter.Core.Models.CurrencyRulesOptions" filename="Models\CurrencyRulesOptions.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="get_ExcludedCurrencies" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="25" branch="False" />
+                <line number="5" hits="28" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="25" branch="False" />
+            <line number="5" hits="28" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Models.HistoricalRatesRequest" filename="Models\HistoricalRatesRequest.cs" line-rate="1" branch-rate="1" complexity="8">
+        <class name="CurrencyConverter.Core.Models.HistoricalRatesRequest" filename="Models\HistoricalRatesRequest.cs" line-rate="1" branch-rate="1" complexity="7">
           <methods>
             <method name="get_BaseCurrency" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="27" branch="False" />
+                <line number="5" hits="35" branch="False" />
               </lines>
             </method>
             <method name="get_TargetCurrency" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="6" hits="27" branch="False" />
+                <line number="6" hits="35" branch="False" />
               </lines>
             </method>
             <method name="get_Start" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="24" branch="False" />
+                <line number="7" hits="38" branch="False" />
               </lines>
             </method>
             <method name="get_End" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="22" branch="False" />
-              </lines>
-            </method>
-            <method name="get_Step" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="12" branch="False" />
+                <line number="8" hits="33" branch="False" />
               </lines>
             </method>
             <method name="get_Page" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="24" branch="False" />
+                <line number="9" hits="26" branch="False" />
               </lines>
             </method>
             <method name="get_PageSize" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="24" branch="False" />
+                <line number="10" hits="26" branch="False" />
               </lines>
             </method>
             <method name="get_ProviderName" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="28" branch="False" />
+                <line number="11" hits="34" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="27" branch="False" />
-            <line number="6" hits="27" branch="False" />
-            <line number="7" hits="24" branch="False" />
-            <line number="8" hits="22" branch="False" />
-            <line number="9" hits="12" branch="False" />
-            <line number="10" hits="24" branch="False" />
-            <line number="11" hits="24" branch="False" />
-            <line number="12" hits="28" branch="False" />
+            <line number="5" hits="35" branch="False" />
+            <line number="6" hits="35" branch="False" />
+            <line number="7" hits="38" branch="False" />
+            <line number="8" hits="33" branch="False" />
+            <line number="9" hits="26" branch="False" />
+            <line number="10" hits="26" branch="False" />
+            <line number="11" hits="34" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Models.LatestRatesRequest" filename="Models\LatestRatesRequest.cs" line-rate="1" branch-rate="1" complexity="4">
+        <class name="CurrencyConverter.Core.Models.LatestRatesRequest" filename="Models\LatestRatesRequest.cs" line-rate="1" branch-rate="1" complexity="4">
           <methods>
             <method name="get_BaseCurrency" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="33" branch="False" />
+                <line number="5" hits="49" branch="False" />
               </lines>
             </method>
             <method name="get_TargetCurrencies" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="6" hits="23" branch="False" />
-              </lines>
-            </method>
-            <method name="get_ProviderName" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="24" branch="False" />
+                <line number="6" hits="30" branch="False" />
               </lines>
             </method>
             <method name="get_Timestamp" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="18" branch="False" />
+                <line number="7" hits="22" branch="False" />
+              </lines>
+            </method>
+            <method name="get_ProviderName" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="31" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="33" branch="False" />
-            <line number="6" hits="23" branch="False" />
-            <line number="7" hits="24" branch="False" />
-            <line number="8" hits="18" branch="False" />
+            <line number="5" hits="49" branch="False" />
+            <line number="6" hits="30" branch="False" />
+            <line number="7" hits="22" branch="False" />
+            <line number="8" hits="31" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.Models.PagedRatesResult" filename="Models\PagedRatesResult.cs" line-rate="1" branch-rate="1" complexity="7">
+        <class name="CurrencyConverter.Core.Models.PagedRatesResult" filename="Models\PagedRatesResult.cs" line-rate="1" branch-rate="1" complexity="7">
           <methods>
             <method name="get_Page" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="8" branch="False" />
-              </lines>
-            </method>
-            <method name="get_PageSize" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="6" hits="8" branch="False" />
-              </lines>
-            </method>
-            <method name="get_TotalCount" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="8" branch="False" />
-              </lines>
-            </method>
-            <method name="get_TotalPages" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="8" hits="8" branch="False" />
               </lines>
             </method>
+            <method name="get_PageSize" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="8" branch="False" />
+              </lines>
+            </method>
+            <method name="get_TotalCount" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="8" branch="False" />
+              </lines>
+            </method>
+            <method name="get_TotalPages" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="8" branch="False" />
+              </lines>
+            </method>
             <method name="get_HasNextPage" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="8" branch="False" />
+                <line number="20" hits="8" branch="False" />
               </lines>
             </method>
             <method name="get_HasPreviousPage" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="8" branch="False" />
+                <line number="23" hits="8" branch="False" />
               </lines>
             </method>
             <method name="get_Rates" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="17" branch="False" />
+                <line number="26" hits="17" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="8" branch="False" />
-            <line number="6" hits="8" branch="False" />
-            <line number="7" hits="8" branch="False" />
             <line number="8" hits="8" branch="False" />
-            <line number="9" hits="8" branch="False" />
-            <line number="10" hits="8" branch="False" />
-            <line number="11" hits="17" branch="False" />
+            <line number="11" hits="8" branch="False" />
+            <line number="14" hits="8" branch="False" />
+            <line number="17" hits="8" branch="False" />
+            <line number="20" hits="8" branch="False" />
+            <line number="23" hits="8" branch="False" />
+            <line number="26" hits="17" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.ExchangeRateProviderFactory" filename="ExchangeRateProviders\ExchangeRateProviderFactory.cs" line-rate="0.909" branch-rate="0.75" complexity="5">
+        <class name="CurrencyConverter.Core.Infrastructure.Http.ResilientHttpClient" filename="Infrastructure\Http\ResilientHttpClient.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
-            <method name="GetProvider" signature="(System.String)" line-rate="0.8571" branch-rate="0.75" complexity="4">
+            <method name=".ctor" signature="(System.Net.Http.HttpClient,Polly.Registry.IReadOnlyPolicyRegistry`1&lt;System.String&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="13" hits="10" branch="False" />
-                <line number="14" hits="10" branch="True" condition-coverage="50% (1/2)">
-                  <conditions>
-                    <condition number="9" type="jump" coverage="50%" />
-                  </conditions>
-                </line>
-                <line number="15" hits="0" branch="False" />
-                <line number="17" hits="10" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="51" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="18" hits="1" branch="False" />
-                <line number="20" hits="9" branch="False" />
-                <line number="21" hits="9" branch="False" />
-              </lines>
-            </method>
-            <method name=".ctor" signature="(System.Collections.Generic.IEnumerable`1&lt;ApiCurrency.ExchangeRateProviders.IExchangeRateProvider&gt;)" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="12" branch="False" />
-                <line number="8" hits="12" branch="False" />
-                <line number="9" hits="29" branch="False" />
-                <line number="10" hits="12" branch="False" />
+                <line number="17" hits="14" branch="False" />
+                <line number="18" hits="14" branch="False" />
+                <line number="19" hits="14" branch="False" />
+                <line number="20" hits="14" branch="False" />
+                <line number="21" hits="14" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="13" hits="10" branch="False" />
-            <line number="14" hits="10" branch="True" condition-coverage="50% (1/2)">
-              <conditions>
-                <condition number="9" type="jump" coverage="50%" />
-              </conditions>
-            </line>
-            <line number="15" hits="0" branch="False" />
-            <line number="17" hits="10" branch="True" condition-coverage="100% (2/2)">
-              <conditions>
-                <condition number="51" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="18" hits="1" branch="False" />
-            <line number="20" hits="9" branch="False" />
-            <line number="21" hits="9" branch="False" />
-            <line number="7" hits="12" branch="False" />
-            <line number="8" hits="12" branch="False" />
-            <line number="9" hits="29" branch="False" />
-            <line number="10" hits="12" branch="False" />
+            <line number="17" hits="14" branch="False" />
+            <line number="18" hits="14" branch="False" />
+            <line number="19" hits="14" branch="False" />
+            <line number="20" hits="14" branch="False" />
+            <line number="21" hits="14" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.FrankfurterExchangeRateProvider" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="3">
+        <class name="CurrencyConverter.Core.Infrastructure.Http.ResilientHttpClient/&lt;&gt;c__DisplayClass3_0/&lt;&lt;SendAsync&gt;b__0&gt;d" filename="Infrastructure\Http\ResilientHttpClient.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="26" hits="25" branch="False" />
+                <line number="27" hits="25" branch="False" />
+                <line number="28" hits="25" branch="False" />
+                <line number="29" hits="48" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="25" branch="False" />
+            <line number="27" hits="25" branch="False" />
+            <line number="28" hits="25" branch="False" />
+            <line number="29" hits="48" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.Infrastructure.Http.ResilientHttpClient/&lt;CloneHttpRequestMessageAsync&gt;d__4" filename="Infrastructure\Http\ResilientHttpClient.cs" line-rate="0.55" branch-rate="0.5" complexity="8">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.55" branch-rate="0.5" complexity="8">
+              <lines>
+                <line number="33" hits="25" branch="False" />
+                <line number="34" hits="25" branch="False" />
+                <line number="35" hits="25" branch="False" />
+                <line number="36" hits="25" branch="False" />
+                <line number="37" hits="25" branch="False" />
+                <line number="40" hits="25" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="85" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="41" hits="0" branch="False" />
+                <line number="42" hits="0" branch="False" />
+                <line number="43" hits="0" branch="False" />
+                <line number="44" hits="0" branch="False" />
+                <line number="45" hits="0" branch="False" />
+                <line number="47" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="366" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="48" hits="0" branch="False" />
+                <line number="49" hits="0" branch="False" />
+                <line number="52" hits="97" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="514" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="53" hits="11" branch="False" />
+                <line number="56" hits="75" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="659" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="57" hits="0" branch="False" />
+                <line number="59" hits="25" branch="False" />
+                <line number="60" hits="25" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="33" hits="25" branch="False" />
+            <line number="34" hits="25" branch="False" />
+            <line number="35" hits="25" branch="False" />
+            <line number="36" hits="25" branch="False" />
+            <line number="37" hits="25" branch="False" />
+            <line number="40" hits="25" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="85" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="41" hits="0" branch="False" />
+            <line number="42" hits="0" branch="False" />
+            <line number="43" hits="0" branch="False" />
+            <line number="44" hits="0" branch="False" />
+            <line number="45" hits="0" branch="False" />
+            <line number="47" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="366" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="48" hits="0" branch="False" />
+            <line number="49" hits="0" branch="False" />
+            <line number="52" hits="97" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="514" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="53" hits="11" branch="False" />
+            <line number="56" hits="75" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="659" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="57" hits="0" branch="False" />
+            <line number="59" hits="25" branch="False" />
+            <line number="60" hits="25" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.Infrastructure.Http.ResilientHttpClient/&lt;SendAsync&gt;d__3" filename="Infrastructure\Http\ResilientHttpClient.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="24" hits="23" branch="False" />
+                <line number="25" hits="23" branch="False" />
+                <line number="30" hits="21" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="24" hits="23" branch="False" />
+            <line number="25" hits="23" branch="False" />
+            <line number="30" hits="21" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.Infrastructure.Cache.RedisCacheProvider" filename="Infrastructure\Cache\RedisCacheProvider.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="GetKey" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="109" hits="68" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(StackExchange.Redis.IConnectionMultiplexer,Microsoft.Extensions.Options.IOptions`1&lt;CurrencyConverter.Core.Settings.RedisSettings&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="13" branch="False" />
+                <line number="17" hits="13" branch="False" />
+                <line number="18" hits="13" branch="False" />
+                <line number="19" hits="13" branch="False" />
+                <line number="20" hits="13" branch="False" />
+                <line number="21" hits="13" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="109" hits="68" branch="False" />
+            <line number="16" hits="13" branch="False" />
+            <line number="17" hits="13" branch="False" />
+            <line number="18" hits="13" branch="False" />
+            <line number="19" hits="13" branch="False" />
+            <line number="20" hits="13" branch="False" />
+            <line number="21" hits="13" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.Infrastructure.Cache.RedisCacheProvider/&lt;Clear&gt;d__8" filename="Infrastructure\Cache\RedisCacheProvider.cs" line-rate="0" branch-rate="0" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0" branch-rate="0" complexity="2">
+              <lines>
+                <line number="93" hits="0" branch="False" />
+                <line number="95" hits="0" branch="False" />
+                <line number="96" hits="0" branch="False" />
+                <line number="97" hits="0" branch="False" />
+                <line number="98" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="313" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="99" hits="0" branch="False" />
+                <line number="100" hits="0" branch="False" />
+                <line number="101" hits="0" branch="False" />
+                <line number="102" hits="0" branch="False" />
+                <line number="103" hits="0" branch="False" />
+                <line number="104" hits="0" branch="False" />
+                <line number="106" hits="0" branch="False" />
+                <line number="107" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="93" hits="0" branch="False" />
+            <line number="95" hits="0" branch="False" />
+            <line number="96" hits="0" branch="False" />
+            <line number="97" hits="0" branch="False" />
+            <line number="98" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="313" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="99" hits="0" branch="False" />
+            <line number="100" hits="0" branch="False" />
+            <line number="101" hits="0" branch="False" />
+            <line number="102" hits="0" branch="False" />
+            <line number="103" hits="0" branch="False" />
+            <line number="104" hits="0" branch="False" />
+            <line number="106" hits="0" branch="False" />
+            <line number="107" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.Infrastructure.Cache.RedisCacheProvider/&lt;Exists&gt;d__7" filename="Infrastructure\Cache\RedisCacheProvider.cs" line-rate="0.5714" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.5714" branch-rate="1" complexity="1">
+              <lines>
+                <line number="81" hits="2" branch="False" />
+                <line number="83" hits="2" branch="False" />
+                <line number="84" hits="2" branch="False" />
+                <line number="86" hits="0" branch="False" />
+                <line number="87" hits="0" branch="False" />
+                <line number="88" hits="0" branch="False" />
+                <line number="90" hits="2" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="81" hits="2" branch="False" />
+            <line number="83" hits="2" branch="False" />
+            <line number="84" hits="2" branch="False" />
+            <line number="86" hits="0" branch="False" />
+            <line number="87" hits="0" branch="False" />
+            <line number="88" hits="0" branch="False" />
+            <line number="90" hits="2" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.Infrastructure.Cache.RedisCacheProvider/&lt;Get&gt;d__4`1" filename="Infrastructure\Cache\RedisCacheProvider.cs" line-rate="0.7333" branch-rate="1" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.7333" branch-rate="1" complexity="2">
+              <lines>
+                <line number="24" hits="34" branch="False" />
+                <line number="26" hits="34" branch="False" />
+                <line number="27" hits="34" branch="False" />
+                <line number="28" hits="34" branch="False" />
+                <line number="29" hits="34" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="222" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="30" hits="33" branch="False" />
+                <line number="31" hits="33" branch="False" />
+                <line number="32" hits="33" branch="False" />
+                <line number="35" hits="1" branch="False" />
+                <line number="36" hits="1" branch="False" />
+                <line number="38" hits="0" branch="False" />
+                <line number="39" hits="0" branch="False" />
+                <line number="40" hits="0" branch="False" />
+                <line number="41" hits="0" branch="False" />
+                <line number="43" hits="34" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="24" hits="34" branch="False" />
+            <line number="26" hits="34" branch="False" />
+            <line number="27" hits="34" branch="False" />
+            <line number="28" hits="34" branch="False" />
+            <line number="29" hits="34" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="222" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="30" hits="33" branch="False" />
+            <line number="31" hits="33" branch="False" />
+            <line number="32" hits="33" branch="False" />
+            <line number="35" hits="1" branch="False" />
+            <line number="36" hits="1" branch="False" />
+            <line number="38" hits="0" branch="False" />
+            <line number="39" hits="0" branch="False" />
+            <line number="40" hits="0" branch="False" />
+            <line number="41" hits="0" branch="False" />
+            <line number="43" hits="34" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.Infrastructure.Cache.RedisCacheProvider/&lt;Remove&gt;d__6" filename="Infrastructure\Cache\RedisCacheProvider.cs" line-rate="0.6363" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.6363" branch-rate="1" complexity="1">
+              <lines>
+                <line number="67" hits="1" branch="False" />
+                <line number="69" hits="1" branch="False" />
+                <line number="70" hits="1" branch="False" />
+                <line number="71" hits="1" branch="False" />
+                <line number="72" hits="1" branch="False" />
+                <line number="73" hits="1" branch="False" />
+                <line number="74" hits="0" branch="False" />
+                <line number="75" hits="0" branch="False" />
+                <line number="76" hits="0" branch="False" />
+                <line number="77" hits="0" branch="False" />
+                <line number="78" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="67" hits="1" branch="False" />
+            <line number="69" hits="1" branch="False" />
+            <line number="70" hits="1" branch="False" />
+            <line number="71" hits="1" branch="False" />
+            <line number="72" hits="1" branch="False" />
+            <line number="73" hits="1" branch="False" />
+            <line number="74" hits="0" branch="False" />
+            <line number="75" hits="0" branch="False" />
+            <line number="76" hits="0" branch="False" />
+            <line number="77" hits="0" branch="False" />
+            <line number="78" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.Infrastructure.Cache.RedisCacheProvider/&lt;Set&gt;d__5`1" filename="Infrastructure\Cache\RedisCacheProvider.cs" line-rate="0.8823000000000001" branch-rate="0.5" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.8823000000000001" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="46" hits="31" branch="False" />
+                <line number="48" hits="31" branch="False" />
+                <line number="49" hits="31" branch="False" />
+                <line number="50" hits="31" branch="False" />
+                <line number="51" hits="31" branch="False" />
+                <line number="53" hits="31" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="137" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="54" hits="31" branch="False" />
+                <line number="55" hits="31" branch="False" />
+                <line number="56" hits="31" branch="False" />
+                <line number="57" hits="31" branch="False" />
+                <line number="58" hits="0" branch="False" />
+                <line number="59" hits="0" branch="False" />
+                <line number="60" hits="31" branch="False" />
+                <line number="61" hits="31" branch="False" />
+                <line number="62" hits="31" branch="False" />
+                <line number="63" hits="31" branch="False" />
+                <line number="64" hits="31" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="46" hits="31" branch="False" />
+            <line number="48" hits="31" branch="False" />
+            <line number="49" hits="31" branch="False" />
+            <line number="50" hits="31" branch="False" />
+            <line number="51" hits="31" branch="False" />
+            <line number="53" hits="31" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="137" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="54" hits="31" branch="False" />
+            <line number="55" hits="31" branch="False" />
+            <line number="56" hits="31" branch="False" />
+            <line number="57" hits="31" branch="False" />
+            <line number="58" hits="0" branch="False" />
+            <line number="59" hits="0" branch="False" />
+            <line number="60" hits="31" branch="False" />
+            <line number="61" hits="31" branch="False" />
+            <line number="62" hits="31" branch="False" />
+            <line number="63" hits="31" branch="False" />
+            <line number="64" hits="31" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProvider" filename="ExchangeRateProviders\CachedExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
             <method name="get_Name" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="7" branch="False" />
+                <line number="16" hits="10" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(CurrencyConverter.Core.ExchangeRateProviders.IExchangeRateProvider,CurrencyConverter.Core.Infrastructure.Cache.ICacheProvider,Microsoft.Extensions.Options.IOptions`1&lt;CurrencyConverter.Core.Settings.RedisSettings&gt;,Microsoft.Extensions.Logging.ILogger`1&lt;CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProvider&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="15" branch="False" />
+                <line number="19" hits="15" branch="False" />
+                <line number="20" hits="15" branch="False" />
+                <line number="21" hits="15" branch="False" />
+                <line number="22" hits="15" branch="False" />
+                <line number="23" hits="15" branch="False" />
+                <line number="24" hits="15" branch="False" />
+                <line number="25" hits="15" branch="False" />
+                <line number="26" hits="15" branch="False" />
+                <line number="27" hits="15" branch="False" />
+                <line number="28" hits="15" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="16" hits="10" branch="False" />
+            <line number="18" hits="15" branch="False" />
+            <line number="19" hits="15" branch="False" />
+            <line number="20" hits="15" branch="False" />
+            <line number="21" hits="15" branch="False" />
+            <line number="22" hits="15" branch="False" />
+            <line number="23" hits="15" branch="False" />
+            <line number="24" hits="15" branch="False" />
+            <line number="25" hits="15" branch="False" />
+            <line number="26" hits="15" branch="False" />
+            <line number="27" hits="15" branch="False" />
+            <line number="28" hits="15" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProvider/&lt;GetRate&gt;d__8" filename="ExchangeRateProviders\CachedExchangeRateProvider.cs" line-rate="0.826" branch-rate="0.5" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.826" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="31" hits="6" branch="False" />
+                <line number="32" hits="6" branch="False" />
+                <line number="33" hits="6" branch="False" />
+                <line number="36" hits="6" branch="False" />
+                <line number="37" hits="6" branch="False" />
+                <line number="38" hits="6" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="365" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="39" hits="0" branch="False" />
+                <line number="40" hits="0" branch="False" />
+                <line number="41" hits="0" branch="False" />
+                <line number="42" hits="0" branch="False" />
+                <line number="45" hits="6" branch="False" />
+                <line number="46" hits="6" branch="False" />
+                <line number="47" hits="6" branch="False" />
+                <line number="49" hits="5" branch="False" />
+                <line number="50" hits="5" branch="False" />
+                <line number="51" hits="5" branch="False" />
+                <line number="53" hits="5" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
+                <line number="58" hits="1" branch="False" />
+                <line number="60" hits="1" branch="False" />
+                <line number="62" hits="5" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="31" hits="6" branch="False" />
+            <line number="32" hits="6" branch="False" />
+            <line number="33" hits="6" branch="False" />
+            <line number="36" hits="6" branch="False" />
+            <line number="37" hits="6" branch="False" />
+            <line number="38" hits="6" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="365" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="39" hits="0" branch="False" />
+            <line number="40" hits="0" branch="False" />
+            <line number="41" hits="0" branch="False" />
+            <line number="42" hits="0" branch="False" />
+            <line number="45" hits="6" branch="False" />
+            <line number="46" hits="6" branch="False" />
+            <line number="47" hits="6" branch="False" />
+            <line number="49" hits="5" branch="False" />
+            <line number="50" hits="5" branch="False" />
+            <line number="51" hits="5" branch="False" />
+            <line number="53" hits="5" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+            <line number="58" hits="1" branch="False" />
+            <line number="60" hits="1" branch="False" />
+            <line number="62" hits="5" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProvider/&lt;GetRatesForPeriod&gt;d__9" filename="ExchangeRateProviders\CachedExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="16">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="16">
+              <lines>
+                <line number="69" hits="9" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="16" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="70" hits="9" branch="False" />
+                <line number="71" hits="9" branch="False" />
+                <line number="73" hits="9" branch="False" />
+                <line number="74" hits="9" branch="False" />
+                <line number="77" hits="116" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="647" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="78" hits="49" branch="False" />
+                <line number="79" hits="49" branch="False" />
+                <line number="80" hits="49" branch="False" />
+                <line number="81" hits="49" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="417" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="82" hits="8" branch="False" />
+                <line number="83" hits="8" branch="False" />
+                <line number="84" hits="8" branch="False" />
+                <line number="85" hits="8" branch="False" />
+                <line number="86" hits="8" branch="False" />
+                <line number="88" hits="41" branch="False" />
+                <line number="89" hits="41" branch="False" />
+                <line number="90" hits="41" branch="False" />
+                <line number="91" hits="41" branch="False" />
+                <line number="92" hits="41" branch="False" />
+                <line number="93" hits="49" branch="False" />
+                <line number="95" hits="9" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="670" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="96" hits="8" branch="False" />
+                <line number="97" hits="8" branch="False" />
+                <line number="98" hits="8" branch="False" />
+                <line number="101" hits="8" branch="False" />
+                <line number="102" hits="8" branch="False" />
+                <line number="104" hits="82" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="998" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="105" hits="33" branch="False" />
+                <line number="106" hits="33" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="857" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="107" hits="30" branch="False" />
+                <line number="108" hits="30" branch="False" />
+                <line number="109" hits="30" branch="False" />
+                <line number="111" hits="3" branch="False" />
+                <line number="112" hits="3" branch="False" />
+                <line number="113" hits="3" branch="False" />
+                <line number="114" hits="3" branch="False" />
+                <line number="115" hits="33" branch="False" />
+                <line number="116" hits="8" branch="False" />
+                <line number="119" hits="46" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="1860" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="120" hits="11" branch="False" />
+                <line number="121" hits="11" branch="False" />
+                <line number="122" hits="11" branch="False" />
+                <line number="123" hits="11" branch="False" />
+                <line number="124" hits="115" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="1787" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="125" hits="41" branch="False" />
+                <line number="126" hits="41" branch="False" />
+                <line number="127" hits="41" branch="False" />
+                <line number="128" hits="41" branch="False" />
+                <line number="129" hits="41" branch="False" />
+                <line number="130" hits="41" branch="False" />
+                <line number="131" hits="41" branch="False" />
+                <line number="132" hits="11" branch="False" />
+                <line number="133" hits="8" branch="False" />
+                <line number="135" hits="9" branch="False" />
+                <line number="136" hits="9" branch="False" />
+                <line number="137" hits="9" branch="False" />
+                <line number="138" hits="9" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="69" hits="9" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="16" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="70" hits="9" branch="False" />
+            <line number="71" hits="9" branch="False" />
+            <line number="73" hits="9" branch="False" />
+            <line number="74" hits="9" branch="False" />
+            <line number="77" hits="116" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="647" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="78" hits="49" branch="False" />
+            <line number="79" hits="49" branch="False" />
+            <line number="80" hits="49" branch="False" />
+            <line number="81" hits="49" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="417" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="82" hits="8" branch="False" />
+            <line number="83" hits="8" branch="False" />
+            <line number="84" hits="8" branch="False" />
+            <line number="85" hits="8" branch="False" />
+            <line number="86" hits="8" branch="False" />
+            <line number="88" hits="41" branch="False" />
+            <line number="89" hits="41" branch="False" />
+            <line number="90" hits="41" branch="False" />
+            <line number="91" hits="41" branch="False" />
+            <line number="92" hits="41" branch="False" />
+            <line number="93" hits="49" branch="False" />
+            <line number="95" hits="9" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="670" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="96" hits="8" branch="False" />
+            <line number="97" hits="8" branch="False" />
+            <line number="98" hits="8" branch="False" />
+            <line number="101" hits="8" branch="False" />
+            <line number="102" hits="8" branch="False" />
+            <line number="104" hits="82" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="998" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="105" hits="33" branch="False" />
+            <line number="106" hits="33" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="857" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="107" hits="30" branch="False" />
+            <line number="108" hits="30" branch="False" />
+            <line number="109" hits="30" branch="False" />
+            <line number="111" hits="3" branch="False" />
+            <line number="112" hits="3" branch="False" />
+            <line number="113" hits="3" branch="False" />
+            <line number="114" hits="3" branch="False" />
+            <line number="115" hits="33" branch="False" />
+            <line number="116" hits="8" branch="False" />
+            <line number="119" hits="46" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="1860" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="120" hits="11" branch="False" />
+            <line number="121" hits="11" branch="False" />
+            <line number="122" hits="11" branch="False" />
+            <line number="123" hits="11" branch="False" />
+            <line number="124" hits="115" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="1787" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="125" hits="41" branch="False" />
+            <line number="126" hits="41" branch="False" />
+            <line number="127" hits="41" branch="False" />
+            <line number="128" hits="41" branch="False" />
+            <line number="129" hits="41" branch="False" />
+            <line number="130" hits="41" branch="False" />
+            <line number="131" hits="41" branch="False" />
+            <line number="132" hits="11" branch="False" />
+            <line number="133" hits="8" branch="False" />
+            <line number="135" hits="9" branch="False" />
+            <line number="136" hits="9" branch="False" />
+            <line number="137" hits="9" branch="False" />
+            <line number="138" hits="9" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.DateTimeExtensions" filename="ExchangeRateProviders\CachedExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="RoundDown" signature="(System.DateTime,System.TimeSpan)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="144" hits="6" branch="False" />
+                <line number="145" hits="6" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="14" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="146" hits="2" branch="False" />
+                <line number="148" hits="4" branch="False" />
+                <line number="149" hits="4" branch="False" />
+                <line number="150" hits="4" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="144" hits="6" branch="False" />
+            <line number="145" hits="6" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="14" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="146" hits="2" branch="False" />
+            <line number="148" hits="4" branch="False" />
+            <line number="149" hits="4" branch="False" />
+            <line number="150" hits="4" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProviderFactory" filename="ExchangeRateProviders\CachedExchangeRateProviderFactory.cs" line-rate="1" branch-rate="1" complexity="6">
+          <methods>
+            <method name="GetProvider" signature="(System.String)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="28" hits="9" branch="False" />
+                <line number="29" hits="9" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="9" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="30" hits="2" branch="False" />
+                <line number="32" hits="7" branch="False" />
+                <line number="33" hits="7" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="63" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="34" hits="1" branch="False" />
+                <line number="36" hits="6" branch="False" />
+                <line number="37" hits="6" branch="False" />
+              </lines>
+            </method>
+            <method name="CreateCachedProvider" signature="(CurrencyConverter.Core.ExchangeRateProviders.IExchangeRateProvider)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="40" hits="1" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(CurrencyConverter.Core.Infrastructure.Cache.ICacheProvider,Microsoft.Extensions.Options.IOptions`1&lt;CurrencyConverter.Core.Settings.RedisSettings&gt;,System.Collections.Generic.IEnumerable`1&lt;CurrencyConverter.Core.ExchangeRateProviders.IExchangeRateProvider&gt;,Microsoft.Extensions.Logging.ILogger`1&lt;CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProvider&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="12" branch="False" />
+                <line number="16" hits="12" branch="False" />
+                <line number="17" hits="12" branch="False" />
+                <line number="18" hits="12" branch="False" />
+                <line number="19" hits="12" branch="False" />
+                <line number="20" hits="12" branch="False" />
+                <line number="21" hits="12" branch="False" />
+                <line number="22" hits="12" branch="False" />
+                <line number="23" hits="22" branch="False" />
+                <line number="24" hits="12" branch="False" />
+                <line number="25" hits="12" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="28" hits="9" branch="False" />
+            <line number="29" hits="9" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="9" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="30" hits="2" branch="False" />
+            <line number="32" hits="7" branch="False" />
+            <line number="33" hits="7" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="63" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="34" hits="1" branch="False" />
+            <line number="36" hits="6" branch="False" />
+            <line number="37" hits="6" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+            <line number="15" hits="12" branch="False" />
+            <line number="16" hits="12" branch="False" />
+            <line number="17" hits="12" branch="False" />
+            <line number="18" hits="12" branch="False" />
+            <line number="19" hits="12" branch="False" />
+            <line number="20" hits="12" branch="False" />
+            <line number="21" hits="12" branch="False" />
+            <line number="22" hits="12" branch="False" />
+            <line number="23" hits="22" branch="False" />
+            <line number="24" hits="12" branch="False" />
+            <line number="25" hits="12" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Name" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="8" branch="False" />
               </lines>
             </method>
             <method name="ShouldUseLatest" signature="(System.DateTime)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="70" hits="8" branch="False" />
-                <line number="71" hits="8" branch="False" />
-                <line number="72" hits="8" branch="False" />
+                <line number="140" hits="12" branch="False" />
+                <line number="141" hits="12" branch="False" />
+                <line number="142" hits="12" branch="False" />
+                <line number="143" hits="12" branch="False" />
               </lines>
             </method>
-            <method name=".ctor" signature="(System.Net.Http.HttpClient,Microsoft.Extensions.Options.IOptions`1&lt;ApiCurrency.Settings.ExchangeRateSettings&gt;)" line-rate="1" branch-rate="1" complexity="1">
+            <method name=".ctor" signature="(CurrencyConverter.Core.Infrastructure.Http.IHttpClient,Microsoft.Extensions.Logging.ILogger`1&lt;CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="14" hits="11" branch="False" />
-                <line number="15" hits="11" branch="False" />
-                <line number="16" hits="11" branch="False" />
-                <line number="17" hits="11" branch="False" />
-                <line number="18" hits="11" branch="False" />
+                <line number="18" hits="17" branch="False" />
+                <line number="19" hits="17" branch="False" />
+                <line number="20" hits="17" branch="False" />
+                <line number="21" hits="17" branch="False" />
+                <line number="22" hits="17" branch="False" />
+                <line number="23" hits="17" branch="False" />
+                <line number="24" hits="17" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="12" hits="7" branch="False" />
-            <line number="70" hits="8" branch="False" />
-            <line number="71" hits="8" branch="False" />
-            <line number="72" hits="8" branch="False" />
-            <line number="14" hits="11" branch="False" />
-            <line number="15" hits="11" branch="False" />
-            <line number="16" hits="11" branch="False" />
-            <line number="17" hits="11" branch="False" />
-            <line number="18" hits="11" branch="False" />
+            <line number="16" hits="8" branch="False" />
+            <line number="140" hits="12" branch="False" />
+            <line number="141" hits="12" branch="False" />
+            <line number="142" hits="12" branch="False" />
+            <line number="143" hits="12" branch="False" />
+            <line number="18" hits="17" branch="False" />
+            <line number="19" hits="17" branch="False" />
+            <line number="20" hits="17" branch="False" />
+            <line number="21" hits="17" branch="False" />
+            <line number="22" hits="17" branch="False" />
+            <line number="23" hits="17" branch="False" />
+            <line number="24" hits="17" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;&gt;c" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="2">
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;&gt;c" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
-            <method name="&lt;GetRatesForPeriod&gt;b__6_0" signature="(System.Collections.Generic.KeyValuePair`2&lt;System.String,System.Collections.Generic.Dictionary`2&lt;System.String,System.Decimal&gt;&gt;)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="&lt;GetRatesForPeriod&gt;b__7_0" signature="(System.Collections.Generic.KeyValuePair`2&lt;System.String,System.Collections.Generic.Dictionary`2&lt;System.String,System.Decimal&gt;&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="45" hits="23" branch="False" />
+                <line number="97" hits="31" branch="False" />
               </lines>
             </method>
-            <method name="&lt;GetRatesForPeriod&gt;b__6_3" signature="(System.DateTime)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="&lt;GetRatesForPeriod&gt;b__7_3" signature="(System.DateTime)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="55" hits="66" branch="False" />
+                <line number="117" hits="123" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="45" hits="23" branch="False" />
-            <line number="55" hits="66" branch="False" />
+            <line number="97" hits="31" branch="False" />
+            <line number="117" hits="123" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;&gt;c__DisplayClass6_0" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="2">
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;&gt;c__DisplayClass7_0" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="&lt;GetRatesForPeriod&gt;b__1" signature="(System.Collections.Generic.KeyValuePair`2&lt;System.String,System.Collections.Generic.Dictionary`2&lt;System.String,System.Decimal&gt;&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="46" hits="28" branch="False" />
+                <line number="98" hits="38" branch="False" />
               </lines>
             </method>
+          </methods>
+          <lines>
+            <line number="98" hits="38" branch="False" />
+          </lines>
+        </class>
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;&gt;c__DisplayClass7_1" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
             <method name="&lt;GetRatesForPeriod&gt;b__2" signature="(System.DateTime)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="54" hits="129" branch="False" />
+                <line number="116" hits="188" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="46" hits="28" branch="False" />
-            <line number="54" hits="129" branch="False" />
+            <line number="116" hits="188" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;GetRate&gt;d__5" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="0.8" branch-rate="0.625" complexity="8">
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;GetRate&gt;d__6" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="0.75" complexity="12">
           <methods>
-            <method name="MoveNext" signature="()" line-rate="0.8" branch-rate="0.625" complexity="8">
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="0.75" complexity="12">
               <lines>
-                <line number="21" hits="8" branch="False" />
-                <line number="22" hits="8" branch="True" condition-coverage="100% (2/2)">
+                <line number="27" hits="12" branch="False" />
+                <line number="29" hits="12" branch="False" />
+                <line number="31" hits="12" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="36" type="jump" coverage="100%" />
+                    <condition number="60" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="23" hits="8" branch="False" />
-                <line number="24" hits="8" branch="False" />
-                <line number="26" hits="8" branch="False" />
-                <line number="27" hits="7" branch="True" condition-coverage="50% (3/6)">
+                <line number="32" hits="12" branch="False" />
+                <line number="33" hits="12" branch="False" />
+                <line number="35" hits="12" branch="False" />
+                <line number="38" hits="12" branch="True" condition-coverage="75% (3/4)">
                   <conditions>
-                    <condition number="328" type="jump" coverage="50%" />
-                    <condition number="339" type="jump" coverage="50%" />
-                    <condition number="379" type="jump" coverage="50%" />
+                    <condition number="236" type="jump" coverage="50%" />
+                    <condition number="248" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="28" hits="0" branch="False" />
-                <line number="29" hits="0" branch="False" />
-                <line number="32" hits="7" branch="False" />
-                <line number="33" hits="7" branch="False" />
+                <line number="39" hits="12" branch="False" />
+                <line number="41" hits="12" branch="False" />
+                <line number="43" hits="12" branch="False" />
+                <line number="44" hits="12" branch="False" />
+                <line number="45" hits="12" branch="False" />
+                <line number="46" hits="9" branch="False" />
+                <line number="48" hits="8" branch="True" condition-coverage="66.66% (4/6)">
+                  <conditions>
+                    <condition number="673" type="jump" coverage="50%" />
+                    <condition number="684" type="jump" coverage="50%" />
+                    <condition number="724" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="49" hits="1" branch="False" />
+                <line number="50" hits="1" branch="False" />
+                <line number="51" hits="1" branch="False" />
+                <line number="52" hits="1" branch="False" />
+                <line number="55" hits="7" branch="False" />
+                <line number="56" hits="7" branch="False" />
+                <line number="57" hits="7" branch="False" />
+                <line number="59" hits="5" branch="False" />
+                <line number="60" hits="5" branch="False" />
+                <line number="61" hits="5" branch="False" />
+                <line number="62" hits="5" branch="False" />
+                <line number="63" hits="5" branch="False" />
+                <line number="65" hits="7" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="21" hits="8" branch="False" />
-            <line number="22" hits="8" branch="True" condition-coverage="100% (2/2)">
+            <line number="27" hits="12" branch="False" />
+            <line number="29" hits="12" branch="False" />
+            <line number="31" hits="12" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="36" type="jump" coverage="100%" />
+                <condition number="60" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="23" hits="8" branch="False" />
-            <line number="24" hits="8" branch="False" />
-            <line number="26" hits="8" branch="False" />
-            <line number="27" hits="7" branch="True" condition-coverage="50% (3/6)">
+            <line number="32" hits="12" branch="False" />
+            <line number="33" hits="12" branch="False" />
+            <line number="35" hits="12" branch="False" />
+            <line number="38" hits="12" branch="True" condition-coverage="75% (3/4)">
               <conditions>
-                <condition number="328" type="jump" coverage="50%" />
-                <condition number="339" type="jump" coverage="50%" />
-                <condition number="379" type="jump" coverage="50%" />
+                <condition number="236" type="jump" coverage="50%" />
+                <condition number="248" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="28" hits="0" branch="False" />
-            <line number="29" hits="0" branch="False" />
-            <line number="32" hits="7" branch="False" />
-            <line number="33" hits="7" branch="False" />
+            <line number="39" hits="12" branch="False" />
+            <line number="41" hits="12" branch="False" />
+            <line number="43" hits="12" branch="False" />
+            <line number="44" hits="12" branch="False" />
+            <line number="45" hits="12" branch="False" />
+            <line number="46" hits="9" branch="False" />
+            <line number="48" hits="8" branch="True" condition-coverage="66.66% (4/6)">
+              <conditions>
+                <condition number="673" type="jump" coverage="50%" />
+                <condition number="684" type="jump" coverage="50%" />
+                <condition number="724" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="49" hits="1" branch="False" />
+            <line number="50" hits="1" branch="False" />
+            <line number="51" hits="1" branch="False" />
+            <line number="52" hits="1" branch="False" />
+            <line number="55" hits="7" branch="False" />
+            <line number="56" hits="7" branch="False" />
+            <line number="57" hits="7" branch="False" />
+            <line number="59" hits="5" branch="False" />
+            <line number="60" hits="5" branch="False" />
+            <line number="61" hits="5" branch="False" />
+            <line number="62" hits="5" branch="False" />
+            <line number="63" hits="5" branch="False" />
+            <line number="65" hits="7" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;GetRatesForPeriod&gt;d__6" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="0.9047" branch-rate="0.8" complexity="10">
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider/&lt;GetRatesForPeriod&gt;d__7" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="0.909" branch-rate="0.8125" complexity="16">
           <methods>
-            <method name="MoveNext" signature="()" line-rate="0.9047" branch-rate="0.8" complexity="10">
+            <method name="MoveNext" signature="()" line-rate="0.909" branch-rate="0.8125" complexity="16">
               <lines>
-                <line number="36" hits="5" branch="False" />
-                <line number="37" hits="5" branch="False" />
-                <line number="38" hits="5" branch="False" />
-                <line number="39" hits="5" branch="True" condition-coverage="50% (2/4)">
+                <line number="68" hits="8" branch="False" />
+                <line number="70" hits="8" branch="False" />
+                <line number="71" hits="8" branch="False" />
+                <line number="73" hits="8" branch="False" />
+                <line number="75" hits="8" branch="False" />
+                <line number="78" hits="8" branch="True" condition-coverage="75% (3/4)">
                   <conditions>
-                    <condition number="377" type="jump" coverage="50%" />
-                    <condition number="395" type="jump" coverage="50%" />
+                    <condition number="276" type="jump" coverage="50%" />
+                    <condition number="288" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="40" hits="0" branch="False" />
-                <line number="41" hits="0" branch="False" />
-                <line number="44" hits="5" branch="False" />
-                <line number="48" hits="5" branch="False" />
-                <line number="49" hits="5" branch="False" />
-                <line number="50" hits="32" branch="True" condition-coverage="100% (2/2)">
+                <line number="79" hits="8" branch="False" />
+                <line number="81" hits="8" branch="False" />
+                <line number="84" hits="8" branch="False" />
+                <line number="85" hits="8" branch="False" />
+                <line number="86" hits="8" branch="False" />
+                <line number="87" hits="8" branch="False" />
+                <line number="89" hits="7" branch="True" condition-coverage="50% (2/4)">
                   <conditions>
-                    <condition number="775" type="jump" coverage="100%" />
+                    <condition number="724" type="jump" coverage="50%" />
+                    <condition number="742" type="jump" coverage="50%" />
                   </conditions>
                 </line>
-                <line number="51" hits="27" branch="False" />
-                <line number="53" hits="27" branch="True" condition-coverage="100% (2/2)">
+                <line number="90" hits="0" branch="False" />
+                <line number="91" hits="0" branch="False" />
+                <line number="92" hits="0" branch="False" />
+                <line number="93" hits="0" branch="False" />
+                <line number="96" hits="7" branch="False" />
+                <line number="101" hits="7" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="564" type="jump" coverage="100%" />
+                    <condition number="950" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="56" hits="27" branch="False" />
-                <line number="58" hits="27" branch="True" condition-coverage="100% (2/2)">
+                <line number="102" hits="1" branch="False" />
+                <line number="103" hits="1" branch="False" />
+                <line number="104" hits="1" branch="False" />
+                <line number="105" hits="1" branch="False" />
+                <line number="108" hits="6" branch="False" />
+                <line number="109" hits="6" branch="False" />
+                <line number="112" hits="42" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="676" type="jump" coverage="100%" />
+                    <condition number="1347" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="59" hits="23" branch="False" />
-                <line number="60" hits="23" branch="False" />
-                <line number="61" hits="23" branch="False" />
-                <line number="63" hits="27" branch="False" />
-                <line number="64" hits="27" branch="False" />
-                <line number="66" hits="5" branch="False" />
-                <line number="67" hits="5" branch="False" />
+                <line number="113" hits="36" branch="False" />
+                <line number="115" hits="36" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="1128" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="118" hits="36" branch="False" />
+                <line number="120" hits="36" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="1240" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="121" hits="36" branch="False" />
+                <line number="122" hits="36" branch="False" />
+                <line number="123" hits="36" branch="False" />
+                <line number="124" hits="36" branch="False" />
+                <line number="125" hits="36" branch="False" />
+                <line number="127" hits="6" branch="False" />
+                <line number="128" hits="6" branch="False" />
+                <line number="129" hits="6" branch="False" />
+                <line number="131" hits="2" branch="False" />
+                <line number="132" hits="2" branch="False" />
+                <line number="133" hits="2" branch="False" />
+                <line number="134" hits="2" branch="False" />
+                <line number="135" hits="2" branch="False" />
+                <line number="137" hits="6" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="36" hits="5" branch="False" />
-            <line number="37" hits="5" branch="False" />
-            <line number="38" hits="5" branch="False" />
-            <line number="39" hits="5" branch="True" condition-coverage="50% (2/4)">
+            <line number="68" hits="8" branch="False" />
+            <line number="70" hits="8" branch="False" />
+            <line number="71" hits="8" branch="False" />
+            <line number="73" hits="8" branch="False" />
+            <line number="75" hits="8" branch="False" />
+            <line number="78" hits="8" branch="True" condition-coverage="75% (3/4)">
               <conditions>
-                <condition number="377" type="jump" coverage="50%" />
-                <condition number="395" type="jump" coverage="50%" />
+                <condition number="276" type="jump" coverage="50%" />
+                <condition number="288" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="40" hits="0" branch="False" />
-            <line number="41" hits="0" branch="False" />
-            <line number="44" hits="5" branch="False" />
-            <line number="48" hits="5" branch="False" />
-            <line number="49" hits="5" branch="False" />
-            <line number="50" hits="32" branch="True" condition-coverage="100% (2/2)">
+            <line number="79" hits="8" branch="False" />
+            <line number="81" hits="8" branch="False" />
+            <line number="84" hits="8" branch="False" />
+            <line number="85" hits="8" branch="False" />
+            <line number="86" hits="8" branch="False" />
+            <line number="87" hits="8" branch="False" />
+            <line number="89" hits="7" branch="True" condition-coverage="50% (2/4)">
               <conditions>
-                <condition number="775" type="jump" coverage="100%" />
+                <condition number="724" type="jump" coverage="50%" />
+                <condition number="742" type="jump" coverage="50%" />
               </conditions>
             </line>
-            <line number="51" hits="27" branch="False" />
-            <line number="53" hits="27" branch="True" condition-coverage="100% (2/2)">
+            <line number="90" hits="0" branch="False" />
+            <line number="91" hits="0" branch="False" />
+            <line number="92" hits="0" branch="False" />
+            <line number="93" hits="0" branch="False" />
+            <line number="96" hits="7" branch="False" />
+            <line number="101" hits="7" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="564" type="jump" coverage="100%" />
+                <condition number="950" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="56" hits="27" branch="False" />
-            <line number="58" hits="27" branch="True" condition-coverage="100% (2/2)">
+            <line number="102" hits="1" branch="False" />
+            <line number="103" hits="1" branch="False" />
+            <line number="104" hits="1" branch="False" />
+            <line number="105" hits="1" branch="False" />
+            <line number="108" hits="6" branch="False" />
+            <line number="109" hits="6" branch="False" />
+            <line number="112" hits="42" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="676" type="jump" coverage="100%" />
+                <condition number="1347" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="59" hits="23" branch="False" />
-            <line number="60" hits="23" branch="False" />
-            <line number="61" hits="23" branch="False" />
-            <line number="63" hits="27" branch="False" />
-            <line number="64" hits="27" branch="False" />
-            <line number="66" hits="5" branch="False" />
-            <line number="67" hits="5" branch="False" />
+            <line number="113" hits="36" branch="False" />
+            <line number="115" hits="36" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="1128" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="118" hits="36" branch="False" />
+            <line number="120" hits="36" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="1240" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="121" hits="36" branch="False" />
+            <line number="122" hits="36" branch="False" />
+            <line number="123" hits="36" branch="False" />
+            <line number="124" hits="36" branch="False" />
+            <line number="125" hits="36" branch="False" />
+            <line number="127" hits="6" branch="False" />
+            <line number="128" hits="6" branch="False" />
+            <line number="129" hits="6" branch="False" />
+            <line number="131" hits="2" branch="False" />
+            <line number="132" hits="2" branch="False" />
+            <line number="133" hits="2" branch="False" />
+            <line number="134" hits="2" branch="False" />
+            <line number="135" hits="2" branch="False" />
+            <line number="137" hits="6" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.FrankfurterResponse" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.FrankfurterResponse" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="get_Rates" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="77" hits="34" branch="False" />
+                <line number="148" hits="41" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="77" hits="34" branch="False" />
+            <line number="148" hits="41" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.FrankfurterHistoricalResponse" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.FrankfurterHistoricalResponse" filename="ExchangeRateProviders\FrankfurterExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="get_Rates" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="82" hits="23" branch="False" />
+                <line number="153" hits="37" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="82" hits="23" branch="False" />
+            <line number="153" hits="37" branch="False" />
           </lines>
         </class>
-        <class name="ApiCurrency.ExchangeRateProviders.StubExchangeRateProvider" filename="ExchangeRateProviders\StubExchangeRateProvider.cs" line-rate="0" branch-rate="0" complexity="4">
+        <class name="CurrencyConverter.Core.ExchangeRateProviders.StubExchangeRateProvider" filename="ExchangeRateProviders\StubExchangeRateProvider.cs" line-rate="1" branch-rate="1" complexity="4">
           <methods>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Name" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="0" branch="False" />
+                <line number="10" hits="4" branch="False" />
               </lines>
             </method>
-            <method name="GetRate" signature="(System.String,System.String,System.DateTime)" line-rate="0" branch-rate="1" complexity="1">
+            <method name="GetRate" signature="(System.String,System.String,System.DateTime)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="13" hits="0" branch="False" />
-                <line number="14" hits="0" branch="False" />
-                <line number="15" hits="0" branch="False" />
+                <line number="13" hits="1" branch="False" />
+                <line number="14" hits="1" branch="False" />
+                <line number="15" hits="1" branch="False" />
               </lines>
             </method>
-            <method name="GetRatesForPeriod" signature="(System.String,System.String,System.DateTime,System.DateTime,System.TimeSpan)" line-rate="0" branch-rate="0" complexity="2">
+            <method name="GetRatesForPeriod" signature="(System.String,System.String,System.DateTime,System.DateTime)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="18" hits="0" branch="False" />
-                <line number="19" hits="0" branch="False" />
-                <line number="20" hits="0" branch="False" />
-                <line number="22" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="18" hits="2" branch="False" />
+                <line number="19" hits="2" branch="False" />
+                <line number="20" hits="24" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="52" type="jump" coverage="0%" />
+                    <condition number="70" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="23" hits="0" branch="False" />
-                <line number="24" hits="0" branch="False" />
-                <line number="25" hits="0" branch="False" />
-                <line number="26" hits="0" branch="False" />
-                <line number="28" hits="0" branch="False" />
-                <line number="29" hits="0" branch="False" />
+                <line number="21" hits="10" branch="False" />
+                <line number="22" hits="10" branch="False" />
+                <line number="23" hits="10" branch="False" />
+                <line number="24" hits="2" branch="False" />
+                <line number="25" hits="2" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="10" hits="0" branch="False" />
-            <line number="13" hits="0" branch="False" />
-            <line number="14" hits="0" branch="False" />
-            <line number="15" hits="0" branch="False" />
-            <line number="18" hits="0" branch="False" />
-            <line number="19" hits="0" branch="False" />
-            <line number="20" hits="0" branch="False" />
-            <line number="22" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="10" hits="4" branch="False" />
+            <line number="13" hits="1" branch="False" />
+            <line number="14" hits="1" branch="False" />
+            <line number="15" hits="1" branch="False" />
+            <line number="18" hits="2" branch="False" />
+            <line number="19" hits="2" branch="False" />
+            <line number="20" hits="24" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="52" type="jump" coverage="0%" />
+                <condition number="70" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="23" hits="0" branch="False" />
-            <line number="24" hits="0" branch="False" />
-            <line number="25" hits="0" branch="False" />
-            <line number="26" hits="0" branch="False" />
-            <line number="28" hits="0" branch="False" />
-            <line number="29" hits="0" branch="False" />
+            <line number="21" hits="10" branch="False" />
+            <line number="22" hits="10" branch="False" />
+            <line number="23" hits="10" branch="False" />
+            <line number="24" hits="2" branch="False" />
+            <line number="25" hits="2" branch="False" />
           </lines>
         </class>
       </classes>

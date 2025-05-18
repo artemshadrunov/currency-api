@@ -213,20 +213,24 @@ var assemblies = [
   {
     "name": "CurrencyConverter.Core",
     "classes": [
-      { "name": "ApiCurrency.ExchangeRateProviders.ExchangeRateProviderFactory", "rp": "CurrencyConverter.Core_ExchangeRateProviderFactory.html", "cl": 10, "ucl": 1, "cal": 11, "tl": 22, "cb": 3, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.ExchangeRateProviders.FrankfurterExchangeRateProvider", "rp": "CurrencyConverter.Core_FrankfurterExchangeRateProvider.html", "cl": 40, "ucl": 4, "cal": 44, "tl": 83, "cb": 13, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.ExchangeRateProviders.FrankfurterHistoricalResponse", "rp": "CurrencyConverter.Core_FrankfurterHistoricalResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 83, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.ExchangeRateProviders.FrankfurterResponse", "rp": "CurrencyConverter.Core_FrankfurterResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 83, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.ExchangeRateProviders.StubExchangeRateProvider", "rp": "CurrencyConverter.Core_StubExchangeRateProvider.html", "cl": 0, "ucl": 14, "cal": 14, "tl": 30, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Models.CurrencyConversionRequest", "rp": "CurrencyConverter.Core_CurrencyConversionRequest.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 10, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Models.CurrencyConversionResult", "rp": "CurrencyConverter.Core_CurrencyConversionResult.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Models.CurrencyRulesOptions", "rp": "CurrencyConverter.Core_CurrencyRulesOptions.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 6, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Models.HistoricalRatesRequest", "rp": "CurrencyConverter.Core_HistoricalRatesRequest.html", "cl": 8, "ucl": 0, "cal": 8, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Models.LatestRatesRequest", "rp": "CurrencyConverter.Core_LatestRatesRequest.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Models.PagedRatesResult", "rp": "CurrencyConverter.Core_PagedRatesResult.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Services.CurrencyConverterService", "rp": "CurrencyConverter.Core_CurrencyConverterService.html", "cl": 99, "ucl": 4, "cal": 103, "tl": 154, "cb": 29, "tb": 32, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Settings.CurrencyRulesSettingsProvider", "rp": "CurrencyConverter.Core_CurrencyRulesSettingsProvider.html", "cl": 9, "ucl": 1, "cal": 10, "tl": 23, "cb": 1, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ApiCurrency.Settings.ExchangeRateSettings", "rp": "CurrencyConverter.Core_ExchangeRateSettings.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 6, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProvider", "rp": "CurrencyConverter.Core_CachedExchangeRateProvider.html", "cl": 89, "ucl": 4, "cal": 93, "tl": 151, "cb": 17, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProviderFactory", "rp": "CurrencyConverter.Core_CachedExchangeRateProviderFactory.html", "cl": 22, "ucl": 0, "cal": 22, "tl": 43, "cb": 4, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.ExchangeRateProviders.DateTimeExtensions", "rp": "CurrencyConverter.Core_DateTimeExtensions.html", "cl": 6, "ucl": 0, "cal": 6, "tl": 151, "cb": 2, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider", "rp": "CurrencyConverter.Core_FrankfurterExchangeRateProvider.html", "cl": 83, "ucl": 4, "cal": 87, "tl": 153, "cb": 22, "tb": 28, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.ExchangeRateProviders.FrankfurterHistoricalResponse", "rp": "CurrencyConverter.Core_FrankfurterHistoricalResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 153, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.ExchangeRateProviders.FrankfurterResponse", "rp": "CurrencyConverter.Core_FrankfurterResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 153, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.ExchangeRateProviders.StubExchangeRateProvider", "rp": "CurrencyConverter.Core_StubExchangeRateProvider.html", "cl": 12, "ucl": 0, "cal": 12, "tl": 26, "cb": 2, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Infrastructure.Cache.RedisCacheProvider", "rp": "CurrencyConverter.Core_RedisCacheProvider.html", "cl": 44, "ucl": 26, "cal": 70, "tl": 110, "cb": 3, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Infrastructure.Http.ResilientHttpClient", "rp": "CurrencyConverter.Core_ResilientHttpClient.html", "cl": 23, "ucl": 9, "cal": 32, "tl": 61, "cb": 4, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Models.CurrencyConversionRequest", "rp": "CurrencyConverter.Core_CurrencyConversionRequest.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 10, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Models.CurrencyConversionResult", "rp": "CurrencyConverter.Core_CurrencyConversionResult.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Models.CurrencyRulesOptions", "rp": "CurrencyConverter.Core_CurrencyRulesOptions.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 6, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Models.HistoricalRatesRequest", "rp": "CurrencyConverter.Core_HistoricalRatesRequest.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Models.LatestRatesRequest", "rp": "CurrencyConverter.Core_LatestRatesRequest.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Models.PagedRatesResult", "rp": "CurrencyConverter.Core_PagedRatesResult.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Services.CurrencyConverterService", "rp": "CurrencyConverter.Core_CurrencyConverterService.html", "cl": 105, "ucl": 3, "cal": 108, "tl": 163, "cb": 38, "tb": 42, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Settings.CurrencyRulesSettingsProvider", "rp": "CurrencyConverter.Core_CurrencyRulesSettingsProvider.html", "cl": 9, "ucl": 1, "cal": 10, "tl": 24, "cb": 1, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CurrencyConverter.Core.Settings.RedisSettings", "rp": "CurrencyConverter.Core_RedisSettings.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
@@ -235,9 +239,29 @@ var metrics = [{ "name": "Crap Score", "abbreviation": "crp", "explanationUrl": 
 var historicCoverageExecutionTimes = [];
 
 var riskHotspotMetrics = [
+      { "name": "Crap Score", "explanationUrl": "https://googletesting.blogspot.de/2011/02/this-code-is-crap.html" },
+      { "name": "Cyclomatic complexity", "explanationUrl": "https://en.wikipedia.org/wiki/Cyclomatic_complexity" },
 ];
 
 var riskHotspots = [
+  {
+    "assembly": "CurrencyConverter.Core", "class": "CurrencyConverter.Core.ExchangeRateProviders.CachedExchangeRateProvider", "reportPath": "CurrencyConverter.Core_CachedExchangeRateProvider.html", "methodName": "GetRatesForPeriod()", "methodShortName": "GetRatesForPeriod()", "fileIndex": 0, "line": 69,
+    "metrics": [
+      { "value": 16, "exceeded": false },
+      { "value": 16, "exceeded": true },
+    ]},
+  {
+    "assembly": "CurrencyConverter.Core", "class": "CurrencyConverter.Core.ExchangeRateProviders.FrankfurterExchangeRateProvider", "reportPath": "CurrencyConverter.Core_FrankfurterExchangeRateProvider.html", "methodName": "GetRatesForPeriod()", "methodShortName": "GetRatesForPeriod()", "fileIndex": 0, "line": 68,
+    "metrics": [
+      { "value": 16, "exceeded": false },
+      { "value": 16, "exceeded": true },
+    ]},
+  {
+    "assembly": "CurrencyConverter.Core", "class": "CurrencyConverter.Core.Services.CurrencyConverterService", "reportPath": "CurrencyConverter.Core_CurrencyConverterService.html", "methodName": "ValidateHistoricalRatesRequest(CurrencyConverter.Core.Models.HistoricalRatesRequest)", "methodShortName": "ValidateHistoricalRatesRequest(...)", "fileIndex": 0, "line": 140,
+    "metrics": [
+      { "value": 17, "exceeded": false },
+      { "value": 16, "exceeded": true },
+    ]},
 ];
 
 var branchCoverageAvailable = true;
