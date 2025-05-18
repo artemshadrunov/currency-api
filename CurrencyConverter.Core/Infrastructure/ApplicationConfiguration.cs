@@ -47,9 +47,22 @@ public static class ApplicationConfiguration
 
     private static void ConfigureLogging(IServiceCollection services, IConfiguration configuration)
     {
-        Log.Logger = new LoggerConfiguration()
+        var seqUrl = configuration["Seq:ServerUrl"] ?? "http://localhost:5341";
+        var seqApiKey = configuration["Seq:ApiKey"];
+
+        var logger = new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
+            .WriteTo.Seq(
+                serverUrl: seqUrl,
+                apiKey: seqApiKey,
+                bufferBaseFilename: "./logs/seq-buffer",
+                period: TimeSpan.FromSeconds(2),
+                batchPostingLimit: 1000,
+                bufferSizeLimitBytes: 52428800,
+                queueSizeLimit: 100000)
             .CreateLogger();
+
+        Log.Logger = logger;
 
         services.AddLogging(loggingBuilder =>
             loggingBuilder.AddSerilog(dispose: true));

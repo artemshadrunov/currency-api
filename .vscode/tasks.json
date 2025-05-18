@@ -55,7 +55,7 @@
         {
             "label": "Start App",
             "type": "shell",
-            "command": "docker-compose down --remove-orphans --volumes; docker-compose up --detach redis seq jaeger; dotnet run --project CurrencyConverter.Core",
+            "command": "docker-compose down --remove-orphans --volumes; docker-compose up --detach redis seq jaeger; dotnet run --project CurrencyConverter.Core --environment Development",
             "presentation": {
                 "reveal": "always",
                 "panel": "new"
