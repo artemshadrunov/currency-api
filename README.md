@@ -38,7 +38,7 @@
 
 ### Testing
 - Unit tests: 90%+ coverage
-  - [Coverage Report](./coverage/html/index.html)
+  - [Coverage Report](https://artemshadrunov.github.io/currency-api/coverage/html/index.html)
 - Integration tests with Frankfurter API
 - Coverage reports: Cobertura XML + HTML
 
