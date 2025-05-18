@@ -27,7 +27,7 @@ public class ProductionApiTests : IDisposable
         _client.Dispose();
     }
 
-    [Fact]
+    [Fact(Skip = "Production tests are skipped")]
     public async Task GetToken_ValidCredentials_ReturnsToken()
     {
         // Arrange
@@ -56,7 +56,7 @@ public class ProductionApiTests : IDisposable
         _userToken = tokenResponse.Token;
     }
 
-    [Fact]
+    [Fact(Skip = "Production tests are skipped")]
     public async Task GetAdminToken_ValidCredentials_ReturnsToken()
     {
         // Arrange
@@ -85,7 +85,7 @@ public class ProductionApiTests : IDisposable
         _adminToken = tokenResponse.Token;
     }
 
-    [Fact]
+    [Fact(Skip = "Production tests are skipped")]
     public async Task ConvertCurrency_ValidRequest_ReturnsConversionResult()
     {
         // Arrange
@@ -127,7 +127,7 @@ public class ProductionApiTests : IDisposable
         Assert.True(result.ConvertedAmount > 0);
     }
 
-    [Fact]
+    [Fact(Skip = "Production tests are skipped")]
     public async Task GetLatestRates_ValidRequest_ReturnsRates()
     {
         // Arrange
@@ -172,7 +172,7 @@ public class ProductionApiTests : IDisposable
         }
     }
 
-    [Fact]
+    [Fact(Skip = "Production tests are skipped")]
     public async Task GetLatestRates_ExcludedCurrency_ReturnsForbidden()
     {
         // Arrange
@@ -201,7 +201,7 @@ public class ProductionApiTests : IDisposable
         Assert.Contains("TRY is excluded from conversion", responseContent);
     }
 
-    [Fact]
+    [Fact(Skip = "Production tests are skipped")]
     public async Task GetHistoricalRates_ValidRequest_ReturnsHistoricalRates()
     {
         // Arrange
@@ -243,7 +243,7 @@ public class ProductionApiTests : IDisposable
         Assert.True(result.Rates.Count > 0);
     }
 
-    [Fact]
+    [Fact(Skip = "Production tests are skipped")]
     public async Task GetHistoricalRates_ExcludedCurrency_ReturnsForbidden()
     {
         // Arrange

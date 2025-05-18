@@ -24,7 +24,10 @@
                 "**/CurrencyConverter.Core/LambdaEntryPoint.cs",
                 "**/CurrencyConverter.Core/Controllers/CurrencyConverterController.cs",
                 "**/CurrencyConverter.Core/Controllers/AuthController.cs",
-                "**/CurrencyConverter.Core/Infrastructure/ApplicationConfiguration.cs"
+                "**/CurrencyConverter.Core/Infrastructure/ApplicationConfiguration.cs",
+                "**/CurrencyConverter.Core/Infrastructure/RequestLoggingMiddleware.cs",
+                "**/CurrencyConverter.Core/Infrastructure/GlobalExceptionHandler.cs",
+                "**/CurrencyConverter.Core/Infrastructure/CorrelationIdMiddleware.cs"
             ],
             "group": {
                 "kind": "test",

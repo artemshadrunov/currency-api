@@ -33,21 +33,21 @@ public class FrankfurterExchangeRateProviderIntegrationTests
         var httpClient = new HttpClient();
         var policyRegistry = new PolicyRegistry();
 
-        // Добавляем политику повторных попыток
+        // Add retry policy
         var retryPolicy = HttpPolicyExtensions
             .HandleTransientHttpError()
             .WaitAndRetryAsync(3, retryAttempt =>
                 TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-        // Добавляем политику размыкателя цепи
+        // Add circuit breaker policy
         var circuitBreakerPolicy = HttpPolicyExtensions
             .HandleTransientHttpError()
             .CircuitBreakerAsync(2, TimeSpan.FromSeconds(30));
 
-        // Комбинируем политики
+        // Combine policies
         var combinedPolicy = Policy.WrapAsync(retryPolicy, circuitBreakerPolicy);
 
-        // Регистрируем политику
+        // Register policy
         policyRegistry.Add("CombinedPolicy", combinedPolicy);
 
         _httpClient = new ResilientHttpClient(httpClient, policyRegistry);

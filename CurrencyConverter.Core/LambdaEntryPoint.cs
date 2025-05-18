@@ -2,7 +2,7 @@ using Amazon.Lambda.AspNetCoreServer;
 using Amazon.Lambda.APIGatewayEvents;
 using Microsoft.AspNetCore.Hosting;
 using Amazon.Lambda.Core;
-using CurrencyConverter.Core; // Для Startup
+using CurrencyConverter.Core; // For Startup
 
 namespace CurrencyConverter.Core;
 

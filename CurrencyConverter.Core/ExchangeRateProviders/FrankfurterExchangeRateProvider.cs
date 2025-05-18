@@ -97,6 +97,13 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
                 kvp => DateTime.SpecifyKind(DateTime.Parse(kvp.Key), DateTimeKind.Utc),
                 kvp => kvp.Value[toCurrency]);
 
+            if (allRates.Count == 0)
+            {
+                _logger.LogError("No rates found for {FromCurrency}/{ToCurrency} from {StartDate} to {EndDate}",
+                    fromCurrency, toCurrency, utcStart, utcEnd);
+                throw new Exception($"No rates found for {fromCurrency}/{toCurrency}");
+            }
+
             var result = new Dictionary<DateTime, decimal>();
             var currentDate = utcStart;
 

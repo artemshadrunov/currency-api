@@ -1,7 +1,5 @@
 using System.Net;
-using System.Net.Http;
 using CurrencyConverter.Core.Infrastructure.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Registry;
@@ -21,7 +19,7 @@ public class ResiliencePoliciesTests
         _mockHttpMessageHandler = new MockHttpMessageHandler();
         var httpClient = new HttpClient(_mockHttpMessageHandler);
 
-        // Создаем политики с меньшими задержками для тестов
+        // Create policies with smaller delays for tests
         var retryPolicy = HttpPolicyExtensions
             .HandleTransientHttpError()
             .WaitAndRetryAsync(3, retryAttempt =>
@@ -81,32 +79,32 @@ public class ResiliencePoliciesTests
             .HandleTransientHttpError()
             .CircuitBreakerAsync(
                 handledEventsAllowedBeforeBreaking: 3,
-                durationOfBreak: TimeSpan.FromSeconds(10)
+                durationOfBreak: TimeSpan.FromSeconds(1)
             );
         var policyRegistry = new PolicyRegistry { { "CombinedPolicy", circuitBreakerPolicy } };
         var resilientHttpClient = new ResilientHttpClient(httpClient, policyRegistry);
 
         // Act & Assert
-        // Первый запрос - должен быть выполнен
+        // First request - should be executed
         var response1 = await resilientHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com"));
         Assert.Equal(HttpStatusCode.ServiceUnavailable, response1.StatusCode);
 
-        // Второй запрос - должен быть выполнен
+        // Second request - should be executed
         var response2 = await resilientHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com"));
         Assert.Equal(HttpStatusCode.ServiceUnavailable, response2.StatusCode);
 
-        // Третий запрос - должен быть выполнен
+        // Third request - should be executed
         var response3 = await resilientHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com"));
         Assert.Equal(HttpStatusCode.ServiceUnavailable, response3.StatusCode);
 
-        // Четвертый запрос - должен быть заблокирован размыкателем цепи
+        // Fourth request - should be blocked by circuit breaker
         await Assert.ThrowsAsync<BrokenCircuitException<HttpResponseMessage>>(() =>
             resilientHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com")));
 
-        // Ждем, пока размыкатель цепи сбросится
-        await Task.Delay(TimeSpan.FromSeconds(10.1));
+        // Wait until circuit breaker resets
+        await Task.Delay(TimeSpan.FromSeconds(1.1));
 
-        // Следующий запрос должен снова быть выполнен
+        // Next request should be executed again
         var response5 = await resilientHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com"));
         Assert.Equal(HttpStatusCode.ServiceUnavailable, response5.StatusCode);
     }
@@ -129,29 +127,29 @@ public class ResiliencePoliciesTests
             .HandleTransientHttpError()
             .CircuitBreakerAsync(
                 handledEventsAllowedBeforeBreaking: 3,
-                durationOfBreak: TimeSpan.FromSeconds(10)
+                durationOfBreak: TimeSpan.FromSeconds(1)
             );
         var policyRegistry = new PolicyRegistry { { "CombinedPolicy", circuitBreakerPolicy } };
         var resilientHttpClient = new ResilientHttpClient(httpClient, policyRegistry);
 
-        // Act: 3 неудачных запроса
+        // Act: 3 unsuccessful requests
         for (int i = 0; i < 3; i++)
         {
             var response = await resilientHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com"));
             Assert.Equal(HttpStatusCode.ServiceUnavailable, response.StatusCode);
         }
 
-        // 4-й запрос — circuit breaker должен быть открыт
+        // 4th request - circuit breaker should be open
         await Assert.ThrowsAsync<BrokenCircuitException<HttpResponseMessage>>(() =>
             resilientHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com")));
 
-        // Ждём восстановления
-        await Task.Delay(TimeSpan.FromSeconds(10.1));
+        // Wait for recovery
+        await Task.Delay(TimeSpan.FromSeconds(1.1));
 
-        // 5-й запрос — должен пройти и вернуть успех
+        // 5th request - should pass and return success
         var successResponse = await resilientHttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com"));
         Assert.Equal(HttpStatusCode.OK, successResponse.StatusCode);
-        Assert.Equal(4, attemptCount); // Было 3 неудачи + 1 успех
+        Assert.Equal(4, attemptCount); // Was 3 failures + 1 success
     }
 
     [Fact]

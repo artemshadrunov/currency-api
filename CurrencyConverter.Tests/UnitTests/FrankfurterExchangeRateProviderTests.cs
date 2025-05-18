@@ -138,6 +138,64 @@ public class FrankfurterExchangeRateProviderTests
         await Assert.ThrowsAsync<HttpRequestException>(() => _provider.GetRate(from, to, date));
     }
 
+    [Fact]
+    public async Task GetRate_ThrowsException_WhenResponseMissingTargetCurrency()
+    {
+        // Arrange
+        var from = "USD";
+        var to = "EUR";
+        var date = DateTime.UtcNow.Date;
+        var url = $"https://api.frankfurter.app/latest?from={from}&to={to}";
+        SetupMockResponse(url, new FrankfurterResponse { Rates = new Dictionary<string, decimal>() });
+
+        // Act & Assert
+        await Assert.ThrowsAsync<Exception>(() => _provider.GetRate(from, to, date));
+    }
+
+    [Fact]
+    public async Task GetRate_ThrowsException_WhenResponseIsEmptyOrInvalid()
+    {
+        // Arrange
+        var from = "USD";
+        var to = "EUR";
+        var date = DateTime.UtcNow.Date;
+        var url = $"https://api.frankfurter.app/latest?from={from}&to={to}";
+        SetupMockResponse(url, null);
+
+        // Act & Assert
+        await Assert.ThrowsAsync<System.Text.Json.JsonException>(() => _provider.GetRate(from, to, date));
+    }
+
+    [Fact]
+    public async Task GetRatesForPeriod_ThrowsException_WhenResponseIsEmptyOrInvalid()
+    {
+        // Arrange
+        var from = "USD";
+        var to = "EUR";
+        var startDate = new DateTime(2025, 1, 1);
+        var endDate = new DateTime(2025, 1, 5);
+        var url = $"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?from={from}&to={to}";
+        SetupMockResponse(url, null);
+
+        // Act & Assert
+        await Assert.ThrowsAsync<System.Text.Json.JsonException>(() => _provider.GetRatesForPeriod(from, to, startDate, endDate));
+    }
+
+    [Fact]
+    public async Task GetRatesForPeriod_ThrowsException_WhenResponseMissingTargetCurrency()
+    {
+        // Arrange
+        var from = "USD";
+        var to = "EUR";
+        var startDate = new DateTime(2025, 1, 1);
+        var endDate = new DateTime(2025, 1, 5);
+        var url = $"https://api.frankfurter.app/{startDate:yyyy-MM-dd}..{endDate:yyyy-MM-dd}?from={from}&to={to}";
+        SetupMockResponse(url, new FrankfurterHistoricalResponse { Rates = new Dictionary<string, Dictionary<string, decimal>>() });
+
+        // Act & Assert
+        await Assert.ThrowsAsync<Exception>(() => _provider.GetRatesForPeriod(from, to, startDate, endDate));
+    }
+
     private void SetupMockResponse(string url, object response)
     {
         _mockHttpClient
