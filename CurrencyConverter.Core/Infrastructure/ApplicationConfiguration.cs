@@ -29,7 +29,7 @@ public static class ApplicationConfiguration
         ConfigureLogging(services, configuration);
         ConfigureOpenTelemetry(services, configuration);
         ConfigureRedis(services, configuration);
-        
+
         // 2. Security Services
         ConfigureAuthentication(services, configuration);
         ConfigureAuthorization(services);
@@ -81,15 +81,21 @@ public static class ApplicationConfiguration
 
     private static void ConfigureRedis(IServiceCollection services, IConfiguration configuration)
     {
+        var redisSettings = configuration.GetSection("Redis").Get<RedisSettings>() ?? new RedisSettings();
+
         services.AddSingleton<IConnectionMultiplexer>(sp =>
         {
-            var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-            return ConnectionMultiplexer.Connect(settings.ConnectionString);
+            var options = ConfigurationOptions.Parse(redisSettings.ConnectionString);
+            options.AbortOnConnectFail = false;
+            options.ConnectTimeout = 5000;
+            options.SyncTimeout = 5000;
+            options.ReconnectRetryPolicy = new LinearRetry(1000);
+            options.ConnectRetry = 3;
+            return ConnectionMultiplexer.Connect(options);
         });
 
         services.AddStackExchangeRedisCache(options =>
         {
-            var redisSettings = configuration.GetSection("Redis").Get<RedisSettings>() ?? new RedisSettings();
             options.Configuration = redisSettings.ConnectionString;
             options.InstanceName = redisSettings.InstanceName;
         });
