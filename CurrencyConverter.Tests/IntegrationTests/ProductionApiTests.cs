@@ -9,14 +9,14 @@ using Xunit;
 
 namespace CurrencyConverter.Tests.IntegrationTests;
 
-public class ApiTests : IDisposable
+public class ProductionApiTests : IDisposable
 {
     private readonly HttpClient _client;
     private readonly string _baseUrl;
     private string? _userToken;
     private string? _adminToken;
 
-    public ApiTests()
+    public ProductionApiTests()
     {
         _client = new HttpClient();
         _baseUrl = "https://39tv7m9hl0.execute-api.eu-central-1.amazonaws.com/prod/";
@@ -97,7 +97,7 @@ public class ApiTests : IDisposable
             FromCurrency = "USD",
             ToCurrency = "EUR",
             Amount = 100,
-            Timestamp = DateTime.UtcNow,
+            Timestamp = new DateTime(2025, 5, 15),
             ProviderName = "Frankfurter"
         };
         var content = new StringContent(
@@ -138,7 +138,7 @@ public class ApiTests : IDisposable
         {
             BaseCurrency = "USD",
             TargetCurrencies = new List<string> { "EUR", "GBP", "JPY" },
-            Timestamp = DateTime.UtcNow,
+            Timestamp = new DateTime(2025, 5, 15),
             ProviderName = "Frankfurter"
         };
         var content = new StringContent(
@@ -157,13 +157,48 @@ public class ApiTests : IDisposable
             throw new Exception($"Status: {response.StatusCode}\nResponse: '{responseContent}'");
         }
 
-        var result = JsonSerializer.Deserialize<PagedRatesResult>(responseContent);
+        var result = JsonSerializer.Deserialize<Dictionary<string, decimal>>(responseContent);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(result);
-        Assert.NotNull(result.Rates);
-        Assert.True(result.Rates.Count > 0);
+        Assert.True(result.Count > 0);
+
+        // Check that all requested currencies are present
+        foreach (var currency in request.TargetCurrencies)
+        {
+            Assert.True(result.ContainsKey(currency), $"Currency {currency} not found in response");
+            Assert.True(result[currency] > 0, $"Rate for {currency} is not positive");
+        }
+    }
+
+    [Fact]
+    public async Task GetLatestRates_ExcludedCurrency_ReturnsForbidden()
+    {
+        // Arrange
+        await GetToken_ValidCredentials_ReturnsToken();
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _userToken);
+
+        var request = new LatestRatesRequest
+        {
+            BaseCurrency = "USD",
+            TargetCurrencies = new List<string> { "EUR", "GBP", "JPY", "TRY" }, // TRY is excluded
+            Timestamp = new DateTime(2025, 5, 15),
+            ProviderName = "Frankfurter"
+        };
+        var content = new StringContent(
+            JsonSerializer.Serialize(request),
+            Encoding.UTF8,
+            "application/json"
+        );
+
+        // Act
+        var response = await _client.PostAsync($"{_baseUrl}/api/v1/currencies/latest", content);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        Assert.Contains("TRY is excluded from conversion", responseContent);
     }
 
     [Fact]
@@ -176,8 +211,11 @@ public class ApiTests : IDisposable
         var request = new HistoricalRatesRequest
         {
             BaseCurrency = "USD",
-            Start = DateTime.UtcNow.AddDays(-7),
-            End = DateTime.UtcNow,
+            TargetCurrency = "EUR",
+            Start = new DateTime(2025, 5, 12),
+            End = new DateTime(2025, 5, 16),
+            Page = 1,
+            PageSize = 10,
             ProviderName = "Frankfurter"
         };
         var content = new StringContent(
@@ -203,6 +241,38 @@ public class ApiTests : IDisposable
         Assert.NotNull(result);
         Assert.NotNull(result.Rates);
         Assert.True(result.Rates.Count > 0);
+    }
+
+    [Fact]
+    public async Task GetHistoricalRates_ExcludedCurrency_ReturnsForbidden()
+    {
+        // Arrange
+        await GetAdminToken_ValidCredentials_ReturnsToken();
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _adminToken);
+
+        var request = new HistoricalRatesRequest
+        {
+            BaseCurrency = "USD",
+            TargetCurrency = "TRY", // TRY is excluded
+            Start = new DateTime(2025, 5, 12),
+            End = new DateTime(2025, 5, 16),
+            Page = 1,
+            PageSize = 10,
+            ProviderName = "Frankfurter"
+        };
+        var content = new StringContent(
+            JsonSerializer.Serialize(request),
+            Encoding.UTF8,
+            "application/json"
+        );
+
+        // Act
+        var response = await _client.PostAsync($"{_baseUrl}/api/v1/currencies/history", content);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        Assert.Contains("TRY is excluded from conversion", responseContent);
     }
 }
 

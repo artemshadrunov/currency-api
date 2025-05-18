@@ -25,9 +25,12 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
 
     public async Task<decimal> GetRate(string fromCurrency, string toCurrency, DateTime date)
     {
-        var url = ShouldUseLatest(date)
+        // Ensure date is in UTC
+        var utcDate = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc);
+
+        var url = ShouldUseLatest(utcDate)
             ? $"https://api.frankfurter.app/latest?from={fromCurrency}&to={toCurrency}"
-            : $"https://api.frankfurter.app/{date:yyyy-MM-dd}?from={fromCurrency}&to={toCurrency}";
+            : $"https://api.frankfurter.app/{utcDate:yyyy-MM-dd}?from={fromCurrency}&to={toCurrency}";
 
         using var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -45,25 +48,29 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
             if (frankfurterResponse?.Rates == null || !frankfurterResponse.Rates.TryGetValue(toCurrency, out var rate))
             {
                 _logger.LogError("Failed to get exchange rate for {FromCurrency}/{ToCurrency} on {Date}",
-                    fromCurrency, toCurrency, date);
+                    fromCurrency, toCurrency, utcDate);
                 throw new Exception($"Failed to get exchange rate for {fromCurrency}/{toCurrency}");
             }
 
             _logger.LogDebug("Successfully retrieved rate {Rate} for {FromCurrency}/{ToCurrency} on {Date}",
-                rate, fromCurrency, toCurrency, date);
+                rate, fromCurrency, toCurrency, utcDate);
             return rate;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error getting exchange rate from Frankfurter API for {FromCurrency}/{ToCurrency} on {Date}",
-                fromCurrency, toCurrency, date);
+                fromCurrency, toCurrency, utcDate);
             throw;
         }
     }
 
     public async Task<Dictionary<DateTime, decimal>> GetRatesForPeriod(string fromCurrency, string toCurrency, DateTime start, DateTime end)
     {
-        var url = $"https://api.frankfurter.app/{start:yyyy-MM-dd}..{end:yyyy-MM-dd}?from={fromCurrency}&to={toCurrency}";
+        // Ensure dates are in UTC
+        var utcStart = DateTime.SpecifyKind(start.Date, DateTimeKind.Utc);
+        var utcEnd = DateTime.SpecifyKind(end.Date, DateTimeKind.Utc);
+
+        var url = $"https://api.frankfurter.app/{utcStart:yyyy-MM-dd}..{utcEnd:yyyy-MM-dd}?from={fromCurrency}&to={toCurrency}";
 
         using var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -82,19 +89,19 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
             if (frankfurterResponse?.Rates == null)
             {
                 _logger.LogError("Failed to get exchange rates for {FromCurrency}/{ToCurrency} from {StartDate} to {EndDate}",
-                    fromCurrency, toCurrency, start, end);
+                    fromCurrency, toCurrency, utcStart, utcEnd);
                 throw new Exception($"Failed to get exchange rates for {fromCurrency}/{toCurrency}");
             }
 
             var allRates = frankfurterResponse.Rates.ToDictionary(
-                kvp => DateTime.Parse(kvp.Key),
+                kvp => DateTime.SpecifyKind(DateTime.Parse(kvp.Key), DateTimeKind.Utc),
                 kvp => kvp.Value[toCurrency]);
 
             var result = new Dictionary<DateTime, decimal>();
-            var currentDate = start;
+            var currentDate = utcStart;
 
             // Add dates until we reach the end date (inclusive)
-            while (currentDate <= end)
+            while (currentDate <= utcEnd)
             {
                 // Find the nearest available date that is not greater than currentDate
                 var nearestDate = allRates.Keys
@@ -110,20 +117,21 @@ public class FrankfurterExchangeRateProvider : IExchangeRateProvider
             }
 
             _logger.LogDebug("Successfully retrieved {Count} rates for {FromCurrency}/{ToCurrency} from {StartDate} to {EndDate}",
-                result.Count, fromCurrency, toCurrency, start, end);
+                result.Count, fromCurrency, toCurrency, utcStart, utcEnd);
             return result;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error getting historical rates from Frankfurter API for {FromCurrency}/{ToCurrency} from {StartDate} to {EndDate}",
-                fromCurrency, toCurrency, start, end);
+                fromCurrency, toCurrency, utcStart, utcEnd);
             throw;
         }
     }
 
     private bool ShouldUseLatest(DateTime date)
     {
-        return date.Date == DateTime.UtcNow.Date;
+        var utcNow = DateTime.UtcNow;
+        return date.Date == utcNow.Date;
     }
 }
 
