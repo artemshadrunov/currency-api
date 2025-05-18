@@ -88,7 +88,9 @@ public static class ApplicationConfiguration
         services.AddSingleton<IConnectionMultiplexer>(sp =>
         {
             var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-            return ConnectionMultiplexer.Connect(settings.ConnectionString);
+            var options = ConfigurationOptions.Parse(settings.ConnectionString);
+            options.AbortOnConnectFail = false;
+            return ConnectionMultiplexer.Connect(options);
         });
 
         services.AddStackExchangeRedisCache(options =>
@@ -308,9 +310,9 @@ public static class ApplicationConfiguration
         app.UseRateLimiter();
         app.UseMiddleware<CorrelationIdMiddleware>();
         app.UseAuthentication();
-        app.UseAuthorization();
         app.UseMiddleware<RequestLoggingMiddleware>();
         app.UseRouting();
+        app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

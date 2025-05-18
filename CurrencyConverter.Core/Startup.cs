@@ -1,11 +1,12 @@
+using CurrencyConverter.Core.Infrastructure;
+using CurrencyConverter.Core.Settings;
+using CurrencyConverter.Core.Models;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CurrencyConverter.Core.Infrastructure;
-using CurrencyConverter.Core.Settings;
-using CurrencyConverter.Core.Models;
 
 namespace CurrencyConverter.Core
 {
@@ -29,9 +30,13 @@ namespace CurrencyConverter.Core
                 Configuration.GetSection("Redis"));
 
             // Base services
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                });
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
             services.AddHttpClient();
             services.AddMemoryCache();
             services.AddStackExchangeRedisCache(options =>
@@ -46,15 +51,16 @@ namespace CurrencyConverter.Core
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<GlobalExceptionHandler>();
+
             if (env.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthorization();
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
