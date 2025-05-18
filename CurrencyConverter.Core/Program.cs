@@ -1,41 +1,20 @@
-using CurrencyConverter.Core.Infrastructure;
-using CurrencyConverter.Core.Settings;
-using Serilog;
-using CurrencyConverter.Core.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-try
+namespace CurrencyConverter.Core
 {
-    var builder = WebApplication.CreateBuilder(args);
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-    // Configure environment
-    var environment = builder.Environment.EnvironmentName;
-    builder.Configuration
-        .SetBasePath(builder.Environment.ContentRootPath)
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
-        .AddEnvironmentVariables();
-
-    // Configure settings
-    builder.Services.Configure<CurrencyRulesOptions>(
-        builder.Configuration.GetSection("CurrencyRules"));
-    builder.Services.Configure<RedisSettings>(
-        builder.Configuration.GetSection("Redis"));
-
-    // Configure services
-    ApplicationConfiguration.ConfigureServices(builder);
-
-    var app = builder.Build();
-
-    // Configure middleware
-    ApplicationConfiguration.ConfigureMiddleware(app);
-
-    app.Run();
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Application terminated unexpectedly");
-}
-finally
-{
-    Log.CloseAndFlush();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
 }

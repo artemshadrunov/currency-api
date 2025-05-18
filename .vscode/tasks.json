@@ -61,6 +61,26 @@
                 "panel": "new"
             },
             "problemMatcher": []
+        },
+        {
+            "label": "CDK Deploy",
+            "type": "shell",
+            "command": "Set-Location -Path '${workspaceFolder}/CurrencyConverter.Infrastructure'; cdk bootstrap --profile test-account; cdk synth --profile test-account; cdk deploy --profile test-account",
+            "options": {
+                "env": {
+                    "AWS_SHARED_CREDENTIALS_FILE": "${workspaceFolder}/.project-aws/credentials",
+                    "AWS_CONFIG_FILE": "${workspaceFolder}/.project-aws/config"
+                }
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
         }
     ]
 }

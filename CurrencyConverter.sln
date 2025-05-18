@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter.Core", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter.Tests", "CurrencyConverter.Tests\CurrencyConverter.Tests.csproj", "{42F2649D-C50B-46CA-B788-3588BFA3788E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter.Infrastructure", "CurrencyConverter.Infrastructure\CurrencyConverter.Infrastructure.csproj", "{A080BA16-0D85-42FA-88D2-268AADE1E39B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{42F2649D-C50B-46CA-B788-3588BFA3788E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42F2649D-C50B-46CA-B788-3588BFA3788E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42F2649D-C50B-46CA-B788-3588BFA3788E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A080BA16-0D85-42FA-88D2-268AADE1E39B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A080BA16-0D85-42FA-88D2-268AADE1E39B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A080BA16-0D85-42FA-88D2-268AADE1E39B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A080BA16-0D85-42FA-88D2-268AADE1E39B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -21,18 +21,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http;
 using Polly.Registry;
 using CurrencyConverter.Core.Infrastructure.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace CurrencyConverter.Core.Infrastructure;
 
 public static class ApplicationConfiguration
 {
-    public static void ConfigureServices(WebApplicationBuilder builder)
+    public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        var services = builder.Services;
-        var configuration = builder.Configuration;
-
         // 1. Infrastructure Services
-        ConfigureLogging(builder);
+        ConfigureLogging(services, configuration);
         ConfigureOpenTelemetry(services, configuration);
         ConfigureRedis(services, configuration);
         ConfigureResiliencePolicies(services);
@@ -51,13 +49,14 @@ public static class ApplicationConfiguration
         ConfigureExchangeRateProviders(services);
     }
 
-    private static void ConfigureLogging(WebApplicationBuilder builder)
+    private static void ConfigureLogging(IServiceCollection services, IConfiguration configuration)
     {
         Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(builder.Configuration)
+            .ReadFrom.Configuration(configuration)
             .CreateLogger();
 
-        builder.Host.UseSerilog();
+        services.AddLogging(loggingBuilder =>
+            loggingBuilder.AddSerilog(dispose: true));
     }
 
     private static void ConfigureOpenTelemetry(IServiceCollection services, IConfiguration configuration)
@@ -293,7 +292,7 @@ public static class ApplicationConfiguration
         services.AddSingleton<IExchangeRateProviderFactory, CachedExchangeRateProviderFactory>();
     }
 
-    public static void ConfigureMiddleware(WebApplication app)
+    public static void ConfigureMiddleware(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (!IsProduction())
         {
@@ -311,7 +310,11 @@ public static class ApplicationConfiguration
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseMiddleware<RequestLoggingMiddleware>();
-        app.MapControllers();
+        app.UseRouting();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
     }
 
     private static bool IsProduction()
