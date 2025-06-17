@@ -35,9 +35,4 @@ public class CachedExchangeRateProviderFactory : IExchangeRateProviderFactory
 
         return provider;
     }
-
-    public IExchangeRateProvider CreateCachedProvider(IExchangeRateProvider provider)
-    {
-        return new CachedExchangeRateProvider(provider, _cache, Options.Create(_settings), _logger);
-    }
 }

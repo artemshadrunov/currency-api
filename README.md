@@ -70,6 +70,20 @@ GET /history?from=USD&to=EUR&startDate=2024-01-01&endDate=2024-03-01
 Authorization: Bearer {jwt_token}
 ```
 
+## What to Improve?
+
+### 1. DTO Mapping and Validation
+- Replace manual DTO mapping with AutoMapper
+- Implement FluentValidation for request validation
+- Move validation logic from service to dedicated validators
+
+### 2. Authentication & Authorization
+- Replace basic JWT authentication with AWS Cognito
+- Add refresh tokens
+
+### 3. Caching Strategy
+- Implement smart caching only for popular currency pairs
+
 ## Development
 
 ### Prerequisites

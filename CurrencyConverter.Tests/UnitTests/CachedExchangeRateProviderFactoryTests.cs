@@ -52,15 +52,5 @@ namespace CurrencyConverter.Tests.UnitTests
             Assert.NotNull(result);
             Assert.IsType<CachedExchangeRateProvider>(result);
         }
-
-        [Fact]
-        public void CreateCachedProvider_ReturnsCachedProvider()
-        {
-            var stub = new StubExchangeRateProvider();
-            var factory = CreateFactory();
-            var result = factory.CreateCachedProvider(stub);
-            Assert.NotNull(result);
-            Assert.IsType<CachedExchangeRateProvider>(result);
-        }
     }
 }
