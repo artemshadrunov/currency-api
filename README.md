@@ -84,6 +84,13 @@ Authorization: Bearer {jwt_token}
 ### 3. Caching Strategy
 - Implement smart caching only for popular currency pairs
 
+### 4. AWS
+- Improve AWS resources and log groups naming for better navigation
+
+### 5. Logging
+- Reduce ammount of prod logs
+- Use debug log level where needed
+
 ## Development
 
 ### Prerequisites
